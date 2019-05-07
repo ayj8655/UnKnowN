@@ -87,6 +87,15 @@ public class LobbyActivity extends AppCompatActivity {
         mArrayList = new ArrayList<>();
     }
 
+    public void AdminMode(View view) {
+        Bundle bundleId = new Bundle();
+        bundleId.putString("id",inProcessDevice[0]);
+        Intent intent = new Intent(LobbyActivity.this, AdminActivity.class);
+        intent.putExtra("DeviceData",bundleId);
+        startActivity(intent);
+    }
+
+
     private class GetData extends AsyncTask<String, Void, String> {
 
         Intent intent = new Intent(LobbyActivity.this, com.example.UnKnowN.ShowActivity.class);
