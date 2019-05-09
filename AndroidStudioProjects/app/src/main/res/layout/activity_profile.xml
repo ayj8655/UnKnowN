@@ -10,25 +10,25 @@
     tools:context=".ProfileActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:paddingBottom="50dp"
-        android:text="아이 정보 입력"
+        android:text="@string/textView2"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
     <TextView
         android:id="@+id/textView_main_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name" />
+        android:text="@string/textView_main_name" />
 
     <EditText
         android:id="@+id/editText_main_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="이름을 입력하세요."
+        android:hint="@string/editText_main_name"
         android:maxLength="5"
         android:inputType="textPersonName" />
 
@@ -36,13 +36,13 @@
         android:id="@+id/textView_main_age"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Age" />
+        android:text="@string/textView_main_age" />
 
     <EditText
         android:id="@+id/editText_main_age"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="아이의 나이를 입력해주세요."
+        android:hint="@string/editText_main_age"
         android:maxLength="2"
         android:inputType="number" />
 
@@ -50,13 +50,13 @@
         android:id="@+id/textView_main_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="보호자 전화번호" />
+        android:text="@string/textView_main_phone" />
 
     <EditText
         android:id="@+id/editText_main_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="전화번호를 입력해주세요."
+        android:hint="@string/editText_main_phone"
         android:maxLength="11"
         android:inputType="phone" />
 
@@ -69,14 +69,14 @@
             android:id="@+id/textView_main_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="id : " />
+            android:text="@string/textView_main_id" />
 
         <TextView
             android:id="@+id/textViewId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:baselineAligned="false"
-            android:text="0" />
+            android:text="@string/textViewId" />
     </LinearLayout>
 
 
@@ -95,7 +95,7 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="10"
-        android:text="Insert" />
+        android:text="@string/button_main_insert" />
 
     <Button
         android:id="@+id/button3"
@@ -111,7 +111,7 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="10"
-        android:text="Exit" />
+        android:text="@string/button3" />
 
     <TextView
         android:id="@+id/textView_main_result"

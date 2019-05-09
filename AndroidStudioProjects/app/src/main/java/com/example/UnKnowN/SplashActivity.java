@@ -10,6 +10,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
+import java.util.Locale;
+
 public class SplashActivity extends Activity {
 
     //permission
@@ -51,6 +53,7 @@ public class SplashActivity extends Activity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        String nationality = Locale.getDefault().getLanguage();
         switch(requestCode){
             case PERMISSION:
                 if(grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED &&
@@ -58,12 +61,18 @@ public class SplashActivity extends Activity {
                         grantResults[2]==PackageManager.PERMISSION_GRANTED &&
                         grantResults[3]==PackageManager.PERMISSION_GRANTED)
                 {
-                    Toast.makeText(getApplicationContext(), "모든 권한 승인됨", Toast.LENGTH_SHORT).show();
+                    if(nationality.compareTo("ko")==0)
+                        Toast.makeText(getApplicationContext(), "모든 권한 승인됨", Toast.LENGTH_SHORT).show();
+                    else if(nationality.compareTo("en")==0)
+                        Toast.makeText(getApplicationContext(), "All Permissions Approved", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(this, NFCActivity.class));
                     finish();
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "일부 권한이 없을 시 앱을 실행할 수 없습니다", Toast.LENGTH_LONG).show();
+                    if(nationality.compareTo("ko")==0)
+                        Toast.makeText(getApplicationContext(), "일부 권한이 없을 시 앱을 실행할 수 없습니다", Toast.LENGTH_LONG).show();
+                    else if(nationality.compareTo("en")==0)
+                        Toast.makeText(getApplicationContext(), "Please Approve All Permissions", Toast.LENGTH_LONG).show();
                     finish();
                 }
                 break;

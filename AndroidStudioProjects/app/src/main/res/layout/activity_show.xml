@@ -15,7 +15,7 @@
         android:id="@+id/textView_serial"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="@string/textView_serial" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -33,13 +33,13 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="NAME     :   " />
+            android:text="@string/textView3" />
 
         <TextView
             android:id="@+id/textView_Show_Name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="NAME" />
+            android:text="@string/textView_Show_Name" />
 
     </LinearLayout>
 
@@ -52,13 +52,13 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="AGE         :   " />
+            android:text="@string/textView4" />
 
         <TextView
             android:id="@+id/textView_Show_Age"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="AGE" />
+            android:text="@string/textView_Show_Age" />
 
     </LinearLayout>
 
@@ -71,13 +71,13 @@
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="PHONE   :   " />
+            android:text="@string/textView5" />
 
         <TextView
             android:id="@+id/textView_Show_Phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="PHONE" />
+            android:text="@string/textView_Show_Phone" />
 
     </LinearLayout>
 
@@ -91,13 +91,13 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ID             :   " />
+            android:text="@string/textView6" />
 
         <TextView
             android:id="@+id/textView_Show_ID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ID" />
+            android:text="@string/textView_Show_ID" />
 
     </LinearLayout>
 
@@ -116,6 +116,6 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="10"
-        android:text="Exit" />
+        android:text="@string/button9" />
 
 </LinearLayout>

@@ -34,7 +34,7 @@
             android:layout_marginRight="50dp"
             android:layout_marginBottom="30dp"
             android:background="@drawable/buttonshape"
-            android:text="Enter the PROFILE"
+            android:text="@string/button"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
 
@@ -47,7 +47,7 @@
             android:layout_marginRight="50dp"
             android:layout_marginBottom="30dp"
             android:background="@drawable/buttonshape"
-            android:text="Show the PROFILE"
+            android:text="@string/button2"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
 
@@ -61,7 +61,7 @@
             android:layout_marginBottom="30dp"
             android:background="@drawable/buttonshape"
             android:onClick="ExitApp"
-            android:text="Exit"
+            android:text="@string/button4"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
 
@@ -75,7 +75,7 @@
             android:layout_marginBottom="40dp"
             android:background="@drawable/buttonshape"
             android:onClick="AdminMode"
-            android:text="   Admin"
+            android:text="@string/buttonAdmin"
             android:textColor="#FFFFFF"
             android:textSize="12sp" />
     </LinearLayout>

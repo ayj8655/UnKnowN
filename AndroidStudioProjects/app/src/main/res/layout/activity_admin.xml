@@ -14,15 +14,15 @@
         android:orientation="vertical">
 
         <TextView
-        android:id="@+id/TextView_Admin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+            android:id="@+id/TextView_Admin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-        android:text="Administer Mode"
-        android:textStyle="bold"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        tools:layout_editor_absoluteX="136dp"
-        tools:layout_editor_absoluteY="65dp" />
+            android:text="@string/TextView_Admin"
+            android:textStyle="bold"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            tools:layout_editor_absoluteX="136dp"
+            tools:layout_editor_absoluteY="65dp" />
 
         <Button
             android:id="@+id/button_reset"
@@ -31,7 +31,7 @@
             android:layout_marginTop="150dp"
             android:layout_gravity="center"
             android:background="@drawable/buttonshape"
-            android:text="RESET USER DATA"
+            android:text="@string/button_reset"
             android:textColor="#FFFFFF"
             tools:layout_editor_absoluteX="161dp"
             tools:layout_editor_absoluteY="168dp" />
@@ -44,7 +44,7 @@
             android:background="@drawable/buttonshape"
             android:layout_marginTop="80dp"
             android:textColor="#FFFFFF"
-            android:text="EXIT TO LOBBY"
+            android:text="@string/button_exit"
             tools:layout_editor_absoluteX="161dp"
             tools:layout_editor_absoluteY="168dp" />
 
@@ -54,6 +54,6 @@
             android:background="#FFFFFF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="" />
+            android:text="@string/textView_result" />
     </LinearLayout>
 </LinearLayout>

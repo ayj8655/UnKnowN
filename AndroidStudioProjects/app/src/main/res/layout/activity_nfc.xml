@@ -15,7 +15,7 @@
         android:layout_marginTop="140dp"
         android:layout_marginBottom="70dp"
         android:gravity="center_horizontal"
-        android:text="NFC를 태그해주세요"
+        android:text="@string/textView"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="@android:color/white"
         android:textFontWeight="40"

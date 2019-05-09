@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import java.util.Locale;
+
 public class NFCActivity extends AppCompatActivity {
 
     private String Device1Serial = "A6D7A0D3";
@@ -46,6 +48,7 @@ public class NFCActivity extends AppCompatActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        String nationality = Locale.getDefault().getLanguage();
         Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
         if (tag != null) {
             byte[] tagId = tag.getId();
@@ -57,7 +60,11 @@ public class NFCActivity extends AppCompatActivity {
                 bun.putInt("id",id);
                 bun.putString("tid",tid);
                 i.putExtra("DeviceData",bun);
-                Toast.makeText(this,String.format("id: %d 태그확인",id),Toast.LENGTH_LONG).show();//DB조회 하기
+                if(nationality.compareTo("ko")==0)
+                    Toast.makeText(this,String.format("id: %d 태그확인",id),Toast.LENGTH_LONG).show();//DB조회 하기
+                else if(nationality.compareTo("en")==0)
+                    Toast.makeText(this,String.format("id: %d Tag Checked",id),Toast.LENGTH_LONG).show();//DB조회 하기
+
                 startActivity(i);
             }
         }
