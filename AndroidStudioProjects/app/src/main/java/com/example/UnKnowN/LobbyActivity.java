@@ -1,13 +1,18 @@
 package com.example.UnKnowN;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -19,16 +24,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.TimeoutException;
 
 public class LobbyActivity extends AppCompatActivity {
 
     private static String TAG = "Show";
-    private static String IP_ADDRESS = "211.229.241.115";
+    public static String IP_ADDRESS = "211.229.241.115";
+    private static String ADMIN_PASS = "q1w2e3r4";
 
     private static final String TAG_JSON = "unknown";
     private static final String TAG_ID = "id";
@@ -87,18 +91,45 @@ public class LobbyActivity extends AppCompatActivity {
         mArrayList = new ArrayList<>();
     }
 
-    public void AdminMode(View view) {
-        Bundle bundleId = new Bundle();
-        bundleId.putString("id",inProcessDevice[0]);
-        Intent intent = new Intent(LobbyActivity.this, AdminActivity.class);
-        intent.putExtra("DeviceData",bundleId);
-        startActivity(intent);
+    public void AdminMode_Pass(View view)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final EditText admin_pass = new EditText(LobbyActivity.this);
+        admin_pass.setFocusable(true);
+        admin_pass.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        admin_pass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        builder.setView(admin_pass);
+        // 확인 버튼 설정
+        builder.setPositiveButton(getString(R.string.button_main_insert), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String value = admin_pass.getText().toString();
+                if (value.equals(ADMIN_PASS)) {
+                    dialog.dismiss();
+                    Bundle bundleId = new Bundle();
+                    bundleId.putString("id",inProcessDevice[0]);
+                    Intent intent = new Intent(LobbyActivity.this, AdminActivity.class);
+                    intent.putExtra("DeviceData",bundleId);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(getApplicationContext(),getString(R.string.invalid_access),Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.setNegativeButton(getString(R.string.button_exit), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();     // close
+            }
+        });
+        builder.show();
     }
-
 
     private class GetData extends AsyncTask<String, Void, String> {
 
-        Intent intent = new Intent(LobbyActivity.this, com.example.UnKnowN.ShowActivity.class);
+        Intent intent = new Intent(LobbyActivity.this, ShowActivity.class);
 
         ProgressDialog progressDialog;
         String errorString = null;

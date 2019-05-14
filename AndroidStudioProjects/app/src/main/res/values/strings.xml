@@ -2,11 +2,10 @@
     <string name="app_name">UnKnowN</string>
     <string name="TextView_Admin">관리자 모드</string>
     <string name="button_reset">사용자 데이터 리셋</string>
-    <string name="button_exit">로비로 나가기</string>
+    <string name="button_exit">나가기</string>
     <string name="textView_result" />
     <string name="button">프로필 입력</string>
     <string name="button2">프로필 보기</string>
-    <string name="button4">나가기</string>
     <string name="buttonAdmin">관리자</string>
     <string name="textView">NFC를 태그해주세요</string>
     <string name="textView2">아이 정보 입력</string>
@@ -27,7 +26,9 @@
     <string name="textView_Show_Phone">번호</string>
     <string name="textView6">아이디             :</string>
     <string name="textView_Show_ID">아이디</string>
-    <string name="button9">나가기</string>
     <string name="button_main_insert">입력</string>
-    <string name="button3">나가기</string>
+    <string name="move_to_setting">설정으로 이동</string>
+    <string name="nfc_title">NFC 권한 안내</string>
+    <string name="nfc_message">어플 사용을 위해 NFC 권한 설정 후 어플을 다시 실행시켜주세요 !</string>
+    <string name="invalid_access">잘못된 접근입니다</string>
 </resources>

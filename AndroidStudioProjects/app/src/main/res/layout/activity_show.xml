@@ -116,6 +116,6 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="10"
-        android:text="@string/button9" />
+        android:text="@string/button_exit" />
 
 </LinearLayout>

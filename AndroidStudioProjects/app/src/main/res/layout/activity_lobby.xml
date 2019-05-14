@@ -61,7 +61,7 @@
             android:layout_marginBottom="30dp"
             android:background="@drawable/buttonshape"
             android:onClick="ExitApp"
-            android:text="@string/button4"
+            android:text="@string/button_exit"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
 
@@ -74,7 +74,7 @@
             android:layout_marginRight="100dp"
             android:layout_marginBottom="40dp"
             android:background="@drawable/buttonshape"
-            android:onClick="AdminMode"
+            android:onClick="AdminMode_Pass"
             android:text="@string/buttonAdmin"
             android:textColor="#FFFFFF"
             android:textSize="12sp" />

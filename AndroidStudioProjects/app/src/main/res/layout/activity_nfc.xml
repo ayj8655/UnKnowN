@@ -18,10 +18,7 @@
         android:text="@string/textView"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="@android:color/white"
-        android:textFontWeight="40"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textFontWeight="40"/>
 
     <ImageView
         android:id="@+id/imageView2"
@@ -29,13 +26,17 @@
         android:layout_height="320dp"
         android:layout_marginStart="29dp"
         android:layout_marginEnd="29dp"
-        android:layout_marginBottom="183dp"
+        android:layout_marginBottom="50dp"
         android:adjustViewBounds="true"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
         app:srcCompat="@drawable/nfc_checkpointsignal" />
+
+    <Button
+        android:id="@+id/button_nfc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
+        android:onClick="Tagging"
+        android:text="Tag" />
 
 </LinearLayout>

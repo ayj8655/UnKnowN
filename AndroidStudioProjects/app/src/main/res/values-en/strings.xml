@@ -2,11 +2,10 @@
     <string name="app_name">UnKnowN</string>
     <string name="TextView_Admin">Administer Mode</string>
     <string name="button_reset">RESET USER DATA</string>
-    <string name="button_exit">EXIT TO LOBBY</string>
+    <string name="button_exit">EXIT</string>
     <string name="textView_result" />
     <string name="button">Enter the PROFILE</string>
     <string name="button2">Show the PROFILE</string>
-    <string name="button4">Exit</string>
     <string name="buttonAdmin">Admin</string>
     <string name="textView">Please tag NFC</string>
     <string name="textView2">Enter your child"s information</string>
@@ -17,7 +16,6 @@
     <string name="textView_main_phone">Phone number</string>
     <string name="editText_main_phone">Enter your phone number</string>
     <string name="textView_main_id">id :</string>
-    <string name="textViewId">0</string>
     <string name="textView_serial">TextView</string>
     <string name="textView3">NAME     :</string>
     <string name="textView_Show_Name">NAME</string>
@@ -27,7 +25,9 @@
     <string name="textView_Show_Phone">PHONE</string>
     <string name="textView6">ID             :</string>
     <string name="textView_Show_ID">ID</string>
-    <string name="button9">Exit</string>
     <string name="button_main_insert">Insert</string>
-    <string name="button3">Exit</string>
+    <string name="move_to_setting">Move To Setting</string>
+    <string name="nfc_title">NFC Permission Guide</string>
+    <string name="nfc_message">Please activate NFC and run the application again!</string>
+    <string name="invalid_access">Invalid Access</string>
 </resources>

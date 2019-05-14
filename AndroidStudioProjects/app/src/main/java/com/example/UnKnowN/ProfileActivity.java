@@ -1,13 +1,16 @@
 package com.example.UnKnowN;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -29,6 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
     private static String IP_ADDRESS = "211.229.241.115"; // 의철's server
     private static String TAG = "unknown";
 
+    private InputMethodManager imm;
     private EditText mEditTextName;
     private EditText mEditTextAge;
     private EditText mEditTextPhone;
@@ -46,15 +50,17 @@ public class ProfileActivity extends AppCompatActivity {
         mEditTextPhone = (EditText)findViewById(R.id.editText_main_phone);
         mTextViewResult = (TextView)findViewById(R.id.textView_main_result);
         mTextViewResult.setMovementMethod(new ScrollingMovementMethod());
+        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         Intent intent = getIntent();
         Bundle id = intent.getBundleExtra("DeviceData");
         mTextViewId.setText(id.getString("id"));
 
-        Button buttonInsert = (Button)findViewById(R.id.button_main_insert);
+        final Button buttonInsert = (Button)findViewById(R.id.button_main_insert);
         buttonInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideKeyboard();
                 String name = mEditTextName.getText().toString();
                 String age = mEditTextAge.getText().toString();
                 String phone = mEditTextPhone.getText().toString();
@@ -69,13 +75,26 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
         Button btnExit = (Button) findViewById(R.id.button3);
+
         btnExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+
+        mEditTextPhone.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    buttonInsert.performClick();
+                    return true;
+                }
+                else return false;
+            }
+        });
     }
+
 
     class InsertData extends AsyncTask<String, Void, String> {
         ProgressDialog progressDialog;
@@ -149,5 +168,11 @@ public class ProfileActivity extends AppCompatActivity {
                 return new String("Error: " + e.getMessage());
             }
         }
+    }
+    private void hideKeyboard()
+    {
+        imm.hideSoftInputFromWindow(mEditTextName.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(mEditTextAge.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(mEditTextPhone.getWindowToken(), 0);
     }
 }
