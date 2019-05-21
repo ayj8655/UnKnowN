@@ -37,6 +37,19 @@
             tools:layout_editor_absoluteY="168dp" />
 
         <Button
+            android:id="@+id/button_notice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:layout_gravity="center"
+            android:background="@drawable/buttonshape"
+            android:text="@string/button_notice"
+            android:textColor="#FFFFFF"
+            android:onClick="UpdateNotice"
+            tools:layout_editor_absoluteX="161dp"
+            tools:layout_editor_absoluteY="168dp" />
+
+        <Button
             android:id="@+id/button_exit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,11 +62,18 @@
             tools:layout_editor_absoluteY="168dp" />
 
         <TextView
+            android:id="@+id/textView_result_"
+            android:layout_width="match_parent"
+            android:layout_marginTop="50dp"
+            android:layout_height="wrap_content"
+            android:text="@string/textView_result" />
+
+        <TextView
             android:id="@+id/textView_result"
-            android:layout_marginTop="200dp"
             android:background="#FFFFFF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/textView_result" />
+            android:text="" />
+
     </LinearLayout>
 </LinearLayout>

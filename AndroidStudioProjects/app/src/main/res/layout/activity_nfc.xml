@@ -37,6 +37,6 @@
         android:layout_marginLeft="100dp"
         android:layout_marginRight="100dp"
         android:onClick="Tagging"
-        android:text="Tag" />
+        android:text="TAG" />
 
 </LinearLayout>

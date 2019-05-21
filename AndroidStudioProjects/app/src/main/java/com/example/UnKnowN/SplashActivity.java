@@ -48,7 +48,6 @@ public class SplashActivity extends Activity {
                     Manifest.permission.READ_EXTERNAL_STORAGE,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION);
         }
-
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -61,18 +60,12 @@ public class SplashActivity extends Activity {
                         grantResults[2]==PackageManager.PERMISSION_GRANTED &&
                         grantResults[3]==PackageManager.PERMISSION_GRANTED)
                 {
-                    if(nationality.compareTo("ko")==0)
-                        Toast.makeText(getApplicationContext(), "모든 권한 승인됨", Toast.LENGTH_SHORT).show();
-                    else if(nationality.compareTo("en")==0)
-                        Toast.makeText(getApplicationContext(), "All Permissions Approved", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.All_Permissions_Approved, Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(this, NFCActivity.class));
                     finish();
                 }
                 else {
-                    if(nationality.compareTo("ko")==0)
-                        Toast.makeText(getApplicationContext(), "일부 권한이 없을 시 앱을 실행할 수 없습니다", Toast.LENGTH_LONG).show();
-                    else if(nationality.compareTo("en")==0)
-                        Toast.makeText(getApplicationContext(), "Please Approve All Permissions", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.Permissions_Denied, Toast.LENGTH_LONG).show();
                     finish();
                 }
                 break;

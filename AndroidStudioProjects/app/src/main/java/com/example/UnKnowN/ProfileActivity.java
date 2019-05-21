@@ -25,6 +25,7 @@ import java.io.OutputStream;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 
 public class ProfileActivity extends AppCompatActivity {
@@ -44,19 +45,18 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        mTextViewId = (TextView)findViewById(R.id.textViewId);
-        mEditTextName = (EditText)findViewById(R.id.editText_main_name);
-        mEditTextAge = (EditText)findViewById(R.id.editText_main_age);
-        mEditTextPhone = (EditText)findViewById(R.id.editText_main_phone);
-        mTextViewResult = (TextView)findViewById(R.id.textView_main_result);
-        mTextViewResult.setMovementMethod(new ScrollingMovementMethod());
+        mTextViewId = findViewById(R.id.textViewId);
+        mEditTextName = findViewById(R.id.editText_main_name);
+        mEditTextAge = findViewById(R.id.editText_main_age);
+        mEditTextPhone = findViewById(R.id.editText_main_phone);
+        mTextViewResult = findViewById(R.id.textView_main_result);
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         Intent intent = getIntent();
         Bundle id = intent.getBundleExtra("DeviceData");
         mTextViewId.setText(id.getString("id"));
 
-        final Button buttonInsert = (Button)findViewById(R.id.button_main_insert);
+        final Button buttonInsert = findViewById(R.id.button_main_insert);
         buttonInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,13 +68,12 @@ public class ProfileActivity extends AppCompatActivity {
 
                 InsertData task = new InsertData();
                 task.execute("http://" + IP_ADDRESS + "/insert.php",id,name,age,phone);
-
                 mEditTextName.setText("");
                 mEditTextAge.setText("");
                 mEditTextPhone.setText("");
             }
         });
-        Button btnExit = (Button) findViewById(R.id.button3);
+        Button btnExit = findViewById(R.id.button3);
 
         btnExit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,14 +97,12 @@ public class ProfileActivity extends AppCompatActivity {
 
     class InsertData extends AsyncTask<String, Void, String> {
         ProgressDialog progressDialog;
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog = ProgressDialog.show(ProfileActivity.this,
                     "Please Wait", null, true, true);
         }
-
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
@@ -114,29 +111,24 @@ public class ProfileActivity extends AppCompatActivity {
             mTextViewResult.setText(result);
             Log.d(TAG, "POST response  - " + result);
         }
-
         @Override
         protected String doInBackground(String... params) {
-
-            String id = (String) params[1];
-            String name = (String) params[2];
-            String age = (String) params[3];
-            String phone = (String) params[4];
-
-            String serverURL = (String) params[0];
+            String id = params[1];
+            String name = params[2];
+            String age = params[3];
+            String phone = params[4];
+            String serverURL = params[0];
             String postParameters = "id=" + id + "&name=" + name + "&age=" + age + "&phone=" + phone;
-
             try {
                 URL url = new URL(serverURL);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-
                 httpURLConnection.setReadTimeout(5000);
                 httpURLConnection.setConnectTimeout(5000);
                 httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.connect();
 
                 OutputStream outputStream = httpURLConnection.getOutputStream();
-                outputStream.write(postParameters.getBytes("UTF-8"));
+                outputStream.write(postParameters.getBytes(StandardCharsets.UTF_8));
                 outputStream.flush();
                 outputStream.close();
 
@@ -150,27 +142,23 @@ public class ProfileActivity extends AppCompatActivity {
                     inputStream = httpURLConnection.getErrorStream();
                 }
 
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
                 StringBuilder sb = new StringBuilder();
                 String line = null;
 
-                while ((line = bufferedReader.readLine()) != null) {
-                    sb.append(line);
-                }
-
+                while ((line = bufferedReader.readLine()) != null) { sb.append(line); }
                 bufferedReader.close();
                 return sb.toString();
-
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 Log.d(TAG, "InsertData: Error ", e);
                 return new String("Error: " + e.getMessage());
             }
         }
     }
-    private void hideKeyboard()
-    {
+    private void hideKeyboard() {
         imm.hideSoftInputFromWindow(mEditTextName.getWindowToken(), 0);
         imm.hideSoftInputFromWindow(mEditTextAge.getWindowToken(), 0);
         imm.hideSoftInputFromWindow(mEditTextPhone.getWindowToken(), 0);

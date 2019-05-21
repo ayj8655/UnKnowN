@@ -34,7 +34,7 @@ public class NFCActivity extends AppCompatActivity {
     private PendingIntent pendingIntent;
     private int id=0;
     private String tid;
-    String mJsonString;
+    private String mJsonString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +117,6 @@ public class NFCActivity extends AppCompatActivity {
     }
 
     private class GetData extends AsyncTask<String, Void, String> {
-
         Intent intent = new Intent(NFCActivity.this, LobbyActivity.class);
         ProgressDialog progressDialog;
         String errorString = null;
@@ -125,7 +124,6 @@ public class NFCActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
             progressDialog = ProgressDialog.show(NFCActivity.this,
                     "Searching Data...", null, true, true);
         }
@@ -133,7 +131,6 @@ public class NFCActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-
             progressDialog.dismiss();
 
             if (result != null){
@@ -141,32 +138,26 @@ public class NFCActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(mJsonString);
                     JSONArray jsonArray = jsonObject.getJSONArray("unknown");
-                    // 추후 수정 필요 (for 문 없애기)
                     for(int i=0;i<jsonArray.length();i++) {
                         JSONObject item = jsonArray.getJSONObject(i);
                         id = Integer.parseInt(item.getString("id"));
-                        String nationality = Locale.getDefault().getLanguage();
                         if (id != 0) {
                             Bundle bun = new Bundle();
                             bun.putInt("id", id);
                             bun.putString("tid", tid);
                             intent.putExtra("DeviceData", bun);
-                            if (nationality.compareTo("ko") == 0)
-                                Toast.makeText(NFCActivity.this, String.format("id: %d 태그확인", id), Toast.LENGTH_LONG).show();
-                            else if (nationality.compareTo("en") == 0)
-                                Toast.makeText(NFCActivity.this, String.format("id: %d Tag Checked", id), Toast.LENGTH_LONG).show();
-
+                            Toast.makeText(NFCActivity.this, String.format("id: %d "+R.string.tag_confirm, id), Toast.LENGTH_SHORT).show();
                             startActivity(intent);
                             break;
                         }
                     }
-                } catch (JSONException e) { }
+                }
+                catch (JSONException e) { }
             }
         }
 
         @Override
         protected String doInBackground(String... params) {
-
             String serverURL = "http://" + LobbyActivity.IP_ADDRESS + "/matching_serial.php";
             // 디바이스 고유번호
             String postParameters = "serial="+params[0];
@@ -174,7 +165,6 @@ public class NFCActivity extends AppCompatActivity {
             try {
                 URL url = new URL(serverURL);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-
                 httpURLConnection.setReadTimeout(5000);
                 httpURLConnection.setConnectTimeout(5000);
                 httpURLConnection.setRequestMethod("POST");
@@ -187,8 +177,8 @@ public class NFCActivity extends AppCompatActivity {
                 outputStream.close();
 
                 int responseStatusCode = httpURLConnection.getResponseCode();
-
                 InputStream inputStream;
+
                 if (responseStatusCode == HttpURLConnection.HTTP_OK) {
                     inputStream = httpURLConnection.getInputStream();
                 } else {
@@ -201,14 +191,11 @@ public class NFCActivity extends AppCompatActivity {
                 StringBuilder sb = new StringBuilder();
                 String line;
 
-                while ((line = bufferedReader.readLine()) != null) {
-                    sb.append(line);
-                }
+                while ((line = bufferedReader.readLine()) != null) { sb.append(line); }
                 bufferedReader.close();
-
                 return sb.toString().trim();
-
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 errorString = e.toString();
                 return null;
             }
