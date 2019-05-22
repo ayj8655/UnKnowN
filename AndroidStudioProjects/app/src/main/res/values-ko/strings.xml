@@ -38,4 +38,5 @@
     <string name="Notice_Update_Complete">공지사항 업데이트 완료</string>
     <string name="Notice_Update_Failed">공지사항 업데이트 실패</string>
     <string name="Update_Notice">공지사항 작성 창</string>
+    <string name="map_button">지도 보기</string>
 </resources>

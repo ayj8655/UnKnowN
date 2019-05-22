@@ -21,6 +21,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".MapActivity"></activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAM-7NqX3wd4R6yfb94Pm8ZHhMH2tXGIMk" />
         <activity android:name=".AdminActivity" />
         <activity android:name=".NFCActivity">
             <intent-filter>

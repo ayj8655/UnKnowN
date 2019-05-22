@@ -38,4 +38,5 @@
     <string name="Notice_Update_Complete">Notice Update Complete</string>
     <string name="Notice_Update_Failed">Notice Update Failed</string>
     <string name="Update_Notice">Update Notice Tab</string>
+    <string name="map_button">View Maps</string>
 </resources>
