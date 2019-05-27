@@ -1,9 +1,11 @@
 package com.example.UnKnowN;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
@@ -32,6 +34,8 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 public class LobbyActivity extends AppCompatActivity {
 
@@ -50,6 +54,7 @@ public class LobbyActivity extends AppCompatActivity {
     private TextView textNotice;
     private ArrayList<HashMap<String, String>> mArrayList;
     private String mJsonString;
+    private Locale myLocale;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +63,9 @@ public class LobbyActivity extends AppCompatActivity {
         // GET INFO OF DEVICE
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("DeviceData");
+
+        // Load Current Language in App
+        loadLocale();
 
         // GET LATELY NOTICE (EVERY 1min)
         textNotice = findViewById(R.id.textView_notice_content);
@@ -168,9 +176,61 @@ public class LobbyActivity extends AppCompatActivity {
         builder.show();
     }
 
-    public void SearchBle(View view) {
-        Intent intent = new Intent(this, SearchBle.class);
-        startActivity(intent);
+    public void change_lang(View view) {
+        final List<String> ListItems = new ArrayList<>();
+        ListItems.add(getString(R.string.en));
+        ListItems.add(getString(R.string.ko));
+        final CharSequence[] items =  ListItems.toArray(new String[ ListItems.size()]);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.lang_title);
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int pos) {
+                String selectedText = items[pos].toString();
+                if (selectedText == getString(R.string.en)) {
+                    String lang="en";
+                    changeLang(lang);
+                }
+                else if (selectedText == getString(R.string.ko)) {
+                    String lang = "ko";
+                    changeLang(lang);
+                }
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+                Toast.makeText(LobbyActivity.this, selectedText, Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.show();
+    }
+
+    public void loadLocale()
+    {
+        String langPref = "Language";
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs", Activity.MODE_PRIVATE);
+        String language = prefs.getString(langPref, "");
+        changeLang(language);
+    }
+
+    public void saveLocale(String lang)
+    {
+        String langPref = "Language";
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(langPref, lang);
+        editor.commit();
+    }
+
+    public void changeLang(String lang)
+    {
+        if (lang.equalsIgnoreCase(""))
+            return;
+        myLocale = new Locale(lang);
+        saveLocale(lang);
+        Locale.setDefault(myLocale);
+        android.content.res.Configuration config = new android.content.res.Configuration();
+        config.setLocale(myLocale);
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
     }
 
     // GET DATA ABOUT PROFILE THAT USER ENTERED

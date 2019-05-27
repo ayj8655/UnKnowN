@@ -84,7 +84,7 @@ public class MyIntentService extends IntentService {
                     Log.d("LJH", "1Length: " + result.getScanRecord().getBytes().length);
                     Log.d("LJH", "1RSSI:" + result.getRssi());
                     rssi = result.getRssi();
-                    distance = SearchBle.calculateAccuracy(-59, rssi);
+                    distance = ShowActivity.calculateAccuracy(-59, rssi);
                     Log.d("LJH", "거리는 " + (Math.round(distance * 10) / 10.0) + "입니다.");
                     Log.d("LJH", "-------------------------------------------------");
                     if ((Math.round(distance * 10) / 10.0) > 20.0) {

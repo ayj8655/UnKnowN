@@ -40,4 +40,8 @@
     <string name="Update_Notice">공지사항 작성 창</string>
     <string name="map_button">지도 보기</string>
     <string name="channel_name">UnKnown</string>
+    <string name="channel_description">UnKnowN_설명</string>
+    <string name="en">영어</string>
+    <string name="ko">한국어</string>
+    <string name="lang_title">언어 설정</string>
 </resources>

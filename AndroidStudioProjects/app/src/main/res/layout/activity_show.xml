@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="100dp"
+    android:paddingTop="50dp"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
     android:orientation="vertical"
@@ -84,7 +84,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="30dp"
         android:orientation="horizontal">
 
         <TextView
@@ -101,12 +101,40 @@
 
     </LinearLayout>
 
+    <TextView
+        android:textSize="25sp"
+        android:textAlignment="center"
+        android:text="현재 연결된 비콘 장치"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp" />
+    <TextView
+        android:id="@+id/devicename"
+        android:text="deviceName"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"/>
+    <TextView
+        android:id="@+id/address"
+        android:text="address"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"/>
+    <TextView
+        android:id="@+id/rssi"
+        android:text="Rssi"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"/>
 
     <Button
         android:id="@+id/button9"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:textColor="#FFFFFF"

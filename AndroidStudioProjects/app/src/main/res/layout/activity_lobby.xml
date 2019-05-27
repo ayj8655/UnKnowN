@@ -10,15 +10,23 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="249dp"
-            android:layout_height="220dp"
-            android:layout_marginLeft="80dp"
-            android:layout_marginTop="20dp"
-            app:srcCompat="@drawable/unknown_logo" />
-    </LinearLayout>
 
+        <ImageView
+            android:id="@+id/main_logo"
+            android:layout_width="249dp"
+            android:layout_height="320dp"
+            android:layout_marginLeft="80dp"
+            app:srcCompat="@drawable/unknown_logo" />
+
+        <ImageView
+            android:id="@+id/lang_menu"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:onClick="change_lang"
+            app:srcCompat="@drawable/lang_icon" />
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -85,19 +93,6 @@
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/searchBle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/buttonshape"
-            android:text="Search Ble"
-            android:onClick="SearchBle"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
         <Button
             android:id="@+id/button4"
             android:layout_width="match_parent"
