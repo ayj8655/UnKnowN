@@ -13,7 +13,7 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="249dp"
-            android:layout_height="302dp"
+            android:layout_height="220dp"
             android:layout_marginLeft="80dp"
             android:layout_marginTop="20dp"
             app:srcCompat="@drawable/unknown_logo" />
@@ -85,6 +85,19 @@
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
 
+        <Button
+            android:id="@+id/searchBle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/buttonshape"
+            android:text="Search Ble"
+            android:onClick="SearchBle"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
         <Button
             android:id="@+id/button4"
             android:layout_width="match_parent"

@@ -39,4 +39,6 @@
     <string name="Notice_Update_Failed">Notice Update Failed</string>
     <string name="Update_Notice">Update Notice Tab</string>
     <string name="map_button">View Maps</string>
+    <string name="channel_name">UnKnown</string>
+    <string name="channel_description">UnKnwonTeam</string>
 </resources>

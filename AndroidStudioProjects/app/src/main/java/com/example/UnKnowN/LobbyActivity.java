@@ -167,6 +167,12 @@ public class LobbyActivity extends AppCompatActivity {
         builder.setNegativeButton(getString(R.string.button_exit), null);
         builder.show();
     }
+
+    public void SearchBle(View view) {
+        Intent intent = new Intent(this, SearchBle.class);
+        startActivity(intent);
+    }
+
     // GET DATA ABOUT PROFILE THAT USER ENTERED
     private class GetData extends AsyncTask<String, Void, String> {
 
