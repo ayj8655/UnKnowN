@@ -233,6 +233,27 @@ public class LobbyActivity extends AppCompatActivity {
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
     }
 
+    public void logout_user(View view) {
+        final View v = view;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final TextView notice = new TextView(LobbyActivity.this);
+        builder.setTitle(R.string.textView_logout_title);
+        notice.setText(R.string.textView_logout);
+        builder.setView(notice);
+        builder.setPositiveButton(getString(R.string.button_yes), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                SharedPreferences sp = getSharedPreferences("NFC",MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.remove("isUsing"); editor.remove("id"); editor.remove("tid");
+                editor.commit();
+                ExitApp(v);
+            }
+        });
+        builder.setNegativeButton(getString(R.string.button_no), null);
+        builder.show();
+    }
+
     // GET DATA ABOUT PROFILE THAT USER ENTERED
     private class GetData extends AsyncTask<String, Void, String> {
 

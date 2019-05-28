@@ -18,7 +18,11 @@
             android:layout_marginLeft="80dp"
             app:srcCompat="@drawable/unknown_logo" />
 
-        <ImageView
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
             android:id="@+id/lang_menu"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -26,6 +30,18 @@
             android:layout_marginTop="10dp"
             android:onClick="change_lang"
             app:srcCompat="@drawable/lang_icon" />
+
+            <ImageView
+                android:id="@+id/logout"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_below="@id/lang_menu"
+                android:onClick="logout_user"
+                app:srcCompat="@drawable/logout_icon" />
+        </RelativeLayout>
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

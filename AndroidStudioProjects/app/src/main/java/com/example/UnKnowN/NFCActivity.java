@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.AsyncTask;
@@ -35,21 +36,43 @@ public class NFCActivity extends AppCompatActivity {
     private int id=0;
     private String tid;
     private String mJsonString;
+    private SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc);
-
-        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        if(nfcAdapter!=null)
-        {
-            if (!nfcAdapter.isEnabled())
-            {
-                show();
+        sp = getSharedPreferences("NFC",MODE_PRIVATE);
+        boolean isUsing = sp.getBoolean("isUsing",false);
+        Log.d("isUsing","sp = "+Boolean.toString(isUsing));
+        // ALREADY IN USE
+        if (isUsing==true) {
+            int usingId = sp.getInt("id",0);
+            String usingTid = sp.getString("tid", "");
+            Log.d("id, tid",""+id+" "+tid);
+            if (usingId == 0 || usingTid == "") {
+                finish();
+                return;
             }
-            Intent intent = new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+            Intent intent = new Intent(NFCActivity.this, LobbyActivity.class);
+            Bundle bun = new Bundle();
+            bun.putInt("id", usingId);
+            bun.putString("tid", usingTid);
+            intent.putExtra("DeviceData", bun);
+            startActivity(intent);
+        }
+        // NEW USER -> NEED TAG
+        else {
+            nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+            if(nfcAdapter!=null)
+            {
+                if (!nfcAdapter.isEnabled())
+                {
+                    show();
+                }
+                Intent intent = new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+            }
         }
     }
 
@@ -142,6 +165,10 @@ public class NFCActivity extends AppCompatActivity {
                         JSONObject item = jsonArray.getJSONObject(i);
                         id = Integer.parseInt(item.getString("id"));
                         if (id != 0) {
+                            SharedPreferences.Editor editor = sp.edit();
+                            editor.putInt("id",id);
+                            editor.putString("tid",tid);
+                            editor.commit();
                             Bundle bun = new Bundle();
                             bun.putInt("id", id);
                             bun.putString("tid", tid);

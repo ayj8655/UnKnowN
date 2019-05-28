@@ -44,4 +44,8 @@
     <string name="en">English</string>
     <string name="ko">Korean</string>
     <string name="lang_title">Select Language</string>
+    <string name="textView_logout_title">LOGOUT</string>
+    <string name="textView_logout">Are you sure you want to log out?</string>
+    <string name="button_yes">YES</string>
+    <string name="button_no">NO</string>
 </resources>

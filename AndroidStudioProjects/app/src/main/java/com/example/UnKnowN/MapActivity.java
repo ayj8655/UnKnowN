@@ -128,6 +128,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         map.setOnInfoWindowClickListener(infoWindowClickListener);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.292568, 127.203429),15));
     }
+
     GoogleMap.OnInfoWindowClickListener infoWindowClickListener = new GoogleMap.OnInfoWindowClickListener() {
         @Override
         public void onInfoWindowClick(Marker marker) {
