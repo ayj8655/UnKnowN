@@ -11,12 +11,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/main_logo"
-            android:layout_width="249dp"
-            android:layout_height="320dp"
-            android:layout_marginLeft="80dp"
-            app:srcCompat="@drawable/unknown_logo" />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:weightSum="1">
+
+            <ImageView
+                android:id="@+id/main_logo"
+                android:layout_width="249dp"
+                android:layout_height="350dp"
+                android:layout_marginLeft="80dp"
+                android:paddingTop="30dp"
+                app:srcCompat="@drawable/unknown_logo"/>
+
+            <Button
+                android:id="@+id/buttonAdmin"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="70dp"
+                android:background="#00000000"
+                android:text="@string/buttonAdmin"
+                android:textColor="#FFFFFF"
+                android:textSize="8sp"
+                android:visibility="visible" />
+
+        </FrameLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -53,7 +74,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="60dp"
-            android:layout_marginTop="10dp"
             android:layout_marginRight="50dp"
             android:text="@string/textView_notice" />
 
@@ -63,7 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
             android:layout_marginRight="50dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="30dp"
             android:background="@drawable/textviewshape"
             android:ellipsize="marquee"
             android:singleLine="true"
@@ -123,19 +143,5 @@
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/buttonAdmin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="250dp"
-            android:layout_marginRight="100dp"
-            android:layout_marginBottom="18dp"
-            android:background="@drawable/buttonshape"
-            android:onClick="AdminMode_Pass"
-            android:text="@string/buttonAdmin"
-            android:textColor="#FFFFFF"
-            android:textSize="12sp" />
     </LinearLayout>
 </LinearLayout>

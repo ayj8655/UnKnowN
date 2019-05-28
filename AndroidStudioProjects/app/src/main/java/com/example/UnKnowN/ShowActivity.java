@@ -116,19 +116,24 @@ public class ShowActivity extends AppCompatActivity {
 
         if(bluetoothAdapter == null){
             Toast.makeText(this, "블루투스 기능을 지원하지 않습니다.",Toast.LENGTH_LONG).show();
-        }else{
-            if(bluetoothAdapter.isEnabled()){
-                Toast.makeText(this, "블루투스 기능이 이미 실행중입니다.",Toast.LENGTH_LONG).show();
+            finish();
+        }
+        else{
+            if(bluetoothAdapter.isEnabled()) {
+                Toast.makeText(this, "블루투스 기능이 이미 실행중입니다.", Toast.LENGTH_LONG).show();
                 // BLE 기기 찾기.
-                if(call == null) {
+                if (call == null) {
                     Log.d("LJH", "Call Null!");
                     settingScanCallback();
                     scanner.startScan(call);
                 }
-            }else{
+            }
+            else{
                 Log.d("LJH", "블루투스 연결설정중");
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+                if (!bluetoothAdapter.isEnabled())
+                    finish();
             }
         }
     }

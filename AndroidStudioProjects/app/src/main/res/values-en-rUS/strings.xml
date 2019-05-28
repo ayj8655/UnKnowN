@@ -32,7 +32,7 @@
     <string name="invalid_access">Invalid Access</string>
     <string name="button_notice">Update Notice</string>
     <string name="textView_notice">NOTICE</string>
-    <string name="tag_confirm">Tag Matched</string>
+    <string name="tag_confirm">Tag Matched (Login Success)</string>
     <string name="All_Permissions_Approved">All Permissions Approved</string>
     <string name="Permissions_Denied">Please Approve All Permissions</string>
     <string name="Notice_Update_Complete">Notice Update Complete</string>
@@ -48,4 +48,5 @@
     <string name="textView_logout">Are you sure you want to log out?</string>
     <string name="button_yes">YES</string>
     <string name="button_no">NO</string>
+    <string name="textView_logout_confirm">Thank You For Using</string>
 </resources>

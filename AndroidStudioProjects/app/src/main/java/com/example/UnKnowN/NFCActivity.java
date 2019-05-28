@@ -59,6 +59,7 @@ public class NFCActivity extends AppCompatActivity {
             bun.putInt("id", usingId);
             bun.putString("tid", usingTid);
             intent.putExtra("DeviceData", bun);
+            finish();
             startActivity(intent);
         }
         // NEW USER -> NEED TAG
@@ -81,6 +82,7 @@ public class NFCActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.nfc_title));
         builder.setMessage(getString(R.string.nfc_message));
+        // builder.setCancelable(false);
         builder.setPositiveButton(getString(R.string.move_to_setting), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
@@ -166,6 +168,7 @@ public class NFCActivity extends AppCompatActivity {
                         id = Integer.parseInt(item.getString("id"));
                         if (id != 0) {
                             SharedPreferences.Editor editor = sp.edit();
+                            editor.putBoolean("isUsing",true);
                             editor.putInt("id",id);
                             editor.putString("tid",tid);
                             editor.commit();
@@ -173,7 +176,7 @@ public class NFCActivity extends AppCompatActivity {
                             bun.putInt("id", id);
                             bun.putString("tid", tid);
                             intent.putExtra("DeviceData", bun);
-                            Toast.makeText(NFCActivity.this, String.format("id: %d "+R.string.tag_confirm, id), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(NFCActivity.this, String.format("id: %d "+getResources().getString(R.string.tag_confirm), id), Toast.LENGTH_SHORT).show();
                             startActivity(intent);
                             break;
                         }

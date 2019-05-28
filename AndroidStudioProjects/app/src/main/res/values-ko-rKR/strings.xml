@@ -32,7 +32,7 @@
     <string name="invalid_access">잘못된 접근입니다</string>
     <string name="button_notice">공지사항 작성</string>
     <string name="textView_notice">공지사항</string>
-    <string name="tag_confirm">태그 확인</string>
+    <string name="tag_confirm">태그 확인 (로그인 성공)</string>
     <string name="All_Permissions_Approved">모든 권한이 승인되었습니다</string>
     <string name="Permissions_Denied">일부 권한이 거부되어 앱을 종료합니다</string>
     <string name="Notice_Update_Complete">공지사항 업데이트 완료</string>
@@ -48,4 +48,5 @@
     <string name="textView_logout">정말로 로그아웃 하시겠습니까?</string>
     <string name="button_yes">네</string>
     <string name="button_no">아니오</string>
+    <string name="textView_logout_confirm">사용해주셔서 감사합니다</string>
 </resources>

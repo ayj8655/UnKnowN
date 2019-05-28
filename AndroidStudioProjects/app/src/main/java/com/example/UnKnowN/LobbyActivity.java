@@ -15,6 +15,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -49,8 +50,9 @@ public class LobbyActivity extends AppCompatActivity {
     private static final String TAG_AGE = "age";
     private static final String TAG_PHONE = "phone";
 
+    private long btnPressTime = 0;
     private String[] inProcessDevice;
-    private Button btnEnter;
+    private Button btnEnter, btnAdmin;
     private TextView textNotice;
     private ArrayList<HashMap<String, String>> mArrayList;
     private String mJsonString;
@@ -105,6 +107,20 @@ public class LobbyActivity extends AppCompatActivity {
             }
         });
 
+        // ADMIN MODE (Double Click the Specific Location in 1sec)
+        btnAdmin = findViewById(R.id.buttonAdmin);
+        btnAdmin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (System.currentTimeMillis() > btnPressTime + 1000) {
+                    btnPressTime = System.currentTimeMillis();
+                    return;
+                }
+                if (System.currentTimeMillis() <= btnPressTime + 1000) {
+                    AdminMode_Pass(v);
+                }
+            }
+        });
         mArrayList = new ArrayList<>();
     }
 
@@ -165,13 +181,11 @@ public class LobbyActivity extends AppCompatActivity {
     public void clickNotice()
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        final TextView notice = new TextView(LobbyActivity.this);
         builder.setTitle(R.string.textView_notice);
         String[] notice_content = textNotice.getText().toString().split("  :  ");
         String content = notice_content[0];
         String date = notice_content[1];
-        notice.setText("\n\t\t"+content+"\n\t\t"+date);
-        builder.setView(notice);
+        builder.setMessage(""+content+"\n"+date);
         builder.setNegativeButton(getString(R.string.button_exit), null);
         builder.show();
     }
@@ -198,7 +212,7 @@ public class LobbyActivity extends AppCompatActivity {
                 Intent intent = getIntent();
                 finish();
                 startActivity(intent);
-                Toast.makeText(LobbyActivity.this, selectedText, Toast.LENGTH_SHORT).show();
+                // Toast.makeText(LobbyActivity.this, selectedText, Toast.LENGTH_SHORT).show();
             }
         });
         builder.show();
@@ -236,10 +250,8 @@ public class LobbyActivity extends AppCompatActivity {
     public void logout_user(View view) {
         final View v = view;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        final TextView notice = new TextView(LobbyActivity.this);
         builder.setTitle(R.string.textView_logout_title);
-        notice.setText(R.string.textView_logout);
-        builder.setView(notice);
+        builder.setMessage(R.string.textView_logout);
         builder.setPositiveButton(getString(R.string.button_yes), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -247,6 +259,7 @@ public class LobbyActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = sp.edit();
                 editor.remove("isUsing"); editor.remove("id"); editor.remove("tid");
                 editor.commit();
+                Toast.makeText(LobbyActivity.this,R.string.textView_logout_confirm, Toast.LENGTH_SHORT).show();
                 ExitApp(v);
             }
         });
