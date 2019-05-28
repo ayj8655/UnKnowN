@@ -18,6 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:fontFamily="@font/font_scdream4"
             android:text="@string/TextView_Admin"
             android:textStyle="bold"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
@@ -31,6 +32,7 @@
             android:layout_marginTop="150dp"
             android:layout_gravity="center"
             android:background="@drawable/buttonshape"
+            android:fontFamily="@font/font_scdream4"
             android:text="@string/button_reset"
             android:textColor="#FFFFFF"
             tools:layout_editor_absoluteX="161dp"
@@ -43,6 +45,7 @@
             android:layout_marginTop="80dp"
             android:layout_gravity="center"
             android:background="@drawable/buttonshape"
+            android:fontFamily="@font/font_scdream4"
             android:text="@string/button_notice"
             android:textColor="#FFFFFF"
             android:onClick="UpdateNotice"
@@ -57,6 +60,7 @@
             android:background="@drawable/buttonshape"
             android:layout_marginTop="80dp"
             android:textColor="#FFFFFF"
+            android:fontFamily="@font/font_scdream4"
             android:text="@string/button_exit"
             tools:layout_editor_absoluteX="161dp"
             tools:layout_editor_absoluteY="168dp" />
@@ -66,6 +70,7 @@
             android:layout_width="match_parent"
             android:layout_marginTop="50dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/font_scdream4"
             android:text="@string/textView_result" />
 
         <TextView

@@ -10,7 +10,6 @@ import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -26,7 +25,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Locale;
 
 public class NFCActivity extends AppCompatActivity {
 
@@ -43,37 +41,17 @@ public class NFCActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc);
         sp = getSharedPreferences("NFC",MODE_PRIVATE);
-        boolean isUsing = sp.getBoolean("isUsing",false);
-        Log.d("isUsing","sp = "+Boolean.toString(isUsing));
-        // ALREADY IN USE
-        if (isUsing==true) {
-            int usingId = sp.getInt("id",0);
-            String usingTid = sp.getString("tid", "");
-            Log.d("id, tid",""+id+" "+tid);
-            if (usingId == 0 || usingTid == "") {
-                finish();
-                return;
-            }
-            Intent intent = new Intent(NFCActivity.this, LobbyActivity.class);
-            Bundle bun = new Bundle();
-            bun.putInt("id", usingId);
-            bun.putString("tid", usingTid);
-            intent.putExtra("DeviceData", bun);
-            finish();
-            startActivity(intent);
-        }
+
         // NEW USER -> NEED TAG
-        else {
-            nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-            if(nfcAdapter!=null)
+        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        if(nfcAdapter!=null)
+        {
+            if (!nfcAdapter.isEnabled())
             {
-                if (!nfcAdapter.isEnabled())
-                {
-                    show();
-                }
-                Intent intent = new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+                show();
             }
+            Intent intent = new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
         }
     }
 

@@ -75,6 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="60dp"
             android:layout_marginRight="50dp"
+            android:fontFamily="@font/font_scdream4"
             android:text="@string/textView_notice" />
 
         <TextView
@@ -87,6 +88,7 @@
             android:background="@drawable/textviewshape"
             android:ellipsize="marquee"
             android:singleLine="true"
+            android:fontFamily="@font/font_scdream4"
             android:marqueeRepeatLimit="marquee_forever"
             android:padding="8dp" />
 
@@ -99,6 +101,7 @@
             android:layout_marginRight="50dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/buttonshape"
+            android:fontFamily="@font/font_scdream4"
             android:text="@string/button"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
@@ -112,6 +115,7 @@
             android:layout_marginRight="50dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/buttonshape"
+            android:fontFamily="@font/font_scdream4"
             android:text="@string/button2"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
@@ -125,6 +129,7 @@
             android:layout_marginRight="50dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/buttonshape"
+            android:fontFamily="@font/font_scdream4"
             android:text="@string/map_button"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
@@ -139,6 +144,7 @@
             android:layout_marginBottom="20dp"
             android:background="@drawable/buttonshape"
             android:onClick="ExitApp"
+            android:fontFamily="@font/font_scdream4"
             android:text="@string/button_exit"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />

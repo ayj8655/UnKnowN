@@ -31,6 +31,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     SeekBar sb;
     MarkerOptions markerOptions = new MarkerOptions();
     ArrayList<LatLng> locations = new ArrayList();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
