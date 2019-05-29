@@ -1,8 +1,15 @@
 package com.example.UnKnowN;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.Handler;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,8 +32,12 @@ import android.widget.Toast;
 import java.util.List;
 import java.util.UUID;
 
-public class ShowActivity extends AppCompatActivity {
+import static com.example.UnKnowN.R.raw.spacealarm;
 
+public class ShowActivity extends AppCompatActivity {
+    MediaPlayer mediaPlayer;
+    Vibrator vibrator;
+    private boolean flag;
     private Button btnExit;
     private TextView nameView, ageView, phoneView, idView, serialView;
     private static final int REQUEST_ENABLE_BT = 10000;
@@ -63,10 +74,11 @@ public class ShowActivity extends AppCompatActivity {
                     Log.d("LJH", "Length: " + result.getScanRecord().getBytes().length);
                     Log.d("LJH", "RSSI:" + result.getRssi());
                     rssi = result.getRssi();
+                    distance = calculateAccuracy(-59,rssi);
+
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            distance = calculateAccuracy(-59,rssi);
                             Rssi.setText("Distance :" + " "+(Math.round(distance*10)/10.0)+" " +"(M)");
                             deviceName.setText("DeviceName : " +" "+ result.getDevice().getName());
                             address.setText("Address : " + " " + result.getDevice().getAddress());
@@ -106,7 +118,7 @@ public class ShowActivity extends AppCompatActivity {
 
                                 Drawable img = getResources().getDrawable(R.drawable.sad, null);
                                 emoticon.setImageDrawable(img);
-                            } else { //미아발생
+                            } else if(distance > bluetooth_intensity_far && flag==false) { //미아발생
                                 under_notification.setText("미아발생");
                                 under_notification.setTextColor(0xFFFF0000);
 
@@ -117,6 +129,23 @@ public class ShowActivity extends AppCompatActivity {
 
                                 Drawable img = getResources().getDrawable(R.drawable.sad_emoji, null);
                                 emoticon.setImageDrawable(img);
+
+                                AudioManager mAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+                                mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), AudioManager.FLAG_PLAY_SOUND);
+                                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.spacealarm);
+                                mediaPlayer.start();
+                                vibrator.vibrate(1000);
+                                show();
+
+                                flag=true;
+                                new Handler().postDelayed(new Runnable()
+                                {
+                                    @Override
+                                    public void run()
+                                    {
+                                        flag=false;
+                                    }
+                                }, 60000);//60000 = 1분
                             }
                         }
                     });
@@ -180,7 +209,7 @@ public class ShowActivity extends AppCompatActivity {
         bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         bluetoothAdapter = bluetoothManager.getAdapter();
         scanner = bluetoothAdapter.getBluetoothLeScanner();
-
+        vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
         if(bluetoothAdapter == null){
             Toast.makeText(this, "블루투스 기능을 지원하지 않습니다.",Toast.LENGTH_LONG).show();
             finish();
@@ -249,6 +278,7 @@ public class ShowActivity extends AppCompatActivity {
         if(serviceIntent == null){
             Log.d("LJH", "서비스 NULL 서비스 시작한다.");
             setServiceIntent();
+            serviceIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startService(serviceIntent);
         }else{
             Log.d("LJH", "이미 서비스 들어있어 ㅄ아, 실행 ㄴㄴ");
@@ -282,5 +312,27 @@ public class ShowActivity extends AppCompatActivity {
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
             }
         }
+    }
+    void show()
+    {
+        AlertDialog.Builder alert = new AlertDialog.Builder(ShowActivity.this);
+        alert.setTitle("아이가 사라졌습니다.");
+        alert.setMessage("관리자에게 전화를 하사겠습니까?");
+        alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mediaPlayer.stop();
+                String tel = "tel:01023459527";
+                startActivity(new Intent("android.intent.action.DIAL", Uri.parse(tel)));
+            }
+        });
+        alert.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                mediaPlayer.stop();
+            }
+        });
+        alert.setCancelable(false);
+        alert.show();
     }
 }
