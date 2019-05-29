@@ -16,7 +16,7 @@
     <string name="textView_main_phone">보호자 전화번호</string>
     <string name="editText_main_phone">전화번호를 입력해주세요.</string>
     <string name="textView_main_id">아이디 :</string>
-    <string name="textView_serial">디바이스이름</string>
+    <string name="textView_serial">(serial)</string>
     <string name="textView3">이름     :</string>
     <string name="textView_Show_Name">이름</string>
     <string name="textView4">나이         :</string>

@@ -16,7 +16,6 @@
     <string name="textView_main_phone">Phone number</string>
     <string name="editText_main_phone">Enter your phone number</string>
     <string name="textView_main_id">id :</string>
-    <string name="textView_serial">TextView</string>
     <string name="textView3">NAME     :</string>
     <string name="textView_Show_Name">NAME</string>
     <string name="textView4">AGE         :</string>
@@ -49,4 +48,5 @@
     <string name="button_yes">YES</string>
     <string name="button_no">NO</string>
     <string name="textView_logout_confirm">Thank You For Using</string>
+    <string name="textView_serial">(serial)</string>
 </resources>
