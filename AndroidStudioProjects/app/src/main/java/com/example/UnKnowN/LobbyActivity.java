@@ -193,6 +193,8 @@ public class LobbyActivity extends AppCompatActivity {
         final List<String> ListItems = new ArrayList<>();
         ListItems.add(getString(R.string.en));
         ListItems.add(getString(R.string.ko));
+        ListItems.add(getString(R.string.ja));
+        ListItems.add(getString(R.string.zh));
         final CharSequence[] items =  ListItems.toArray(new String[ ListItems.size()]);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -206,6 +208,14 @@ public class LobbyActivity extends AppCompatActivity {
                 }
                 else if (selectedText == getString(R.string.ko)) {
                     String lang = "ko";
+                    changeLang(lang);
+                }
+                else if (selectedText == getString(R.string.ja)) {
+                    String lang = "ja";
+                    changeLang(lang);
+                }
+                else if (selectedText == getString(R.string.zh)) {
+                    String lang = "zh";
                     changeLang(lang);
                 }
                 Intent intent = getIntent();
@@ -264,6 +274,11 @@ public class LobbyActivity extends AppCompatActivity {
         });
         builder.setNegativeButton(getString(R.string.button_no), null);
         builder.show();
+    }
+
+    public void go_show(View view) {
+        Intent intent = new Intent(LobbyActivity.this, ShowActivity.class);
+        startActivity(intent);
     }
 
     // GET DATA ABOUT PROFILE THAT USER ENTERED

@@ -10,22 +10,14 @@ import android.bluetooth.BluetoothManager;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanResult;
-import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 import java.util.UUID;
@@ -72,6 +64,8 @@ public class MyIntentService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Log.d("LJH", "onHandleIntent로 들어옴");
         BluetoothLeScanner scanner = bluetoothAdapter.getBluetoothLeScanner();
+        if (!bluetoothAdapter.isEnabled())
+            return;
 
         scanner.startScan(new ScanCallback() {
             @Override

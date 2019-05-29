@@ -2,10 +2,12 @@ package com.example.UnKnowN;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
@@ -33,10 +35,18 @@ public class ShowActivity extends AppCompatActivity {
     private BluetoothAdapter bluetoothAdapter;
     private BluetoothLeScanner scanner;
     private TextView deviceName, Rssi, address;
+    private TextView under_notification; //하단 경고상태
+    private TextView status1, status2, status3, status4;
+
     private double distance = 0;
     private double rssi = 0;
     public static Intent serviceIntent = null;
     private static ScanCallback call = null;
+    private ImageView emoticon;
+    private static int bluetooth_intensity_danger = 20;
+    private static int bluetooth_intensity_far = 15;
+    private static int bluetooth_intensity_normal = 10;
+    private static int bluetooth_intensity_safe = 5;
 
     public void setServiceIntent(){
         serviceIntent = new Intent(this, MyIntentService.class);
@@ -60,6 +70,54 @@ public class ShowActivity extends AppCompatActivity {
                             Rssi.setText("Distance :" + " "+(Math.round(distance*10)/10.0)+" " +"(M)");
                             deviceName.setText("DeviceName : " +" "+ result.getDevice().getName());
                             address.setText("Address : " + " " + result.getDevice().getAddress());
+
+                            if (distance <= bluetooth_intensity_safe) { //안전
+                                under_notification.setText("안전");
+                                under_notification.setTextColor(0xFF666666);
+
+                                status1.setTextColor(0xFFFF0000);
+                                status2.setTextColor(0xFF666666);
+                                status3.setTextColor(0xFF666666);
+                                status4.setTextColor(0xFF666666);
+
+                                Drawable img = (Drawable) getResources().getDrawable(R.drawable.smile, null);
+                                emoticon.setImageDrawable(img);
+                            } else if (bluetooth_intensity_safe < distance
+                                    && distance <= bluetooth_intensity_normal) {//주의
+                                under_notification.setText("주의");
+                                under_notification.setTextColor(0xFF666666);
+
+                                status2.setTextColor(0xFFFF0000);
+                                status1.setTextColor(0xFF666666);
+                                status3.setTextColor(0xFF666666);
+                                status4.setTextColor(0xFF666666);
+
+                                Drawable img = getResources().getDrawable(R.drawable.smilely, null);
+                                emoticon.setImageDrawable(img);
+                            } else if (bluetooth_intensity_normal < distance
+                                    && distance <= bluetooth_intensity_far) { //위험
+                                under_notification.setText("위험");
+                                under_notification.setTextColor(0xFFFF0000);
+
+                                status3.setTextColor(0xFFFF0000);
+                                status1.setTextColor(0xFF666666);
+                                status2.setTextColor(0xFF666666);
+                                status4.setTextColor(0xFF666666);
+
+                                Drawable img = getResources().getDrawable(R.drawable.sad, null);
+                                emoticon.setImageDrawable(img);
+                            } else { //미아발생
+                                under_notification.setText("미아발생");
+                                under_notification.setTextColor(0xFFFF0000);
+
+                                status4.setTextColor(0xFFFF0000);
+                                status1.setTextColor(0xFF666666);
+                                status2.setTextColor(0xFF666666);
+                                status3.setTextColor(0xFF666666);
+
+                                Drawable img = getResources().getDrawable(R.drawable.sad_emoji, null);
+                                emoticon.setImageDrawable(img);
+                            }
                         }
                     });
                     Log.d("LJH","-------------------------------------------------");
@@ -89,13 +147,22 @@ public class ShowActivity extends AppCompatActivity {
         phoneView = findViewById(R.id.textView_Show_Phone);
         idView = findViewById(R.id.textView_Show_ID);
         serialView = findViewById(R.id.textView_serial);
-
+        emoticon = findViewById(R.id.Emoticon);
+        deviceName = findViewById(R.id.devicename);
+        Rssi = findViewById(R.id.rssi);
+        address = findViewById(R.id.address);
+        status1 = findViewById(R.id.Status1);
+        status2 = findViewById(R.id.Status2);
+        status3 = findViewById(R.id.Status3);
+        status4 = findViewById(R.id.Status4);
+        under_notification =  findViewById(R.id.Under_Notification);
+        /*
         nameView.setText(bundle.getString("name"));
         ageView.setText(bundle.getString("age"));
         phoneView.setText(bundle.getString("phone"));
         idView.setText(bundle.getString("id"));
         serialView.setText(bundle.getString("serial"));
-
+        */
         // 나가기 버튼
         btnExit = findViewById(R.id.button9);
         btnExit.setOnClickListener(new View.OnClickListener() {
@@ -120,7 +187,7 @@ public class ShowActivity extends AppCompatActivity {
         }
         else{
             if(bluetoothAdapter.isEnabled()) {
-                Toast.makeText(this, "블루투스 기능이 이미 실행중입니다.", Toast.LENGTH_LONG).show();
+                // Toast.makeText(this, "블루투스 기능이 이미 실행중입니다.", Toast.LENGTH_LONG).show();
                 // BLE 기기 찾기.
                 if (call == null) {
                     Log.d("LJH", "Call Null!");
@@ -132,8 +199,7 @@ public class ShowActivity extends AppCompatActivity {
                 Log.d("LJH", "블루투스 연결설정중");
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-                if (!bluetoothAdapter.isEnabled())
-                    finish();
+
             }
         }
     }
@@ -154,6 +220,10 @@ public class ShowActivity extends AppCompatActivity {
                     scanner.startScan(call);
                 }
             }
+        }
+        else {
+            Toast.makeText(this, "블루투스를 활성화해주세요", Toast.LENGTH_SHORT).show();
+            finish();
         }
     }
 

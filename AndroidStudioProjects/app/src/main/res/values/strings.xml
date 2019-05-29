@@ -43,6 +43,8 @@
     <string name="channel_description">UnKnowN_description</string>
     <string name="en">English</string>
     <string name="ko">Korean</string>
+    <string name="ja">Japanese</string>
+    <string name="zh">Chinese</string>
     <string name="lang_title">Select Language</string>
     <string name="textView_logout_title">LOGOUT</string>
     <string name="textView_logout">Are you sure you want to log out?</string>

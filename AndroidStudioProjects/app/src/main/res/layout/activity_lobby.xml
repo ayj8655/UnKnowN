@@ -113,12 +113,26 @@
             android:layout_gravity="center"
             android:layout_marginLeft="50dp"
             android:layout_marginRight="50dp"
-            android:layout_marginBottom="20dp"
             android:background="@drawable/buttonshape"
             android:fontFamily="@font/font_scdream4"
             android:text="@string/button2"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/button22"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/buttonshape"
+            android:fontFamily="@font/font_scdream4"
+            android:text="SHOW PROFILE (DEV)"
+            android:textColor="#FFFFFF"
+            android:onClick="go_show"
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/map_button"

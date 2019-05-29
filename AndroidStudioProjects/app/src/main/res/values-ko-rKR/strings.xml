@@ -43,6 +43,8 @@
     <string name="channel_description">UnKnowN_설명</string>
     <string name="en">영어</string>
     <string name="ko">한국어</string>
+    <string name="ja">일본어</string>
+    <string name="zh">중국어</string>
     <string name="lang_title">언어 설정</string>
     <string name="textView_logout_title">로그아웃</string>
     <string name="textView_logout">정말로 로그아웃 하시겠습니까?</string>
