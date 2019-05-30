@@ -51,7 +51,7 @@ public class LobbyActivity extends AppCompatActivity {
 
     private long btnPressTime = 0;
     private String[] inProcessDevice;
-    private Button btnEnter, btnAdmin;
+    private Button btnEnter, btnAdmin, map_button;
     private TextView textNotice;
     private ArrayList<HashMap<String, String>> mArrayList;
     private String mJsonString;
@@ -121,6 +121,15 @@ public class LobbyActivity extends AppCompatActivity {
             }
         });
         mArrayList = new ArrayList<>();
+
+        map_button = findViewById(R.id.map_button);
+        map_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LobbyActivity.this, MapActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     // Administrator Button onClick
