@@ -322,6 +322,7 @@ public class ShowActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 mediaPlayer.stop();
+                mediaPlayer.release();
                 String tel = "tel:01023459527";
                 startActivity(new Intent("android.intent.action.DIAL", Uri.parse(tel)));
             }
@@ -330,6 +331,7 @@ public class ShowActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 mediaPlayer.stop();
+                mediaPlayer.release();
             }
         });
         alert.setCancelable(false);

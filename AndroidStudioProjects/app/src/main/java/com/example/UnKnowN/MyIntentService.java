@@ -24,6 +24,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.provider.SyncStateContract;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
@@ -56,15 +57,16 @@ public class MyIntentService extends IntentService {
     public void onCreate() {
         super.onCreate();
         Log.d("LJH", "onCreate 들어온다. onStartCommand 전에 일회성 서비스 검사.");
+        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.spacealarm);
+        vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
         Bitmap mLargeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.unknown_logo);
 
-        Intent snoozeIntent = new Intent();
-        snoozeIntent.setData(Uri.parse("tel:01026341063"));
-        snoozeIntent.setAction(Intent.ACTION_DIAL);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, snoozeIntent,
-                PendingIntent.FLAG_ONE_SHOT);
-
+        Intent leftIntent = new Intent();
+        leftIntent.setData(Uri.parse("tel:01026341063"));
+        leftIntent.setAction(Intent.ACTION_DIAL);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, leftIntent, 0);
         createNotificationChannel();
+
         builder = (NotificationCompat.Builder) new NotificationCompat.Builder(getApplicationContext(), CHANEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_background)
                 .setContentTitle("아이가 탐색되지 않습니다.")
@@ -72,10 +74,8 @@ public class MyIntentService extends IntentService {
                 .setSound(alarm)
                 .setLargeIcon(mLargeIcon)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText("관리자에게 전화하시겠습니까?"))
-                .setContentIntent(pendingIntent)
-                .addAction(R.drawable.common_google_signin_btn_icon_dark, getString(R.string.button_yes),pendingIntent)
-                .addAction(R.drawable.common_google_signin_btn_icon_dark, getString(R.string.button_no), null);
-        vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent);
     }
 
     @Override
@@ -113,14 +113,10 @@ public class MyIntentService extends IntentService {
 
                         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
                         notificationManager.notify(notificationId, builder.build());
-
                         AudioManager mAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
                         mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), AudioManager.FLAG_PLAY_SOUND);
-                        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.spacealarm);
                         mediaPlayer.start();
                         vibrator.vibrate(1000);
-
-
                         flag=true;
                         new Handler().postDelayed(new Runnable()
                         {
