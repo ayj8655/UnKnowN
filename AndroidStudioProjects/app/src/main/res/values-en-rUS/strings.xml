@@ -8,7 +8,7 @@
     <string name="button2">Show the PROFILE</string>
     <string name="buttonAdmin">Admin</string>
     <string name="textView">Please tag NFC</string>
-    <string name="textView2">Enter your child"s information</string>
+    <string name="textView2">Enter your child information</string>
     <string name="textView_main_name">Name</string>
     <string name="editText_main_name">Enter child"s name</string>
     <string name="textView_main_age">Age</string>
@@ -51,4 +51,8 @@
     <string name="button_yes">YES</string>
     <string name="button_no">NO</string>
     <string name="textView_logout_confirm">Thank You For Using</string>
+    <string name="enable_the_bluetooth">Please Enable The Bluetooth</string>
+    <string name="not_avaliable_bluetooth">Device Not Available Bluetooth</string>
+    <string name="lost_child">A CHILD MISSED!</string>
+    <string name="call_manager">Would you like to contact the manager?</string>
 </resources>

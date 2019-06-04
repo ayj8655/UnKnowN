@@ -11,11 +11,14 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
+import java.util.Locale;
+
 
 public class SplashActivity extends Activity {
 
     private SharedPreferences sp;
     private boolean isUsing;
+    private Locale myLocale;
 
     //permission
     final int PERMISSION = 1;
@@ -23,11 +26,15 @@ public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Load Current Language in App
         try {
+            setLanguage();
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        // Is User Using?
         sp = getSharedPreferences("NFC",MODE_PRIVATE);
         isUsing = sp.getBoolean("isUsing",false);
 
@@ -94,5 +101,18 @@ public class SplashActivity extends Activity {
                 }
                 break;
         }
+    }
+
+    private void setLanguage()
+    {
+        SharedPreferences langSp = getSharedPreferences("CommonPrefs",MODE_PRIVATE);
+        String lang = langSp.getString("Language", Locale.getDefault().getLanguage());
+        if (lang.equalsIgnoreCase(""))
+            return;
+        myLocale = new Locale(lang);
+        Locale.setDefault(myLocale);
+        android.content.res.Configuration config = new android.content.res.Configuration();
+        config.setLocale(myLocale);
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
     }
 }

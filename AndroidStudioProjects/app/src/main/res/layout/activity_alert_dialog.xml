@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/imgView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/lang_icon"
+        android:layout_centerHorizontal="true" />
+    <ScrollView
+        android:id="@+id/ScrollView01"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/imgView"
+        android:layout_height="200px">
+        <TextView
+            android:text=""
+            android:id="@+id/message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </ScrollView>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/ScrollView01">
+    <Button
+        android:id="@+id/call"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="Call"/>
+    <Button
+        android:id="@+id/gotolobby"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="Cancel" />
+    </LinearLayout>
+</RelativeLayout>

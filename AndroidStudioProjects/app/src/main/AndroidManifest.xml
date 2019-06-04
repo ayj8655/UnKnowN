@@ -25,7 +25,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:screenOrientation="portrait"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
         <service
             android:name=".MyIntentService"
@@ -39,7 +39,8 @@
             android:value="AIzaSyAM-7NqX3wd4R6yfb94Pm8ZHhMH2tXGIMk" />
 
         <activity android:name=".AdminActivity" />
-        <activity android:name=".NFCActivity">
+        <activity android:name=".NFCActivity"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.nfc.action.TAG_DISCOVERED" />
 
@@ -59,6 +60,7 @@
         </activity>
         <activity
             android:name=".LobbyActivity"
+            android:theme="@style/LobbyTheme"
             android:screenOrientation="portrait" />
         <activity android:name=".ProfileActivity" />
     </application>

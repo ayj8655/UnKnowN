@@ -22,6 +22,7 @@ import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.provider.SyncStateContract;
@@ -69,11 +70,11 @@ public class MyIntentService extends IntentService {
 
         builder = (NotificationCompat.Builder) new NotificationCompat.Builder(getApplicationContext(), CHANEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_background)
-                .setContentTitle("아이가 탐색되지 않습니다.")
+                .setContentTitle(getString(R.string.lost_child))
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setSound(alarm)
                 .setLargeIcon(mLargeIcon)
-                .setStyle(new NotificationCompat.BigTextStyle().bigText("관리자에게 전화하시겠습니까?"))
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(getString(R.string.call_manager)))
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent);
     }
@@ -92,13 +93,16 @@ public class MyIntentService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Log.d("LJH", "onHandleIntent로 들어옴");
         BluetoothLeScanner scanner = bluetoothAdapter.getBluetoothLeScanner();
-        if (!bluetoothAdapter.isEnabled())
+        if (!bluetoothAdapter.isEnabled()) {
+            Log.d("LJH","블루투스 비활성화");
             return;
-
+        }
+        Log.d("LJH","onScanResult before");
         scanner.startScan(new ScanCallback() {
             @Override
             public void onScanResult(int callbackType, ScanResult result) {
                 super.onScanResult(callbackType, result);
+                Log.d("LJH",result.getDevice().getName());
                 if(result.getDevice().getName()!= null && result.getDevice().getName().equals("UnKnown")){
                     Log.d("LJH", "1Size: " + result.getDevice().getName());
                     Log.d("LJH", "1Size: " + result.getScanRecord().getServiceUuids().size());
@@ -118,6 +122,7 @@ public class MyIntentService extends IntentService {
                         mediaPlayer.start();
                         vibrator.vibrate(1000);
                         flag=true;
+                        dialog();
                         new Handler().postDelayed(new Runnable()
                         {
                             @Override
@@ -127,6 +132,9 @@ public class MyIntentService extends IntentService {
                             }
                         }, 60000);//60000 = 1분
                     }
+                }
+                else {
+
                 }
             }
 
@@ -142,6 +150,7 @@ public class MyIntentService extends IntentService {
                 Log.d("LJH", "onScanFailed에 들어온다");
             }
         });
+        Log.d("LJH","onScanResult after");
     }
     private void createNotificationChannel(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
@@ -154,5 +163,22 @@ public class MyIntentService extends IntentService {
             notificationManager.createNotificationChannel(channel);
         }
     }
+
+    private void dialog(){
+        Bundle bun = new Bundle();
+
+        bun.putString("notiMessage",R.string.lost_child+" "+R.string.call_manager);
+        Intent popupIntent = new Intent(this, AlertDialogActivity.class);
+        popupIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        popupIntent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        popupIntent.putExtras(bun);
+        PendingIntent pie= PendingIntent.getActivity(this, 0, popupIntent, 0);
+        try {
+            pie.send();
+        } catch (PendingIntent.CanceledException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

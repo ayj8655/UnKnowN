@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/lang_change_btn"
+        android:title="Language"
+        app:showAsAction="always"
+        android:icon="@drawable/lang_icon"/>
+
+    <item
+        android:id="@+id/logout_btn"
+        android:title="Logout"
+        app:showAsAction="always"
+        android:icon="@drawable/logout_icon"/>
+
+    <item
+        android:id="@+id/about"
+        android:title="about"
+        app:showAsAction="never"/>
+</menu>

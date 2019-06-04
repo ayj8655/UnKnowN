@@ -54,7 +54,7 @@ public class ShowActivity extends AppCompatActivity {
     public static Intent serviceIntent = null;
     private static ScanCallback call = null;
     private ImageView emoticon;
-    private static int bluetooth_intensity_danger = 20;
+
     private static int bluetooth_intensity_far = 15;
     private static int bluetooth_intensity_normal = 10;
     private static int bluetooth_intensity_safe = 5;
@@ -211,12 +211,11 @@ public class ShowActivity extends AppCompatActivity {
         scanner = bluetoothAdapter.getBluetoothLeScanner();
         vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
         if(bluetoothAdapter == null){
-            Toast.makeText(this, "블루투스 기능을 지원하지 않습니다.",Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.not_avaliable_bluetooth,Toast.LENGTH_LONG).show();
             finish();
         }
         else{
             if(bluetoothAdapter.isEnabled()) {
-                // Toast.makeText(this, "블루투스 기능이 이미 실행중입니다.", Toast.LENGTH_LONG).show();
                 // BLE 기기 찾기.
                 if (call == null) {
                     Log.d("LJH", "Call Null!");
@@ -251,7 +250,7 @@ public class ShowActivity extends AppCompatActivity {
             }
         }
         else {
-            Toast.makeText(this, "블루투스를 활성화해주세요", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.enable_the_bluetooth, Toast.LENGTH_SHORT).show();
             finish();
         }
     }
@@ -274,14 +273,14 @@ public class ShowActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d("LJH", "onStop 된다");
+        Log.d("LJH", "onStop");
         if(serviceIntent == null){
-            Log.d("LJH", "서비스 NULL 서비스 시작한다.");
+            Log.d("LJH", "서비스 NULL 서비스 시작");
             setServiceIntent();
             serviceIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startService(serviceIntent);
         }else{
-            Log.d("LJH", "이미 서비스 들어있어 ㅄ아, 실행 ㄴㄴ");
+            Log.d("LJH", "이미 서비스 동작 중");
         }
         if(!bluetoothAdapter.isEnabled()){
             call = null;
@@ -296,10 +295,9 @@ public class ShowActivity extends AppCompatActivity {
         super.onRestart();
         Log.d("LJH", "ReStart...");
         if(bluetoothAdapter == null){
-            Toast.makeText(this, "블루투스 기능을 지원하지 않습니다.",Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.not_avaliable_bluetooth,Toast.LENGTH_LONG).show();
         }else{
             if(bluetoothAdapter.isEnabled()){
-                Toast.makeText(this, "블루투스 기능이 이미 실행중입니다.",Toast.LENGTH_LONG).show();
                 // BLE 기기 찾기.
                 if(call == null) {
                     Log.d("LJH", "Call Null!");
@@ -316,9 +314,9 @@ public class ShowActivity extends AppCompatActivity {
     void show()
     {
         AlertDialog.Builder alert = new AlertDialog.Builder(ShowActivity.this);
-        alert.setTitle("아이가 사라졌습니다.");
-        alert.setMessage("관리자에게 전화를 하사겠습니까?");
-        alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+        alert.setTitle(R.string.lost_child);
+        alert.setMessage(R.string.call_manager);
+        alert.setPositiveButton(R.string.button_yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 mediaPlayer.stop();
@@ -327,7 +325,7 @@ public class ShowActivity extends AppCompatActivity {
                 startActivity(new Intent("android.intent.action.DIAL", Uri.parse(tel)));
             }
         });
-        alert.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+        alert.setNegativeButton(R.string.button_no, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 mediaPlayer.stop();

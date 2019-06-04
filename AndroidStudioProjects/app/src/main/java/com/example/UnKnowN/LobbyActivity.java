@@ -6,20 +6,26 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +42,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class LobbyActivity extends AppCompatActivity {
 
@@ -51,22 +59,83 @@ public class LobbyActivity extends AppCompatActivity {
 
     private long btnPressTime = 0;
     private String[] inProcessDevice;
-    private Button btnEnter, btnAdmin, map_button;
+    private Button btnAdmin, lang_change_btn, logout_btn;
+    private ImageView enterProfile, showStatus, viewMap;
     private TextView textNotice;
     private ArrayList<HashMap<String, String>> mArrayList;
     private String mJsonString;
     private Locale myLocale;
 
+    ViewPager viewPager;
+    LinearLayout sliderDotspanel;
+    private int dotscount;
+    private  ImageView[] dots;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lobby);
+
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        myToolbar.setLogo(R.drawable.title1);
+        myToolbar.setTitle("UnKnowN");
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+
+        View backgroundimage = findViewById(R.id.background);
+        Drawable background = backgroundimage.getBackground();
+        background.setAlpha(100);
+
+        lang_change_btn = findViewById(R.id.lang_change_btn);
+        logout_btn = findViewById(R.id.logout_btn);
+
+        //viewpager step1
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this);
+        viewPager.setAdapter(viewPagerAdapter);
+        viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+
+        //viewpager step2 ( auto viewpager )
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new MyTimerTask(), 2000, 4000);
+
+        //viewpager step3 ( Dots Indicator )
+        sliderDotspanel = (LinearLayout) findViewById(R.id.SliderDots);
+        dotscount = viewPagerAdapter.getCount();
+        dots = new ImageView[dotscount];
+
+        for (int i = 0; i < dotscount; i++){
+            dots[i] = new ImageView(this);
+            dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.nonactive_dot));
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams. WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins(8,0,8,0);
+
+            sliderDotspanel.addView(dots[i], params);
+        }
+        dots[0].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) { }
+
+            @Override
+            public void onPageSelected(int i) {
+                for(int a = 0; a < dotscount; a++){
+                    dots[a].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.nonactive_dot));
+                }
+                dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) { }
+        });
+
         // GET INFO OF DEVICE
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("DeviceData");
-
-        // Load Current Language in App
-        loadLocale();
 
         // GET LATELY NOTICE (EVERY 1min)
         textNotice = findViewById(R.id.textView_notice_content);
@@ -83,8 +152,8 @@ public class LobbyActivity extends AppCompatActivity {
         inProcessDevice[1]=bundle.getString("tid");
 
         // GO TO PROFILE ACTIVITY THAT CAN ENTER USER PROFILE TO USE DEVICE WELL
-        btnEnter = findViewById(R.id.button);
-        btnEnter.setOnClickListener(new View.OnClickListener() {
+        enterProfile = findViewById(R.id.EnterProfile_Image);
+        enterProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundleId = new Bundle();
@@ -96,8 +165,8 @@ public class LobbyActivity extends AppCompatActivity {
         });
 
         // GO TO SHOW ACTIVITY THAT LISTED ABOUT USER PROFILE
-        Button button_search = findViewById(R.id.button2);
-        button_search.setOnClickListener(new View.OnClickListener() {
+        showStatus = findViewById(R.id.ShowProfile_Image);
+        showStatus.setOnClickListener(new View.OnClickListener() {
             // GET DATA IN DB
             public void onClick(View v) {
                 mArrayList.clear();
@@ -122,14 +191,68 @@ public class LobbyActivity extends AppCompatActivity {
         });
         mArrayList = new ArrayList<>();
 
-        map_button = findViewById(R.id.map_button);
-        map_button.setOnClickListener(new View.OnClickListener() {
+        viewMap = findViewById(R.id.ViewMap_Image);
+        viewMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LobbyActivity.this, MapActivity.class);
                 startActivity(intent);
             }
         });
+
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.mymenu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // action with ID action_refresh was selected
+            case R.id.lang_change_btn:
+                change_lang();
+                break;
+            // action with ID action_settings was selected
+            case R.id.logout_btn:
+                logout_user();
+                break;
+            case R.id.about:
+
+            default:
+                break;
+        }
+
+        return true;
+    }
+
+    //viewpager step2//////////////////////////////////////////////////////////////
+    public class MyTimerTask extends TimerTask {
+
+        @Override
+        public void run() {
+            LobbyActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (viewPager.getCurrentItem() == 0){
+                        viewPager.setCurrentItem(1);
+                    } else if (viewPager.getCurrentItem() == 1) {
+                        viewPager.setCurrentItem(2);
+                    } else if (viewPager.getCurrentItem() == 2) {
+                        viewPager.setCurrentItem(3);
+                    } else if (viewPager.getCurrentItem() == 3) {
+                        viewPager.setCurrentItem(4);
+                    } else if (viewPager.getCurrentItem() == 4) {
+                        viewPager.setCurrentItem(5);
+                    } else {
+                        viewPager.setCurrentItem(0);
+                    }
+                }
+            });
+        }
     }
 
     // Administrator Button onClick
@@ -198,7 +321,7 @@ public class LobbyActivity extends AppCompatActivity {
         builder.show();
     }
 
-    public void change_lang(View view) {
+    public void change_lang() {
         final List<String> ListItems = new ArrayList<>();
         ListItems.add(getString(R.string.en));
         ListItems.add(getString(R.string.ko));
@@ -230,7 +353,6 @@ public class LobbyActivity extends AppCompatActivity {
                 Intent intent = getIntent();
                 finish();
                 startActivity(intent);
-                // Toast.makeText(LobbyActivity.this, selectedText, Toast.LENGTH_SHORT).show();
             }
         });
         builder.show();
@@ -265,8 +387,7 @@ public class LobbyActivity extends AppCompatActivity {
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
     }
 
-    public void logout_user(View view) {
-        final View v = view;
+    public void logout_user() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.textView_logout_title);
         builder.setMessage(R.string.textView_logout);
@@ -278,7 +399,7 @@ public class LobbyActivity extends AppCompatActivity {
                 editor.remove("isUsing"); editor.remove("id"); editor.remove("tid");
                 editor.commit();
                 Toast.makeText(LobbyActivity.this,R.string.textView_logout_confirm, Toast.LENGTH_SHORT).show();
-                ExitApp(v);
+                finish();
             }
         });
         builder.setNegativeButton(getString(R.string.button_no), null);

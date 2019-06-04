@@ -51,4 +51,8 @@
     <string name="button_yes">はい</string>
     <string name="button_no">いいえ</string>
     <string name="textView_logout_confirm">ご使用いただきありがとうございます</string>
+    <string name="enable_the_bluetooth">Bluetoothを有効にしてください</string>
+    <string name="not_avaliable_bluetooth">デバイスがBluetoothをサポートしていません</string>
+    <string name="lost_child">見逃した子供!</string>
+    <string name="call_manager">管理者に連絡しますか?</string>
 </resources>

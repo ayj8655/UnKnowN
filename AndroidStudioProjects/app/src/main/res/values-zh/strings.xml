@@ -51,4 +51,8 @@
     <string name="button_yes">是</string>
     <string name="button_no">不</string>
     <string name="textView_logout_confirm">谢谢使用</string>
+    <string name="enable_the_bluetooth">请启用蓝牙</string>
+    <string name="not_avaliable_bluetooth">设备不可用蓝牙</string>
+    <string name="lost_child">未打中儿童!</string>
+    <string name="call_manager">您愿意与经理联系吗?</string>
 </resources>
