@@ -47,18 +47,18 @@ import java.util.TimerTask;
 
 public class LobbyActivity extends AppCompatActivity {
 
-    private static String TAG = "Show";
+    public static String TAG = "SUC";
     public static String IP_ADDRESS = "211.229.241.115";
     private static String ADMIN_PASS = "q1w2e3r4";
 
-    private static final String TAG_JSON = "unknown";
-    private static final String TAG_ID = "id";
-    private static final String TAG_NAME = "name";
-    private static final String TAG_AGE = "age";
-    private static final String TAG_PHONE = "phone";
+    public static final String TAG_JSON = "unknown";
+    public static final String TAG_ID = "id";
+    public static final String TAG_NAME = "name";
+    public static final String TAG_AGE = "age";
+    public static final String TAG_PHONE = "phone";
 
     private long btnPressTime = 0;
-    private String[] inProcessDevice;
+    public String[] inProcessDevice;
     private Button btnAdmin, lang_change_btn, logout_btn;
     private ImageView enterProfile, showStatus, viewMap;
     private TextView textNotice;
@@ -83,7 +83,7 @@ public class LobbyActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
 
-        View backgroundimage = findViewById(R.id.background);
+        View backgroundimage = findViewById(R.id.background_lobby);
         Drawable background = backgroundimage.getBackground();
         background.setAlpha(100);
 
@@ -169,9 +169,13 @@ public class LobbyActivity extends AppCompatActivity {
         showStatus.setOnClickListener(new View.OnClickListener() {
             // GET DATA IN DB
             public void onClick(View v) {
+                /*
                 mArrayList.clear();
                 GetData task = new GetData();
                 task.execute(inProcessDevice[0]);
+                */
+                Intent intent = new Intent(LobbyActivity.this, ShowActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -191,6 +195,7 @@ public class LobbyActivity extends AppCompatActivity {
         });
         mArrayList = new ArrayList<>();
 
+        // View Map onClick
         viewMap = findViewById(R.id.ViewMap_Image);
         viewMap.setOnClickListener(new View.OnClickListener() {
             @Override

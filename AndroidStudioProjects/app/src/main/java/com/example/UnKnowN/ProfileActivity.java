@@ -3,6 +3,8 @@ package com.example.UnKnowN;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -29,7 +31,12 @@ public class ProfileActivity extends AppCompatActivity {
 
     private static String IP_ADDRESS = "211.229.241.115"; // 의철's server
     private static String TAG = "unknown";
+    private SharedPreferences sp;
 
+    public String id;
+    public String name;
+    public String age;
+    public String phone;
     private InputMethodManager imm;
     private EditText mEditTextName;
     private EditText mEditTextAge;
@@ -41,18 +48,19 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        sp = getSharedPreferences("NFC",MODE_PRIVATE);
+
+        View backgroundimage = findViewById(R.id.background_profile);
+        Drawable background = backgroundimage.getBackground();
+        background.setAlpha(100);
 
         mTextViewId = findViewById(R.id.textViewId);
         mEditTextName = findViewById(R.id.editText_main_name);
         mEditTextAge = findViewById(R.id.editText_main_age);
         mEditTextPhone = findViewById(R.id.editText_main_phone);
-        mTextViewResult = findViewById(R.id.textView_main_result);
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
-        Intent intent = getIntent();
-        Bundle id = intent.getBundleExtra("DeviceData");
-        mTextViewId.setText(id.getString("id"));
-
+        mTextViewId.setText(Integer.toString(sp.getInt("id",0)));
         final Button buttonInsert = findViewById(R.id.button_main_insert);
         buttonInsert.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +76,7 @@ public class ProfileActivity extends AppCompatActivity {
                 mEditTextName.setText("");
                 mEditTextAge.setText("");
                 mEditTextPhone.setText("");
+                finish();
             }
         });
         Button btnExit = findViewById(R.id.button3);
@@ -84,13 +93,13 @@ public class ProfileActivity extends AppCompatActivity {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER) {
                     buttonInsert.performClick();
+                    finish();
                     return true;
                 }
                 else return false;
             }
         });
     }
-
 
     class InsertData extends AsyncTask<String, Void, String> {
         ProgressDialog progressDialog;
@@ -105,15 +114,17 @@ public class ProfileActivity extends AppCompatActivity {
             super.onPostExecute(result);
 
             progressDialog.dismiss();
-            mTextViewResult.setText(result);
+            Intent intent = new Intent(ProfileActivity.this, ShowActivity.class);
+            startActivity(intent);
+            //mTextViewResult.setText(result);
             Log.d(TAG, "POST response  - " + result);
         }
         @Override
         protected String doInBackground(String... params) {
-            String id = params[1];
-            String name = params[2];
-            String age = params[3];
-            String phone = params[4];
+            id = params[1];
+            name = params[2];
+            age = params[3];
+            phone = params[4];
             String serverURL = params[0];
             String postParameters = "id=" + id + "&name=" + name + "&age=" + age + "&phone=" + phone;
             try {

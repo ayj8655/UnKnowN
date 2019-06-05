@@ -27,19 +27,29 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".AlertDialogActivity"
+            android:theme="@android:style/Theme.Dialog">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <service
             android:name=".MyIntentService"
             android:theme="@android:style/Theme.Dialog"
             android:exported="false"></service>
 
-        <activity android:name=".MapActivity" />
+        <activity android:name=".MapActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAM-7NqX3wd4R6yfb94Pm8ZHhMH2tXGIMk" />
 
-        <activity android:name=".AdminActivity" />
+        <activity android:name=".AdminActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".NFCActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.nfc.action.TAG_DISCOVERED" />
@@ -47,7 +57,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ShowActivity" />
+        <activity android:name=".ShowActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait"

@@ -2,16 +2,20 @@ package com.example.UnKnowN;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -29,17 +33,29 @@ import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.UUID;
-
-import static com.example.UnKnowN.R.raw.spacealarm;
 
 public class ShowActivity extends AppCompatActivity {
     MediaPlayer mediaPlayer;
     Vibrator vibrator;
+    private LobbyActivity lb;
+    private ProfileActivity pf;
+    private String mJsonString;
     private boolean flag;
     private Button btnExit;
-    private TextView nameView, ageView, phoneView, idView, serialView;
+    private TextView nameView, ageView, phoneView;
     private static final int REQUEST_ENABLE_BT = 10000;
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 100;
     private BluetoothManager bluetoothManager;
@@ -48,46 +64,51 @@ public class ShowActivity extends AppCompatActivity {
     private TextView deviceName, Rssi, address;
     private TextView under_notification; //하단 경고상태
     private TextView status1, status2, status3, status4;
+    private SharedPreferences sp;
+    private String id;
 
     private double distance = 0;
     private double rssi = 0;
-    public static Intent serviceIntent = null;
-    private static ScanCallback call = null;
+    private static Intent serviceIntent = null;
+    private ScanCallback call = null;
     private ImageView emoticon;
 
     private static int bluetooth_intensity_far = 15;
     private static int bluetooth_intensity_normal = 10;
     private static int bluetooth_intensity_safe = 5;
 
-    public void setServiceIntent(){
+    public void setServiceIntent() {
         serviceIntent = new Intent(this, MyIntentService.class);
     }
+
     public void settingScanCallback() {
+        Log.d("LJH", "showactivity scancallback before");
         call = new ScanCallback() {
             @Override
             public void onScanResult(int callbackType, final ScanResult result) {
                 super.onScanResult(callbackType, result);
-                if(result.getDevice().getName() !=null && result.getDevice().getName().equals("UnKnown")) {
-                    Log.d("LJH","Size: " +  result.getDevice().getName());
-                    Log.d("LJH","Size: " + result.getScanRecord().getServiceUuids().size());
-                    Log.d("LJH","Size: " + UUID.nameUUIDFromBytes(result.getScanRecord().getBytes()).toString());
+                Log.d("LJH", "showactivity scancallback in");
+                if (result.getDevice().getName() != null && result.getDevice().getName().equals("UnKnowN")) {
+                    Log.d("LJH", "Size: " + result.getDevice().getName());
+                    Log.d("LJH", "Size: " + result.getScanRecord().getServiceUuids().size());
+                    Log.d("LJH", "Size: " + UUID.nameUUIDFromBytes(result.getScanRecord().getBytes()).toString());
                     Log.d("LJH", "Length: " + result.getScanRecord().getBytes().length);
                     Log.d("LJH", "RSSI:" + result.getRssi());
                     rssi = result.getRssi();
-                    distance = calculateAccuracy(-59,rssi);
+                    distance = calculateAccuracy(-59, rssi);
 
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Rssi.setText("Distance :" + " "+(Math.round(distance*10)/10.0)+" " +"(M)");
-                            deviceName.setText("DeviceName : " +" "+ result.getDevice().getName());
+                            Rssi.setText("Distance :" + " " + (Math.round(distance * 10) / 10.0) + " " + "(M)");
+                            deviceName.setText("DeviceName : " + " " + result.getDevice().getName());
                             address.setText("Address : " + " " + result.getDevice().getAddress());
 
                             if (distance <= bluetooth_intensity_safe) { //안전
                                 under_notification.setText("안전");
-                                under_notification.setTextColor(0xFF666666);
+                                under_notification.setTextColor(0xFF20E801);
 
-                                status1.setTextColor(0xFFFF0000);
+                                status1.setTextColor(0xFF20E801);
                                 status2.setTextColor(0xFF666666);
                                 status3.setTextColor(0xFF666666);
                                 status4.setTextColor(0xFF666666);
@@ -97,9 +118,9 @@ public class ShowActivity extends AppCompatActivity {
                             } else if (bluetooth_intensity_safe < distance
                                     && distance <= bluetooth_intensity_normal) {//주의
                                 under_notification.setText("주의");
-                                under_notification.setTextColor(0xFF666666);
+                                under_notification.setTextColor(0xFFFF9900);
 
-                                status2.setTextColor(0xFFFF0000);
+                                status2.setTextColor(0xFFFF9900);
                                 status1.setTextColor(0xFF666666);
                                 status3.setTextColor(0xFF666666);
                                 status4.setTextColor(0xFF666666);
@@ -118,11 +139,11 @@ public class ShowActivity extends AppCompatActivity {
 
                                 Drawable img = getResources().getDrawable(R.drawable.sad, null);
                                 emoticon.setImageDrawable(img);
-                            } else if(distance > bluetooth_intensity_far && flag==false) { //미아발생
+                            } else if (distance > bluetooth_intensity_far && flag == false) { //미아발생
                                 under_notification.setText("미아발생");
-                                under_notification.setTextColor(0xFFFF0000);
+                                under_notification.setTextColor(0xFF800000);
 
-                                status4.setTextColor(0xFFFF0000);
+                                status4.setTextColor(0xFF800000);
                                 status1.setTextColor(0xFF666666);
                                 status2.setTextColor(0xFF666666);
                                 status3.setTextColor(0xFF666666);
@@ -130,26 +151,24 @@ public class ShowActivity extends AppCompatActivity {
                                 Drawable img = getResources().getDrawable(R.drawable.sad_emoji, null);
                                 emoticon.setImageDrawable(img);
 
-                                AudioManager mAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
-                                mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), AudioManager.FLAG_PLAY_SOUND);
+                                AudioManager mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                                mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 10, AudioManager.FLAG_PLAY_SOUND);
                                 mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.spacealarm);
                                 mediaPlayer.start();
                                 vibrator.vibrate(1000);
                                 show();
 
-                                flag=true;
-                                new Handler().postDelayed(new Runnable()
-                                {
+                                flag = true;
+                                new Handler().postDelayed(new Runnable() {
                                     @Override
-                                    public void run()
-                                    {
-                                        flag=false;
+                                    public void run() {
+                                        flag = false;
                                     }
-                                }, 60000);//60000 = 1분
+                                }, 10000);//60000 = 1분
                             }
                         }
                     });
-                    Log.d("LJH","-------------------------------------------------");
+                    Log.d("LJH", "-------------------------------------------------");
                 }
             }
 
@@ -157,6 +176,7 @@ public class ShowActivity extends AppCompatActivity {
             public void onBatchScanResults(List<ScanResult> results) {
                 super.onBatchScanResults(results);
             }
+
             @Override
             public void onScanFailed(int errorCode) {
                 super.onScanFailed(errorCode);
@@ -168,14 +188,18 @@ public class ShowActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show);
+        View backgroundimage = findViewById(R.id.background_show);
+        Drawable background = backgroundimage.getBackground();
+        background.setAlpha(100);
 
-        Intent intent = getIntent();
-        Bundle bundle = intent.getBundleExtra("Data");
+        sp = getSharedPreferences("NFC",MODE_PRIVATE);
+        id = Integer.toString(sp.getInt("id",0));
+        GetData task = new GetData();
+        task.execute(id);
+
         nameView = findViewById(R.id.textView_Show_Name);
         ageView = findViewById(R.id.textView_Show_Age);
         phoneView = findViewById(R.id.textView_Show_Phone);
-        idView = findViewById(R.id.textView_Show_ID);
-        serialView = findViewById(R.id.textView_serial);
         emoticon = findViewById(R.id.Emoticon);
         deviceName = findViewById(R.id.devicename);
         Rssi = findViewById(R.id.rssi);
@@ -184,14 +208,8 @@ public class ShowActivity extends AppCompatActivity {
         status2 = findViewById(R.id.Status2);
         status3 = findViewById(R.id.Status3);
         status4 = findViewById(R.id.Status4);
-        under_notification =  findViewById(R.id.Under_Notification);
-        /*
-        nameView.setText(bundle.getString("name"));
-        ageView.setText(bundle.getString("age"));
-        phoneView.setText(bundle.getString("phone"));
-        idView.setText(bundle.getString("id"));
-        serialView.setText(bundle.getString("serial"));
-        */
+        under_notification = findViewById(R.id.Under_Notification);
+
         // 나가기 버튼
         btnExit = findViewById(R.id.button9);
         btnExit.setOnClickListener(new View.OnClickListener() {
@@ -210,20 +228,18 @@ public class ShowActivity extends AppCompatActivity {
         bluetoothAdapter = bluetoothManager.getAdapter();
         scanner = bluetoothAdapter.getBluetoothLeScanner();
         vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-        if(bluetoothAdapter == null){
-            Toast.makeText(this, R.string.not_avaliable_bluetooth,Toast.LENGTH_LONG).show();
+        if (bluetoothAdapter == null) {
+            Toast.makeText(this, R.string.not_avaliable_bluetooth, Toast.LENGTH_LONG).show();
             finish();
-        }
-        else{
-            if(bluetoothAdapter.isEnabled()) {
+        } else {
+            if (bluetoothAdapter.isEnabled()) {
                 // BLE 기기 찾기.
                 if (call == null) {
                     Log.d("LJH", "Call Null!");
                     settingScanCallback();
                     scanner.startScan(call);
                 }
-            }
-            else{
+            } else {
                 Log.d("LJH", "블루투스 연결설정중");
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
@@ -236,20 +252,19 @@ public class ShowActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK){
+        if (resultCode == RESULT_OK) {
             Log.d("LJH", "블루투스 설정 확인신호 누름.");
-            if(bluetoothAdapter.isEnabled()){
+            if (bluetoothAdapter.isEnabled()) {
                 // BLE 기기 찾기.
                 scanner = bluetoothAdapter.getBluetoothLeScanner();
                 Log.d("LJH", "블루투스 활성화 상태");
-                if(call == null) {
+                if (call == null) {
                     Log.d("LJH", "Call Null!");
                     settingScanCallback();
                     scanner.startScan(call);
                 }
             }
-        }
-        else {
+        } else {
             Toast.makeText(this, R.string.enable_the_bluetooth, Toast.LENGTH_SHORT).show();
             finish();
         }
@@ -260,12 +275,11 @@ public class ShowActivity extends AppCompatActivity {
             return -1.0; // if we cannot determine accuracy, return -1.
         }
 
-        double ratio = rssi*1.0/txPower;
+        double ratio = rssi * 1.0 / txPower;
         if (ratio < 1.0) {
-            return Math.pow(ratio,10);
-        }
-        else {
-            double accuracy =  (0.89976)*Math.pow(ratio,7.7095) + 0;
+            return Math.pow(ratio, 10);
+        } else {
+            double accuracy = (0.89976) * Math.pow(ratio, 7.7095) + 0;
             return accuracy;
         }
     }
@@ -274,17 +288,17 @@ public class ShowActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         Log.d("LJH", "onStop");
-        if(serviceIntent == null){
+        if (serviceIntent == null) {
             Log.d("LJH", "서비스 NULL 서비스 시작");
             setServiceIntent();
             serviceIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startService(serviceIntent);
-        }else{
+        } else {
             Log.d("LJH", "이미 서비스 동작 중");
         }
-        if(!bluetoothAdapter.isEnabled()){
+        if (!bluetoothAdapter.isEnabled()) {
             call = null;
-        }else{
+        } else {
             scanner.stopScan(call);
             call = null;
         }
@@ -293,26 +307,32 @@ public class ShowActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
+        // stop service that running in background
+        if (serviceIntent != null) {
+            Log.d("LJH","stop service");
+            stopService(serviceIntent);
+            serviceIntent = null;
+        }
         Log.d("LJH", "ReStart...");
-        if(bluetoothAdapter == null){
-            Toast.makeText(this, R.string.not_avaliable_bluetooth,Toast.LENGTH_LONG).show();
-        }else{
-            if(bluetoothAdapter.isEnabled()){
+        if (bluetoothAdapter == null) {
+            Toast.makeText(this, R.string.not_avaliable_bluetooth, Toast.LENGTH_LONG).show();
+        } else {
+            if (bluetoothAdapter.isEnabled()) {
                 // BLE 기기 찾기.
-                if(call == null) {
+                if (call == null) {
                     Log.d("LJH", "Call Null!");
                     settingScanCallback();
                     scanner.startScan(call);
                 }
-            }else{
+            } else {
                 Log.d("LJH", "블루투스 연결설정중");
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
             }
         }
     }
-    void show()
-    {
+
+    void show() {
         AlertDialog.Builder alert = new AlertDialog.Builder(ShowActivity.this);
         alert.setTitle(R.string.lost_child);
         alert.setMessage(R.string.call_manager);
@@ -335,4 +355,108 @@ public class ShowActivity extends AppCompatActivity {
         alert.setCancelable(false);
         alert.show();
     }
+    // GET DATA ABOUT PROFILE THAT USER ENTERED
+    private class GetData extends AsyncTask<String, Void, String> {
+
+        ProgressDialog progressDialog;
+        String errorString = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog = ProgressDialog.show(ShowActivity.this,
+                    "Searching Data...", null, true, true);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            progressDialog.dismiss();
+
+            Log.d(lb.TAG, "response - " + result);
+
+            if (result == null){
+                Log.d(lb.TAG, errorString);
+            }
+            else {
+                mJsonString = result;
+                try {
+                    JSONObject jsonObject = new JSONObject(mJsonString);
+                    JSONArray jsonArray = jsonObject.getJSONArray(lb.TAG_JSON);
+                    for(int i=0;i<jsonArray.length();i++) {
+
+                        JSONObject item = jsonArray.getJSONObject(i);
+
+                        nameView.setText(item.getString(lb.TAG_NAME));
+                        ageView.setText(item.getString(lb.TAG_AGE));
+                        phoneView.setText(item.getString(lb.TAG_PHONE));
+                    }
+                } catch (JSONException e) {
+                    Log.d(lb.TAG, "showResult : ", e);
+                }
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String serverURL = "http://" + lb.IP_ADDRESS + "/query.php";
+            // DEVICE NUMBER
+            String postParameters = "id="+params[0];
+
+            try {
+
+                URL url = new URL(serverURL);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+                httpURLConnection.setReadTimeout(5000);
+                httpURLConnection.setConnectTimeout(5000);
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoInput(true);
+                httpURLConnection.connect();
+
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(postParameters.getBytes(StandardCharsets.UTF_8));
+                outputStream.flush();
+                outputStream.close();
+
+
+                int responseStatusCode = httpURLConnection.getResponseCode();
+                Log.d(lb.TAG, "response code - " + responseStatusCode);
+
+                InputStream inputStream;
+                if (responseStatusCode == HttpURLConnection.HTTP_OK) {
+                    inputStream = httpURLConnection.getInputStream();
+                } else {
+                    inputStream = httpURLConnection.getErrorStream();
+                }
+
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuilder sb = new StringBuilder();
+                String line;
+
+                while ((line = bufferedReader.readLine()) != null) {
+                    sb.append(line);
+                }
+
+
+                bufferedReader.close();
+
+
+                return sb.toString().trim();
+
+            } catch (Exception e) {
+                Log.d(lb.TAG, "InsertData: Error ", e);
+                errorString = e.toString();
+                return null;
+            }
+
+        }
+    }
 }
+

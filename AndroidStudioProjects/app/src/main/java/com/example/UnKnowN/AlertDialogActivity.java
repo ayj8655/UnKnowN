@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import android.os.Vibrator;
+import android.view.MotionEvent;
 import android.view.View;
 
 import android.view.View.OnClickListener;
@@ -23,16 +24,14 @@ import android.widget.TextView;
 
 public class AlertDialogActivity extends Activity {
     MediaPlayer mediaPlayer;
-    Vibrator vibrator;
     private String notiMessage;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AudioManager mAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
-        mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), AudioManager.FLAG_PLAY_SOUND);
+        mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 10, AudioManager.FLAG_PLAY_SOUND);
         mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.spacealarm);
         mediaPlayer.start();
-        vibrator.vibrate(1000);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         Bundle bun = getIntent().getExtras();
         notiMessage = bun.getString("notiMessage");
@@ -60,5 +59,8 @@ public class AlertDialogActivity extends Activity {
             }
         });
     }
-
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return false;
+    }
 }

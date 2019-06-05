@@ -38,12 +38,11 @@ import java.util.UUID;
 
 public class MyIntentService extends IntentService {
     MediaPlayer mediaPlayer;
-    Vibrator vibrator;
     private boolean flag;
     private BluetoothManager bluetoothManager;
     private BluetoothAdapter bluetoothAdapter;
     private int rssi;
-    private String CHANEL_ID = "UnKnown";
+    private String CHANEL_ID = "UnKnowN";
     private Integer notificationId = 123;
     private double distance = 0 ;
     private NotificationCompat.Builder builder;
@@ -53,13 +52,13 @@ public class MyIntentService extends IntentService {
     }
     public static Intent serviceIntent = null;
 
+
     final Uri alarm = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
     @Override
     public void onCreate() {
         super.onCreate();
         Log.d("LJH", "onCreate 들어온다. onStartCommand 전에 일회성 서비스 검사.");
         mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.spacealarm);
-        vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
         Bitmap mLargeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.unknown_logo);
 
         Intent leftIntent = new Intent();
@@ -93,64 +92,51 @@ public class MyIntentService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Log.d("LJH", "onHandleIntent로 들어옴");
         BluetoothLeScanner scanner = bluetoothAdapter.getBluetoothLeScanner();
-        if (!bluetoothAdapter.isEnabled()) {
-            Log.d("LJH","블루투스 비활성화");
-            return;
-        }
-        Log.d("LJH","onScanResult before");
-        scanner.startScan(new ScanCallback() {
-            @Override
-            public void onScanResult(int callbackType, ScanResult result) {
-                super.onScanResult(callbackType, result);
-                Log.d("LJH",result.getDevice().getName());
-                if(result.getDevice().getName()!= null && result.getDevice().getName().equals("UnKnown")){
-                    Log.d("LJH", "1Size: " + result.getDevice().getName());
-                    Log.d("LJH", "1Size: " + result.getScanRecord().getServiceUuids().size());
-                    Log.d("LJH", "1Size: " + UUID.nameUUIDFromBytes(result.getScanRecord().getBytes()).toString());
-                    Log.d("LJH", "1Length: " + result.getScanRecord().getBytes().length);
-                    Log.d("LJH", "1RSSI:" + result.getRssi());
-                    rssi = result.getRssi();
-                    distance = ShowActivity.calculateAccuracy(-59, rssi);
-                    Log.d("LJH", "거리는 " + (Math.round(distance * 10) / 10.0) + "입니다.");
-                    Log.d("LJH", "-------------------------------------------------");
-                    if ((Math.round(distance * 10) / 10.0) > 3.0 && flag==false) {
-
-                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
-                        notificationManager.notify(notificationId, builder.build());
-                        AudioManager mAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
-                        mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), AudioManager.FLAG_PLAY_SOUND);
-                        mediaPlayer.start();
-                        vibrator.vibrate(1000);
-                        flag=true;
-                        dialog();
-                        new Handler().postDelayed(new Runnable()
-                        {
-                            @Override
-                            public void run()
+        if (bluetoothAdapter.isEnabled()){
+            scanner.startScan(new ScanCallback() {
+                @Override
+                public void onScanResult(int callbackType, ScanResult result) {
+                    super.onScanResult(callbackType, result);
+                    if(result.getDevice().getName()!= null && result.getDevice().getName().equals("UnKnowN")){
+                        Log.d("LJH", "1Size: " + result.getDevice().getName());
+                        Log.d("LJH", "1Size: " + result.getScanRecord().getServiceUuids().size());
+                        Log.d("LJH", "1Size: " + UUID.nameUUIDFromBytes(result.getScanRecord().getBytes()).toString());
+                        Log.d("LJH", "1Length: " + result.getScanRecord().getBytes().length);
+                        Log.d("LJH", "1RSSI:" + result.getRssi());
+                        rssi = result.getRssi();
+                        distance = ShowActivity.calculateAccuracy(-59, rssi);
+                        Log.d("LJH", "거리는 " + (Math.round(distance * 10) / 10.0) + "입니다.");
+                        Log.d("LJH", "-------------------------------------------------");
+                        if ((Math.round(distance * 10) / 10.0) > 15.0 && flag==false) {
+                            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
+                            notificationManager.notify(notificationId, builder.build());
+                            flag=true;
+                            dialog();
+                            new Handler().postDelayed(new Runnable()
                             {
-                                flag=false;
-                            }
-                        }, 60000);//60000 = 1분
+                                @Override
+                                public void run()
+                                {
+                                    flag=false;
+                                }
+                            }, 10000);//60000 = 1분
+                        }
                     }
                 }
-                else {
 
+                @Override
+                public void onBatchScanResults(List<ScanResult> results) {
+                    super.onBatchScanResults(results);
+                    Log.d("LJH", "onBatchScanResults에 들어온다");
                 }
-            }
 
-            @Override
-            public void onBatchScanResults(List<ScanResult> results) {
-                super.onBatchScanResults(results);
-                Log.d("LJH", "onBatchScanResults에 들어온다");
-            }
-
-            @Override
-            public void onScanFailed(int errorCode) {
-                super.onScanFailed(errorCode);
-                Log.d("LJH", "onScanFailed에 들어온다");
-            }
-        });
-        Log.d("LJH","onScanResult after");
+                @Override
+                public void onScanFailed(int errorCode) {
+                    super.onScanFailed(errorCode);
+                    Log.d("LJH", "onScanFailed에 들어온다");
+                }
+            });
+        }
     }
     private void createNotificationChannel(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
@@ -166,8 +152,7 @@ public class MyIntentService extends IntentService {
 
     private void dialog(){
         Bundle bun = new Bundle();
-
-        bun.putString("notiMessage",R.string.lost_child+" "+R.string.call_manager);
+        bun.putString("notiMessage",getString(R.string.lost_child)+". "+getString(R.string.call_manager));
         Intent popupIntent = new Intent(this, AlertDialogActivity.class);
         popupIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         popupIntent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
@@ -179,6 +164,9 @@ public class MyIntentService extends IntentService {
             e.printStackTrace();
         }
     }
-
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopSelf();
+    }
 }

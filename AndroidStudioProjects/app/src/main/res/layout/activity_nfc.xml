@@ -6,30 +6,34 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#3F6CB5"
-    tools:context=".NFCActivity">
+    tools:context=".NFCActivity"
+    android:weightSum="5">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5">
+    </LinearLayout>
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="140dp"
-        android:layout_marginBottom="70dp"
         android:gravity="center_horizontal"
         android:fontFamily="@font/font_scdream4"
         android:text="@string/textView"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="@android:color/white"
-        android:textFontWeight="40"/>
+        android:textFontWeight="40"
+        android:textStyle="bold"
+        android:layout_weight="0.5"/>
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="352dp"
-        android:layout_height="320dp"
-        android:layout_marginStart="29dp"
-        android:layout_marginEnd="29dp"
-        android:layout_marginBottom="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
         android:adjustViewBounds="true"
-        app:srcCompat="@drawable/nfc_checkpointsignal" />
+        app:srcCompat="@drawable/movingtagnfc" />
 
     <Button
         android:id="@+id/button_nfc"

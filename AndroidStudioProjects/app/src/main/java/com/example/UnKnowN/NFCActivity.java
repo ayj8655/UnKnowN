@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.AnimationDrawable;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.AsyncTask;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -42,6 +44,13 @@ public class NFCActivity extends AppCompatActivity {
         setContentView(R.layout.activity_nfc);
         sp = getSharedPreferences("NFC",MODE_PRIVATE);
 
+        //animation//////////////////////////////////////////////////
+        ImageView nfc = (ImageView) findViewById(R.id.imageView2);
+        nfc.setImageResource(R.drawable.movingtagnfc);
+        AnimationDrawable pleasetagnfc = (AnimationDrawable)nfc.getDrawable();
+        pleasetagnfc.start();
+
+        //animation//////////////////////////////////////////////////
         // NEW USER -> NEED TAG
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if(nfcAdapter!=null)
@@ -120,7 +129,7 @@ public class NFCActivity extends AppCompatActivity {
     }
 
     private class GetData extends AsyncTask<String, Void, String> {
-        Intent intent = new Intent(NFCActivity.this, LobbyActivity.class);
+        Intent intent = new Intent(NFCActivity.this, ProfileActivity.class);
         ProgressDialog progressDialog;
         String errorString = null;
 
