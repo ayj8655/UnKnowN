@@ -37,7 +37,6 @@ public class AdminActivity extends AppCompatActivity {
 
         btnReset = findViewById(R.id.button_reset);
         btnExit = findViewById(R.id.button_exit);
-        btnNotice = findViewById(R.id.button_notice);
         mTextViewResult = findViewById(R.id.textView_result);
 
         Intent intent = getIntent();
@@ -64,7 +63,7 @@ public class AdminActivity extends AppCompatActivity {
         final EditText noticeText = new EditText(AdminActivity.this);
         builder.setTitle(R.string.Update_Notice);
         noticeText.setFocusable(true);
-        noticeText.setLines(3);
+        noticeText.setLines(2);
         builder.setView(noticeText);
 
         // YES BUTTON

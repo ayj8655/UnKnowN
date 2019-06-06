@@ -2,24 +2,37 @@
 
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    <ImageView
-        android:id="@+id/imgView"
-        android:layout_width="wrap_content"
+    android:layout_width="240dp"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFFFF">
+
+    <TextView
+        android:id="@+id/Dialog_TITLE"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/lang_icon"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:text="Dialog_TITLE"
+        android:textAlignment="center"
+        android:background="@color/colorPrimaryDark"
+        android:textSize="16sp" />
+
     <ScrollView
         android:id="@+id/ScrollView01"
-        android:layout_width="wrap_content"
-        android:layout_below="@id/imgView"
-        android:layout_height="200px">
+        android:layout_width="240dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/Dialog_TITLE"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
         <TextView
-            android:text=""
-            android:id="@+id/message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:id="@+id/Dialog_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Dialog_message"
+            android:textSize="13sp"
+            android:textAlignment="center" />
     </ScrollView>
     <LinearLayout
         android:layout_width="wrap_content"

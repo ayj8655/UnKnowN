@@ -152,7 +152,8 @@ public class MyIntentService extends IntentService {
 
     private void dialog(){
         Bundle bun = new Bundle();
-        bun.putString("notiMessage",getString(R.string.lost_child)+". "+getString(R.string.call_manager));
+        bun.putString("notiTitle",getString(R.string.lost_child));
+        bun.putString("notiMessage",getString(R.string.call_manager));
         Intent popupIntent = new Intent(this, AlertDialogActivity.class);
         popupIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         popupIntent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
@@ -163,10 +164,5 @@ public class MyIntentService extends IntentService {
         } catch (PendingIntent.CanceledException e) {
             e.printStackTrace();
         }
-    }
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        stopSelf();
     }
 }

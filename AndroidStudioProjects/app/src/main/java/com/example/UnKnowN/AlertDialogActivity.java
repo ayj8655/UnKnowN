@@ -24,7 +24,7 @@ import android.widget.TextView;
 
 public class AlertDialogActivity extends Activity {
     MediaPlayer mediaPlayer;
-    private String notiMessage;
+    private String notiTitle, notiMessage;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,9 +34,12 @@ public class AlertDialogActivity extends Activity {
         mediaPlayer.start();
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         Bundle bun = getIntent().getExtras();
+        notiTitle = bun.getString("notiTitle");
         notiMessage = bun.getString("notiMessage");
         setContentView(R.layout.activity_alert_dialog);
-        TextView adMessage = (TextView)findViewById(R.id.message);
+        TextView adTitle = (TextView)findViewById(R.id.Dialog_TITLE);
+        TextView adMessage = (TextView)findViewById(R.id.Dialog_message);
+        adTitle.setText(notiTitle);
         adMessage.setText(notiMessage);
         Button goToLobby = (Button)findViewById(R.id.gotolobby);
         Button Call = (Button)findViewById(R.id.call);

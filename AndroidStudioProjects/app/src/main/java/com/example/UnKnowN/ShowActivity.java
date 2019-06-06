@@ -355,6 +355,7 @@ public class ShowActivity extends AppCompatActivity {
         alert.setCancelable(false);
         alert.show();
     }
+
     // GET DATA ABOUT PROFILE THAT USER ENTERED
     private class GetData extends AsyncTask<String, Void, String> {
 

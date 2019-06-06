@@ -411,11 +411,6 @@ public class LobbyActivity extends AppCompatActivity {
         builder.show();
     }
 
-    public void go_show(View view) {
-        Intent intent = new Intent(LobbyActivity.this, ShowActivity.class);
-        startActivity(intent);
-    }
-
     // GET DATA ABOUT PROFILE THAT USER ENTERED
     private class GetData extends AsyncTask<String, Void, String> {
 
