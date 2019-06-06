@@ -17,9 +17,15 @@
         android:background="@color/colorPrimaryDark"
         android:textSize="16sp" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"
+        android:layout_below="@id/Dialog_TITLE"/>
+
     <ScrollView
         android:id="@+id/ScrollView01"
-        android:layout_width="240dp"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@id/Dialog_TITLE"
         android:layout_marginLeft="10dp"
@@ -34,20 +40,30 @@
             android:textSize="13sp"
             android:textAlignment="center" />
     </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"
+        android:layout_below="@id/ScrollView01"/>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@id/ScrollView01">
-    <Button
-        android:id="@+id/call"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:text="Call"/>
-    <Button
-        android:id="@+id/gotolobby"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:text="Cancel" />
+        <Button
+            android:id="@+id/call"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFFFF"
+            android:text="@string/button_yes"/>
+
+        <Button
+            android:id="@+id/gotolobby"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFFFF"
+            android:text="@string/button_no" />
     </LinearLayout>
 </RelativeLayout>

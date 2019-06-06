@@ -55,4 +55,5 @@
     <string name="not_avaliable_bluetooth">设备不可用蓝牙</string>
     <string name="lost_child">未打中儿童!</string>
     <string name="call_manager">您愿意与经理联系吗?</string>
+    <string name="height">高度</string>
 </resources>

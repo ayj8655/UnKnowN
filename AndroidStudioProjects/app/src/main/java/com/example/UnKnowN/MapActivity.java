@@ -107,7 +107,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
 
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                textView.setText("키: : " + progress);
+                textView.setText(getString(R.string.height)+" : " + progress);
                 child = progress;
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -146,4 +146,5 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             startActivity(intent);
         }
     };
+    public void ExitApp(View view) { finish(); }
 }

@@ -55,4 +55,5 @@
     <string name="not_avaliable_bluetooth">Device Not Available Bluetooth</string>
     <string name="lost_child">A CHILD MISSED!</string>
     <string name="call_manager">Would you like to contact the manager?</string>
+    <string name="height">height</string>
 </resources>

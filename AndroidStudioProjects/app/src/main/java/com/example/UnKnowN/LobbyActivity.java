@@ -226,7 +226,8 @@ public class LobbyActivity extends AppCompatActivity {
                 logout_user();
                 break;
             case R.id.about:
-
+                Intent intent = new Intent(LobbyActivity.this, AboutActivity.class);
+                startActivity(intent);
             default:
                 break;
         }

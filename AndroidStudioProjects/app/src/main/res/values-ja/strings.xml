@@ -55,4 +55,5 @@
     <string name="not_avaliable_bluetooth">デバイスがBluetoothをサポートしていません</string>
     <string name="lost_child">見逃した子供!</string>
     <string name="call_manager">管理者に連絡しますか?</string>
+    <string name="height">高さ</string>
 </resources>

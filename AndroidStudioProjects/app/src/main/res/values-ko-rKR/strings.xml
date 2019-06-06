@@ -55,4 +55,5 @@
     <string name="not_avaliable_bluetooth">기기가 블루투스를 지원하지 않습니다</string>
     <string name="lost_child">미아 발생 !</string>
     <string name="call_manager">관리자에게 연락하시겠습니까?</string>
+    <string name="height">신장</string>
 </resources>

@@ -5,6 +5,7 @@
     <uses-feature
         android:name="android.hardware.nfc"
         android:required="false" />
+
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -27,6 +28,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
+        <activity android:name=".AboutActivity"></activity>
         <activity
             android:name=".AlertDialogActivity"
             android:theme="@android:style/Theme.Dialog">
@@ -34,21 +36,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
             android:name=".MyIntentService"
-            android:theme="@android:style/Theme.Dialog"
-            android:exported="false"></service>
+            android:exported="false"
+            android:theme="@android:style/Theme.Dialog" />
 
-        <activity android:name=".MapActivity"
+        <activity
+            android:name=".MapActivity"
             android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAM-7NqX3wd4R6yfb94Pm8ZHhMH2tXGIMk" />
 
-        <activity android:name=".AdminActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".NFCActivity"
+        <activity
+            android:name=".AdminActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".NFCActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -57,7 +63,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ShowActivity"
+        <activity
+            android:name=".ShowActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".SplashActivity"
@@ -71,8 +78,8 @@
         </activity>
         <activity
             android:name=".LobbyActivity"
-            android:theme="@style/LobbyTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/LobbyTheme" />
         <activity android:name=".ProfileActivity" />
     </application>
 

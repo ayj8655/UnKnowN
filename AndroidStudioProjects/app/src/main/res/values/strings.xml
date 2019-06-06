@@ -55,4 +55,6 @@
     <string name="not_avaliable_bluetooth">Device Not Available Bluetooth</string>
     <string name="lost_child">A CHILD MISSED!</string>
     <string name="call_manager">Would you like to contact the manager?</string>
+    <string name="height">height</string>
+    <string name="credit1" translatable="false">"Smart Mobile Programming Team 2 (UnKnowN)\n\nTeam Leader\n윤혁진\n\nTeam\n김진홍, 박래근, 서동관, 신의철, 이대근, 이재훈"</string>
 </resources>
