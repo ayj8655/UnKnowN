@@ -25,7 +25,7 @@
         android:textColor="@android:color/white"
         android:textFontWeight="40"
         android:textStyle="bold"
-        android:layout_weight="0.5"/>
+        android:layout_weight="0.25"/>
 
     <ImageView
         android:id="@+id/imageView2"

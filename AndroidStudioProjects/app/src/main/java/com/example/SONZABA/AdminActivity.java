@@ -1,4 +1,4 @@
-package com.example.UnKnowN;
+package com.example.SONZABA;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -20,7 +20,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Locale;
 
 public class AdminActivity extends AppCompatActivity {
 

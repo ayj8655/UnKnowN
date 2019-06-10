@@ -1,4 +1,4 @@
-package com.example.UnKnowN;
+package com.example.SONZABA;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -15,7 +15,6 @@ import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -288,31 +287,25 @@ public class ShowActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         Log.d("LJH", "onStop");
-        if (serviceIntent == null) {
-            Log.d("LJH", "서비스 NULL 서비스 시작");
-            setServiceIntent();
-            serviceIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startService(serviceIntent);
-        } else {
-            Log.d("LJH", "이미 서비스 동작 중");
-        }
         if (!bluetoothAdapter.isEnabled()) {
             call = null;
         } else {
             scanner.stopScan(call);
             call = null;
         }
+        MyIntentService.scanBLE = true;
+        setServiceIntent();
+        startService(serviceIntent);
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
         // stop service that running in background
-        if (serviceIntent != null) {
-            Log.d("LJH","stop service");
-            stopService(serviceIntent);
-            serviceIntent = null;
-        }
+        MyIntentService.scanBLE = false;
+        setServiceIntent();
+        startService(serviceIntent);
+        Log.d("LJH", "ScanBle False야, Stop SerVice");
         Log.d("LJH", "ReStart...");
         if (bluetoothAdapter == null) {
             Toast.makeText(this, R.string.not_avaliable_bluetooth, Toast.LENGTH_LONG).show();
@@ -458,6 +451,22 @@ public class ShowActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("LJH", " PAUSE야  빽키");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("LJH", " RESUME야 ");
+        MyIntentService.scanBLE = false;
+        setServiceIntent();
+        startService(serviceIntent);
+        Log.d("LJH", "ScanBle False야, Stop SerVice");
     }
 }
 

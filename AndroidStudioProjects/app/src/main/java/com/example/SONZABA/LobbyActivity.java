@@ -1,4 +1,4 @@
-package com.example.UnKnowN;
+package com.example.SONZABA;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -70,6 +70,7 @@ public class LobbyActivity extends AppCompatActivity {
     LinearLayout sliderDotspanel;
     private int dotscount;
     private  ImageView[] dots;
+    private static Intent serviceIntent = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -392,6 +393,9 @@ public class LobbyActivity extends AppCompatActivity {
         config.setLocale(myLocale);
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
     }
+    public void setServiceIntent() {
+        serviceIntent = new Intent(this, MyIntentService.class);
+    }
 
     public void logout_user() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -405,6 +409,9 @@ public class LobbyActivity extends AppCompatActivity {
                 editor.remove("isUsing"); editor.remove("id"); editor.remove("tid");
                 editor.commit();
                 Toast.makeText(LobbyActivity.this,R.string.textView_logout_confirm, Toast.LENGTH_SHORT).show();
+                MyIntentService.scanBLE = false;
+                setServiceIntent();
+                startService(serviceIntent);
                 finish();
             }
         });

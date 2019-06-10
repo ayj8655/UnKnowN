@@ -1,4 +1,4 @@
-package com.example.UnKnowN;
+package com.example.SONZABA;
 
 import android.app.AlertDialog;
 import android.app.PendingIntent;
@@ -10,9 +10,10 @@ import android.graphics.drawable.AnimationDrawable;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -37,6 +38,8 @@ public class NFCActivity extends AppCompatActivity {
     private String tid;
     private String mJsonString;
     private SharedPreferences sp;
+    ImageView nfc;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +48,8 @@ public class NFCActivity extends AppCompatActivity {
         sp = getSharedPreferences("NFC",MODE_PRIVATE);
 
         //animation//////////////////////////////////////////////////
-        ImageView nfc = (ImageView) findViewById(R.id.imageView2);
-        nfc.setImageResource(R.drawable.movingtagnfc);
-        AnimationDrawable pleasetagnfc = (AnimationDrawable)nfc.getDrawable();
-        pleasetagnfc.start();
-
+        nfc = (ImageView) findViewById(R.id.imageView2);
+        animation_nfc();
         //animation//////////////////////////////////////////////////
         // NEW USER -> NEED TAG
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
@@ -62,6 +62,12 @@ public class NFCActivity extends AppCompatActivity {
             Intent intent = new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
         }
+    }
+
+    private void animation_nfc() {
+        nfc.setImageResource(R.drawable.movingtagnfc);
+        AnimationDrawable pleasetagnfc = (AnimationDrawable)nfc.getDrawable();
+        pleasetagnfc.start();
     }
 
     void show()

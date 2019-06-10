@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">UnKnowN</string>
+    <string name="app_name">SONZABA</string>
     <string name="TextView_Admin">관리자 모드</string>
     <string name="button_reset">사용자 데이터 리셋</string>
     <string name="button_exit">나가기</string>

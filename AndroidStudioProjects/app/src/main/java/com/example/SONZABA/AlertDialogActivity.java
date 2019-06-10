@@ -1,4 +1,4 @@
-package com.example.UnKnowN;
+package com.example.SONZABA;
 
 import android.app.Activity;
 
@@ -9,7 +9,6 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 
-import android.os.Vibrator;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -17,6 +16,7 @@ import android.view.View.OnClickListener;
 
 import android.view.Window;
 
+import android.view.WindowManager;
 import android.widget.Button;
 
 import android.widget.TextView;
@@ -43,6 +43,10 @@ public class AlertDialogActivity extends Activity {
         adMessage.setText(notiMessage);
         Button goToLobby = (Button)findViewById(R.id.gotolobby);
         Button Call = (Button)findViewById(R.id.call);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON// Screen 을 켜진 상태로 유지
+                | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD// Keyguard를 해지
+                | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON// Screen On
+                | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);// Lock 화면 위로 실행
         goToLobby.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,5 +69,12 @@ public class AlertDialogActivity extends Activity {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return false;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (MyIntentService.wakeLock.isHeld())
+            MyIntentService.wakeLock.release();
     }
 }

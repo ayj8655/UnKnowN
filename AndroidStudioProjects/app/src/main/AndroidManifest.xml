@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.UnKnowN">
+    package="com.example.SONZABA">
 
     <uses-feature
         android:name="android.hardware.nfc"
@@ -17,7 +17,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon"
@@ -28,9 +28,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AboutActivity"></activity>
+        <activity android:name="com.example.SONZABA.AboutActivity"></activity>
         <activity
-            android:name=".AlertDialogActivity"
+            android:name="com.example.SONZABA.AlertDialogActivity"
             android:theme="@android:style/Theme.Dialog">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -38,12 +38,12 @@
         </activity>
 
         <service
-            android:name=".MyIntentService"
+            android:name="com.example.SONZABA.MyIntentService"
             android:exported="false"
             android:theme="@android:style/Theme.Dialog" />
 
         <activity
-            android:name=".MapActivity"
+            android:name="com.example.SONZABA.MapActivity"
             android:screenOrientation="portrait" />
 
         <meta-data
@@ -51,10 +51,10 @@
             android:value="AIzaSyAM-7NqX3wd4R6yfb94Pm8ZHhMH2tXGIMk" />
 
         <activity
-            android:name=".AdminActivity"
+            android:name="com.example.SONZABA.AdminActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".NFCActivity"
+            android:name="com.example.SONZABA.NFCActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -64,10 +64,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ShowActivity"
+            android:name="com.example.SONZABA.ShowActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SplashActivity"
+            android:name="com.example.SONZABA.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -77,10 +77,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LobbyActivity"
+            android:name="com.example.SONZABA.LobbyActivity"
             android:screenOrientation="portrait"
             android:theme="@style/LobbyTheme" />
-        <activity android:name=".ProfileActivity" />
+        <activity android:name="com.example.SONZABA.ProfileActivity" />
     </application>
 
 </manifest>

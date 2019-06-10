@@ -20,34 +20,48 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3">
+            android:layout_weight="1">
         </LinearLayout>
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/family2"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5">
+        </LinearLayout>
         <TextView
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/font_scdream4"
             android:gravity="center_horizontal"
             android:text="@string/textView2"
-            android:textSize="28sp"
+            android:textSize="24sp"
+            android:textColor="#4B4F9C"
             android:layout_weight="0"/>
-
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"></LinearLayout>
+            android:layout_weight="1.5"></LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
-            android:layout_weight="2">
+            android:layout_weight="2.5">
             <TextView
                 android:id="@+id/textView_main_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/font_scdream4"
+                android:textColor="#484B7F"
+                android:textStyle="bold"
                 android:text="@string/textView_main_name" />
 
             <EditText
@@ -59,18 +73,21 @@
                 android:focusable="true"
                 android:maxLength="5"
                 android:inputType="textPersonName"
-                android:nextFocusDown="@+id/editText_main_age"/>
+                android:nextFocusDown="@+id/editText_main_age"
+                android:textColorHint="#6F696CB8"
+                android:backgroundTint="#484B7F"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
+            android:layout_weight="2.5"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/textView_main_age"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/font_scdream4"
+                android:textColor="#484b7f"
                 android:text="@string/textView_main_age" />
 
             <EditText
@@ -81,18 +98,21 @@
                 android:hint="@string/editText_main_age"
                 android:maxLength="2"
                 android:inputType="number"
-                android:nextFocusDown="@+id/editText_main_phone"/>
+                android:nextFocusDown="@+id/editText_main_phone"
+                android:textColorHint="#6F696CB8"
+                android:backgroundTint="#484B7F"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
+            android:layout_weight="2.5"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/textView_main_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/font_scdream4"
+                android:textColor="#484b7f"
                 android:text="@string/textView_main_phone" />
 
             <EditText
@@ -102,7 +122,9 @@
                 android:fontFamily="@font/font_scdream4"
                 android:hint="@string/editText_main_phone"
                 android:maxLength="11"
-                android:inputType="phone"/>
+                android:inputType="phone"
+                android:textColorHint="#6F696CB8"
+                android:backgroundTint="#484B7F"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -113,13 +135,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/font_scdream4"
-                android:text="@string/textView_main_id" />
+                android:text="@string/textView_main_id"
+                android:textColor="#484B7F"/>
 
             <TextView
                 android:id="@+id/textViewId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:baselineAligned="false"/>
+                android:baselineAligned="false"
+                android:textColor="#484B7F"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
