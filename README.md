@@ -1,4 +1,6 @@
-<center><img src="https://user-images.githubusercontent.com/48272857/59177021-b8e64f00-8b95-11e9-98d5-9e3147ea8258.png"> </center>
+<center>
+ <img src="https://user-images.githubusercontent.com/48272857/59177021-b8e64f00-8b95-11e9-98d5-9e3147ea8258.png">
+</center>
 
  - 스마트 모바일 프로그래밍 2조 프로젝트 (UnKnowN)
 ---
