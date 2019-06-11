@@ -249,16 +249,25 @@ QR코드에 있는 어플을 다운받으면 앱 기능 중 지도보기가 정�
 
 1. 다음 링크에 접속 후 프로젝트 만들기를 클릭합니다. (프로젝트 이름은 원하는 이름으로 입력합니다.)  
 https://console.developers.google.com/apis/library 
+<img src="https://user-images.githubusercontent.com/48484742/59256055-177efc00-8c6e-11e9-8005-ef4691340e57.png"> <br>
 
 2. 생성된 프로젝트로 들어간 후 'API 및 서비스 사용 설정'을 클릭합니다.
+<img src="https://user-images.githubusercontent.com/48484742/59256349-b73c8a00-8c6e-11e9-89ac-a74e69163c6f.png"> <br>
 
 3. Maps SDK for Android를 검색하고 선택합니다.
+<img src="https://user-images.githubusercontent.com/48484742/59256385-cde2e100-8c6e-11e9-975f-1c6a95e0b31c.png"> <br>
 
 4. 사용 설정을 클릭하여 활성화하고 인증 설정을 위해 '사용자 인증 정보'를 선택합니다
+<img src="https://user-images.githubusercontent.com/48484742/59256494-0b476e80-8c6f-11e9-8519-92de214b0d6d.png"> <br>
 
-5. 사용자 인증 정보 만들기를 클릭 > API 키를 클릭 > 키 제한을 누릅니다. 이 창을 유지시켜놓고 다음 항목으로 넘어갑니다.
+5. 사용자 인증 정보 만들기를 클릭 > API 키를 클릭 > 키 제한을 누릅니다. 이 때 생성된 API키는 AndroidManifest.xml에 사용이 됩니다.
+<img src="https://user-images.githubusercontent.com/48484742/59256577-3631c280-8c6f-11e9-8168-50d8a1fc4d5b.png"> <br>
 
-6. SHA-1 인증서 지문을 얻기 위한 과정부터 진행합니다.  윈도우키 + R을 누른 후 cmd를 입력하고 엔터를 눌러서 명령 프롬프트 창을 엽니다.
+6. '이름'은 원하는대로 설정하고 '애플리케이션 제한사항'은 Android 앱을 선택하고 'API 제한사항'은 키 제한을 선택한 후 Maps SDK for Android 를 선택합니다.
+<img src="https://user-images.githubusercontent.com/48484742/59256609-45187500-8c6f-11e9-98dd-0126f8d44861.png"> <br>
+
+7. Android 앱의 사용량 제한 부분에서 SHA-1 인증서 지문을 얻기 위한 과정부터 진행합니다.  윈도우키 + R을 누른 후 cmd를 입력하고 엔터를 눌러서 명령 프롬프트 창을 엽니다.
+<img src="https://user-images.githubusercontent.com/48484742/59256696-6da06f00-8c6f-11e9-8494-241bc09956e8.png"> <br>
 다음 명령을 입력합니다.
 ```sh
 "C:\Program Files\Android\Android Studio\jre\bin\keytool" -list -v -keystore "%USERPROFILE%\.android\debug.keystore" -alias androiddebugkey -storepass android -keypass android
@@ -268,16 +277,14 @@ https://console.developers.google.com/apis/library
 ```
 keytool 오류: java.lang.Exception: 키 저장소 파일이 존재하지 않음: C:\Users\webnautes\.android\debug.keystore
 ```
-7.  인증서 지문에 있는 SHA1 문자열을 복사합니다.
+8.  인증서 지문에 있는 SHA1 문자열을 복사합니다.
+<img src="https://user-images.githubusercontent.com/48484742/59256723-801aa880-8c6f-11e9-9569-d7099c05fb3a.png"> <br>
+9.  인터넷 창으로 돌아가서 어플리케이션 제한사항에서 'Android 앱'을 선택하고 항목 추가를 클릭합니다.
 
-8.  인터넷 창으로 돌아가서 어플리케이션 제한사항에서 'Android 앱'을 선택하고 항목 추가를 클릭합니다.
-
-9. Google Maps Android API를 사용할 안드로이드 프로젝트의 패키지 이름과 방금 복사한 SHA1 문자열을 입력하고 완료를 누릅니다.
+10. Google Maps Android API를 사용할 안드로이드 프로젝트의 패키지 이름과 방금 복사한 SHA1 문자열을 입력하고 완료를 누릅니다.
 (프로젝트를 그대로 사용하는 경우 com.example.SONZABA를 패키지 이름으로 하면 됩니다.)
 
-10. API 제한사항에서 키 제한을 선택하고 콤보박스에서 Maps SDK for Android를 체크 후 저장을 클릭합니다.
-
-11. API키를 복사합니다.
+11. 5번에서 생성된 API키를 복사합니다.
 
 12. 마지막으로 AndroidManifest.xml 파일에서 meta-data 부분을 다음과 같이 수정합니다.  
 
