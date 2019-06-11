@@ -3,8 +3,10 @@
  - 스마트 모바일 프로그래밍 2조 프로젝트 (UnKnowN)
 ---
 # 주제를 선정하게 된 이유
+<div>
 <center><img src="https://user-images.githubusercontent.com/48272857/59177151-1d091300-8b96-11e9-8e2e-f083d993f425.png"></center>
 <center><img src="https://user-images.githubusercontent.com/48272857/59177153-1e3a4000-8b96-11e9-99e3-0ad131934872.png"></center>
+ </div>
 [표. 미아발생 원인 및 발생장소]
 <br>
 위 표의 결과와 같이 미아가 발생하는 원인의 86.2%는 보호자의 부주의와 관련되어 있음을 시사하고 있다. 
