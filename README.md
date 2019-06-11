@@ -57,7 +57,17 @@
   <center><img src="https://user-images.githubusercontent.com/48484742/59267009-06d98080-8c84-11e9-8fa1-db883677eb76.png" width="50%" height="50%"></center><br>
   놀이공원의 티켓 검사 자동화를 위해 Arduino Uno (R3) 호환보드, RFID Rc522모듈, 서보모터를 사용하여 구현했다. NFC를 RFID에 태그하게 되면 서보모터가 작동하며 문이 열리게 된다.
   
-  5. 케이스  
+  5. 케이스    
+  -1차 모델  
+  <center><img src="https://user-images.githubusercontent.com/48273766/59301890-a40cd700-8ccd-11e9-99b6-98dac746faa3.png"width="50%" height="30%"></center><br>  
+  -2차 모델
+   <center><img src="https://user-images.githubusercontent.com/48273766/59302736-935d6080-8ccf-11e9-8d98-4c5c6b736f46.png"width="50%" height="30%"></center><br>
+   -3차 모델
+   <center><img src="https://user-images.githubusercontent.com/48273766/59303341-f56a9580-8cd0-11e9-9ae5-029817283fef.png"width="50%" height="30%"></center><br>
+   -배터리 모듈
+   <center><img src="https://user-images.githubusercontent.com/48273766/59303522-56926900-8cd1-11e9-8cf3-1ea0ecaf027c.png"width="50%" height="30%"></center><br>
+   -최종 팔찌 모델
+   <center><img src="https://user-images.githubusercontent.com/48273766/59303948-49c24500-8cd2-11e9-9274-9b91ce5de6df.png"width="50%" height="30%"></center><br>
   <center><img src="https://user-images.githubusercontent.com/48272857/59179677-ca335980-8b9d-11e9-91dc-a0ebfb733aec.png"></center><br>
   사용자를 비롯한 관리자의 유지보수와 지속가능성 증대를 위해 왼쪽 그림과 같은 디바이스를 3D모델링을 통해 고안하였다. 이 디바이스는 배터리, 블루투스, NFC를 장착하여 사용하는 모델이다.  사용자는 디바이스에 벨크로를 연결하여 착용한다.
   
@@ -772,7 +782,7 @@ public void settingScanCallback() {
  ###### 5.4.1 서비스란?
   - 백그라운드에서 실행되는 작업을 수행할 수 있는 애플리케이션 구성 요소이며 사용자 인터페이스를 제공하지 않는다.
   - 즉, 어플리케이션 화면을 나가도 RSSI를 지속적으로 받기 위해 사용한다.
-  >[SerVice 가이드 바로가기](https://developer.android.com/guide/components/services?hl=ko)
+  >[Service 가이드 바로가기](https://developer.android.com/guide/components/services?hl=ko)
   
   ###### 5.4.2 서비스 클래스 생성 및 서비스 동작.
   1. AndroidManifest.xml에 다음 코드를 추가한다.
@@ -782,10 +792,10 @@ public void settingScanCallback() {
             android:exported="false"
             android:theme="@android:style/Theme.Dialog" />
   ```            
-  2. MyIntentSerVice.class 생성.
+  2. MyIntentService.class 생성.
   
  ``` 
-  //MyIntentSerVice.class
+  //MyIntentService.class
   public class MyIntentService extends IntentService {
     //생략..
     public MyIntentService() {
@@ -814,9 +824,9 @@ public void settingScanCallback() {
 ```
  - 서비스가 여러 개의 요청을 동시에 처리하지 않아도 되는 경우에는 IntentService를 사용하는 것이 좋다.
  - 결론적으로 작업을 수행하기 위해 onHandleIntent()를 구현하기만 하면 된다.
- >[SerVice 가이드 바로가기](https://developer.android.com/guide/components/services?hl=ko)
+ >[Service 가이드 바로가기](https://developer.android.com/guide/components/services?hl=ko)
  
- >[SerVice 순환도 바로가기](https://t1.daumcdn.net/cfile/tistory/264BF04A5950B5D21A)
+ >[Service 순환도 바로가기](https://t1.daumcdn.net/cfile/tistory/264BF04A5950B5D21A)
  
  
  
@@ -865,7 +875,7 @@ public void settingScanCallback() {
         MyIntentService.scanBLE = false;
         setServiceIntent();
         startService(serviceIntent);
-        Log.d("LJH", "ScanBle False야, Stop SerVice");
+        Log.d("LJH", "ScanBle False야, Stop Service");
         //생략
     }
  ```
@@ -1216,6 +1226,29 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 <img src="https://user-images.githubusercontent.com/48272857/59276126-aacd2700-8c98-11e9-8cb7-78270b231a85.jpg" width="200px"/>
 
 ---
+
+### 동작 동영상  
+1. 전자티켓  
+[![](http://img.youtube.com/vi/3Bs-gfSAk9Q/0.jpg)](http://www.youtube.com/watch?v=3Bs-gfSAk9Q "")  
+2. 프로필 보기까지  
+[![](http://img.youtube.com/vi/sAEyqkDJjhM/0.jpg)](http://www.youtube.com/watch?v=sAEyqkDJjhM "")
+3. 언어 변경  
+[![](http://img.youtube.com/vi/vG_SQjo8ly0/0.jpg)](http://www.youtube.com/watch?v=vG_SQjo8ly0 "")
+4. 관리자모드, 공지사항  
+[![](http://img.youtube.com/vi/C4wrD8I8SPE/0.jpg)](http://www.youtube.com/watch?v=C4wrD8I8SPE "")
+5. 아이정보초기화  
+[![](http://img.youtube.com/vi/FRgbE2feLNc/0.jpg)](http://www.youtube.com/watch?v=FRgbE2feLNc "")
+6. 지도보기   
+[![](http://img.youtube.com/vi/f485b8O0mVw/0.jpg)](http://www.youtube.com/watch?v=f485b8O0mVw "")
+7. 다이얼로그 (서비스x)  
+[![](http://img.youtube.com/vi/eTKeifIiATo/0.jpg)](http://www.youtube.com/watch?v=eTKeifIiATo "")
+8. 다이얼로그 (서비스o)  
+[![](http://img.youtube.com/vi/6b-bvjCXdik/0.jpg)](http://www.youtube.com/watch?v=6b-bvjCXdik "")
+9. 앱 실사용   
+[![](http://img.youtube.com/vi/j0Zvgoz5r-Y/0.jpg)](http://www.youtube.com/watch?v=j0Zvgoz5r-Y "")
+
+---
+
 ### 개발 관련
 
 - 사용한 프로그램  
