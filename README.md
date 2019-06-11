@@ -34,11 +34,11 @@
 # 하드웨어 
 * 구성 
   1. 블루투스 모듈  
-  <img src="https://user-images.githubusercontent.com/48484742/59264651-8bc19b80-8c7e-11e9-93b3-00fe51714850.jpg"><br>
+  <img src="https://user-images.githubusercontent.com/48484742/59264651-8bc19b80-8c7e-11e9-93b3-00fe51714850.jpg" width="100" height="100"><br>
   아이와의 거리를 계산하기위해 비콘 기능을 가진 블루투스 모듈을 사용하였다. 모듈은 HM-10을 사용하였다.  
   비콘 기능이 없는 블루투스 모듈의 경우 RSSI값을 받아오는데에 있어 어려움이 있고 배터리소모가 많아 비효율적이기 때문에 비콘 기능이 있는 블루투스 모듈을 사용하였다.
   2. 배터리  
-  <img src="https://user-images.githubusercontent.com/48484742/59264686-a09e2f00-8c7e-11e9-9774-d218b6b5fbd4.jpg"><br>
+  <img src="https://user-images.githubusercontent.com/48484742/59264686-a09e2f00-8c7e-11e9-9774-d218b6b5fbd4.jpg" width="100" height="100"><br>
   미아방지 팔찌의 유지보수 증대를 위해 CR2450 수은전지를 사용하며 이는 620mAh의 용량을 가진다. 
   3. NFC  
   NFC에 부여된 고유 ID값을 이용해 놀이공원이 소유한 티켓인지를 구분한다. 고유 ID값은 데이터베이스에 저장되어 있으며 등록된 NFC를 휴대폰에 태그 한 경우에만 어플리케이션 사용이 가능하다.
