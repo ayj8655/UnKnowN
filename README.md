@@ -33,6 +33,10 @@
     
   5. 놀이기구 지도
     - 아이의 키에 맞는 놀이기구를 표시하고 자세한 정보를 확인
+
+  6. QR코드  
+  --QR코드이미지--  
+  놀이공원에 온 손님이 미아방지팔찌를 원하는 경우 미아방지팔찌에 맞는 어플을 부모의 핸드폰에 다운로드 하기 위해 놀이공원 측에서 QR코드를 제공한다. QR코드는 네이버에서 제공하는 네이버QR코드를 이용하여 만들었다.
 ---
 # 하드웨어 
 * 구성 
@@ -117,7 +121,7 @@ void loop() {
 ```
 4. 시리얼 모니터를 띄우고 밑에 옵션 설정을 'line ending 없음'으로 바꾼 후 AT를 입력한다. 결과로 OK가 출력되는지 확인한다. OK가 안뜬다면 선이 반대로 연결되었거나, 업로드가 안됬을 가능성이 높다.
 
-5. 시리얼 모니터를 통해 다음과 같이 설정한한다. (본 예시는 프로젝트 설정을 따라간다)
+5. 시리얼 모니터를 통해 다음과 같이 설정한한다. (본 예시는 프로젝트 설정을 따라간다.)
 ```
 >> AT+RENEW // 공장초기화
 >> AT+RESET // 모듈 재부팅
@@ -135,16 +139,15 @@ void loop() {
 
 - 서버 구축 및 설정  
 앱을 위한 서버가 필요하다.
-Mysql + phpmyadmin을 지원하는 WampServer를 이용하면 손쉽게 서버를 구축할 수 있다.
-
-WampServer | http://www.wampserver.com/en/ 에서 다운로드 가능하다.
-
+Mysql + phpmyadmin을 지원하는 WampServer를 이용하면 손쉽게 서버를 구축할 수 있다.  
+  
+  WampServer | http://www.wampserver.com/en/ 에서 다운로드 가능하다.
 
 1. https://sourceforge.net/projects/wampserver/files/ 에 접속하여 초록색 버튼 Download Latest Version을 클릭하면 최신 버전의 WampServer가 다운로드 된다.
 
-2. 설치 중간에 웹브라우저와 편집기에 대한 설정을 물어보는데 인터넷 익스플로러와 노트패드를 기본으로 쓸땐 '예'를 누르고 진행하면 된다.
-
-(설치과정에 방화벽 앱 허용 창이 뜰때 자신의 인터넷이 개인 네트워크라면 개인에 체크, 다른 인터넷 환경에서도 서버를 사용하려면 공용에도 체크해줘야 한다.)
+2. 설치 중간에 웹브라우저와 편집기에 대한 설정을 물어보는데 인터넷 익스플로러와 노트패드를 기본으로 쓸땐 '예'를 누르고 진행하면 된다.  
+  
+    (설치과정에 방화벽 앱 허용 창이 뜰때 자신의 인터넷이 개인 네트워크라면 개인에 체크, 다른 인터넷 환경에서도 서버를 사용하려면 공용에도 체크해줘야 한다.)
 
 3. 정상적으로 설치가 완료되고 실행됬다면 오른쪽 밑 트레이 아이콘에 녹색 아이콘이 뜰 것이다.
 
@@ -156,7 +159,7 @@ WampServer | http://www.wampserver.com/en/ 에서 다운로드 가능하다.
 6. root 계정의 비밀번호를 다음과 같이 입력하여 변경한다. 
 ```sh
 SET PASSWORD FOR root@localhost = PASSWORD('변경할 비밀번호');
-```
+```  
 (계정명과 비밀번호는 phpMyAdmin에 접속할 때와 php파일에서 사용한다.)
 
 7. 콘솔에 quit 입력하여 콘솔창을 종료한다.
@@ -312,7 +315,7 @@ https://console.developers.google.com/apis/library
 3. Maps SDK for Android를 검색하고 선택한다.
 <img src="https://user-images.githubusercontent.com/48484742/59256385-cde2e100-8c6e-11e9-975f-1c6a95e0b31c.png"> <br>
 
-4. 사용 설정을 클릭하여 활성화하고 인증 설정을 위해 '사용자 인증 정보'를 선택한다
+4. 사용 설정을 클릭하여 활성화하고 인증 설정을 위해 '사용자 인증 정보'를 선택한다.
 <img src="https://user-images.githubusercontent.com/48484742/59256494-0b476e80-8c6f-11e9-8519-92de214b0d6d.png"> <br>
 
 5. 사용자 인증 정보 만들기를 클릭 > API 키를 클릭 > 키 제한을 누른다. 이 때 생성된 API키는 AndroidManifest.xml에 사용이 된다.
@@ -355,9 +358,265 @@ https://webnautes.tistory.com/647
 
 ---
 # 기능 구현
-### 1. 권한 허용 알림
+### 1. 권한 허용 알림  
+<img src="https://user-images.githubusercontent.com/48484742/59296598-512d2280-8cc1-11e9-9241-0a6ed773cb03.jpg" width="200"> <br>  
+
+어플을 실행하는데 있어 반드시 필요한 권한들을 허용하도록 다이얼로그를 띄운다.
+- AndroidManifest.xml파일에 필요한 permission을 부여한다.
+```
+//AndroidManifest.xml
+<uses-permission android:name="android.permission.CALL_PHONE" />
+<uses-permission android:name="android.permission.INTERNET" />
+...
+//생략...
+```
+- SplashActivity.java에서 권한을 모두 허용했는지 확인한다. 허용하지 않은 권한만 요청한다. isUsing은 NFC태그를 어플 첫 사용시에만 사용하도록 하기위한 변수다. 이를 사용하지 않는다면 if문 안의 내용만 사용하면 된다.
+```
+//SplashActivity.java
+public class SplashActivity extends Activity {
+    final int PERMISSION = 1;
+    @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            int permissionCheck= ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+            //생략...
+            if(permissionCheck == PackageManager.PERMISSION_GRANTED && ...){
+                if (isUsing==false) {
+                    Intent intent = new Intent(this, WelcomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+             else {
+                // Start Granting Permission From User
+                ActivityCompat.requestPermissions(this, new String[]{ Manifest.permission.CAMERA,...}, PERMISSION);
+            }
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch(requestCode){
+            case PERMISSION:
+                if(grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED &&...)
+                {
+                    if (isUsing==false) {
+                        startActivity(new Intent(this, WelcomeActivity.class));
+                        finish();
+                    }
+                }
+                else {
+                    finish();
+                }
+                break;
+        }
+    }
+    //생략...
+}
+```
 ### 2. 인트로 슬라이드
+<img src="https://github.com/RickStrahl/MarkdownMonster/raw/master/Art/MarkdownMonster_Icon_128.png" align="right" style="height: 64px"/>
+
+인트로 슬라이드에 대한 설명은 다음과 같다.
+
+* 사용자가 앱을 처음 실행할 때 **가이드** 역할을 한다.
+
+* **화면을 옆으로 넘기거나 NEXT 버튼**을 누르면 **다음화면**으로 넘어간다.
+
+* **SKIP버튼**을 누르면 바로 **인트로 슬라이드를 종료**할 수 있다.
+
+* 인트로 슬라이드의 마지막 화면에는 **START버튼**으로 **앱을 시작**할 수 있다.
+
+* 인트로 슬라이드는 다음과 같이 실행된다.
+
+
+<img src="https://user-images.githubusercontent.com/48484193/59270364-3f7d5800-8c8c-11e9-9003-6170578794d6.gif" width="250px"/>
+
+---
+#### 2.1 인트로 슬라이드 구현하기 
+
+* **자바 클래스**는 `WelcomeActivity`, `MyPagerAdapter`을 생성하였다.  
+![캡처](https://user-images.githubusercontent.com/48484193/59276220-db14c580-8c98-11e9-914c-0dad1bc0d7f8.PNG)
+
+* **레이아웃**은 슬라이드 할 만큼 생성하면 된다.  
+![캡처2](https://user-images.githubusercontent.com/48484193/59276568-8160cb00-8c99-11e9-8d5d-a9c751901893.PNG)
+
+
+
+##### 2.1.1 레이아웃(Layout)
+
+레이아웃은 크게 두가지로 보면 된다.  
+**activity_welcome**과 **slider**부분이다.  
+
+###### * **activiy_welcome**
+  
+먼저 **activity_welcome**에서 주의할 점은  
+```
+<android.support.v4.view.ViewPager
+    android:id="@+id/view_pager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+```
+*ViewPager* 클래스이다. 
+
+*ViewPager* 클래스는 페이지가 슬라이드 되어 좌우로 넘어갈 수 있도록 해주는 기능이다. 
+주의해야 할 점은 *ViewPager*클래스는 support v4에서 제공하므로, *프래그먼트도 이에 맞춰주어야 한다.  
+
+
+> **프래그먼트:** 하나의 액티비티가 여러 개의 화면을 가지도록 만들기위해 고안된 개념이다.  
+다양한 크기의 화면을 가진 모바일 환경이 늘어남에 따라  하나의 디스플레이 안에서 다양한 화면 요소들을 보여주고 싶은 요구가 생기게 되었다.   
+대표적인 예로 태블릿 PC를 들 수 있다.
+
+
+출처: https://tedrepository.tistory.com/5 [Ted's IT Repository]  
+
+**activity_welcome**을 완성하면 인트로 슬라이드의 하단부분이 완성된다.  
+![캡처3](https://user-images.githubusercontent.com/48484193/59280399-7eb5a400-8ca0-11e9-9daa-2e5abdad8fbe.PNG)  
+
+###### * **slider** 
+
+**slider**에서는 인트로 슬라이드의 화면 하나하나를 보여준다.  
+```
+<ImageView
+ android:src="@drawable/p1"
+```
+*ImageView*에는 인트로 슬라이드에 띄우고 싶은 이미지를 넣어주면 된다.  
+이미지는 res->drawble에 이미지파일을 넣으면 @drawable/ 로 불러올 수 있다.   
+
+*TextView*에는 해당 이미지에 맞는 설명을 넣으면 된다.  
+<img src="https://user-images.githubusercontent.com/48484193/59283705-f20de480-8ca5-11e9-94b6-cd4ab2d036ca.PNG" width="200"><br>  
+#### 2.1.2 자바 클래스(Java Class)
+자바 클래스에는 **MyPagerAdapter**, **WelcomeActivity**가 있다.  
+
+###### * **MyPagerAdapter**  
+* PagerAdapter를 구현할 때 오버라이드 해야 하는 메소드
+
+| 메소드    | 설명       |
+| ------------ | ------------|
+| **getCount**()  | 사용 가능한 뷰의 갯수를 리턴.|
+| **isViewFromObject**(View view, Object object)  | 페이지뷰가 특정 키 객체(key object)와 연관되는지 여부. |
+| **instantiateItem**(ViewGroup container, int position)    |position에 해당하는 페이지 생성. |
+| **destroyItem**(ViewGroup container, int position, Object object) | position 위치의 페이지 제거.  |
+
+###### * **WelcomeActivity**
+```
+btnSkip = findViewById(R.id.btn_skip);
+btnSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isUsing == false)
+                    startMainActivity();
+                else
+                    startActivity(new Intent(WelcomeActivity.this, LobbyActivity.class));
+                finish();
+            }
+        });
+```
+*SKIP* 버튼에 관한 내용이다.  
+*SKIP* 버튼을 눌렀을 때 NFC태그를 하지 않았을 시에는 *NFCActivity*를 시작하고, NFC태그를 했을시에는 *LobbyActivity*를 시작한다.
+```
+btnNext = findViewById(R.id.btn_next);
+btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int currentPage = viewPager.getCurrentItem()+1;
+                if(currentPage < layouts.length) {
+                    viewPager.setCurrentItem(currentPage);
+                } else {
+                    startMainActivity();
+                }
+            }
+        });
+```
+
+*NEXT* 버튼에 관한 내용이다.  
+*NEXT* 버튼을  눌렀을 때 현재 페이지에 *ViewPager*에 아이템을 추가한 다음페이지가 나오게되고, 마지막 페이지에는 버튼을 눌러 앱을 시작한다. 
+```
+layouts = new int[]{R.layout.slider_1, R.layout.slider_2, R.layout.slider_3, R.layout.slider_4 ... 생략
+```
+*layout*을 배열로 생성해 인트로 슬라이더의 화면을 넣어준다.  
+참고로 페이지의 순서는 배열에 넣는 순서와 동일하다.
+### 2.2 동작 방식
+1. **getCount**() 메소드 : *ViewPager*의 전체 페이지 수 결정.  
+뷰페이저에 포함된 전체 페이지 수는  getCount()  메소드의 리턴 값으로 결정됩니다.  **getCount**() 는 개발자가 직접 오버라이드하여 작성하는 메소드이므로 **전체 페이지 수는 개발자가 결정**할 수 있다. 
+```
+public int getCount() {
+        return layouts.length;
+    }
+```
+본 코드에서는 layout 배열의 길이로 리턴해주었다.
+
+2. **ViewPager**의 페이지 생성과 관리 :
+*ViewPager*는 항상 현재 페이지를 기준으로 좌/우 하나씩 존재한다. 즉, **현재 페이지를 포함하여 최대 세 개의 페이지를 생성 및 관리**한다. 
+
+3. **instantiateItem**() 메소드 : **화면에 표시할 페이지뷰 생성**한다.
+ 파라미터로 전달된 position에 해당하는 페이지를 생성한 다음, 또 다른 파라미터로 전달된 컨테이너(=뷰페이저 객체)에 생성된 페이지뷰를 추가하면 된다.
+ ```
+ public Object instantiateItem(@NonNull ViewGroup container, int position) {
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = inflater.inflate(layouts[position], container, false);
+        container.addView(v);
+        return v;
+    }
+ ```
+ 4. **isViewFromObject()** 메소드 : 페이지뷰가 키 객체와 연관되는지 확인한다. 뷰페이저 내부적으로 관리되는 키 객체(key object)와 페이지뷰가 연관되는지 여부를 확인하는 역할을 수행한다.  
+ 
+ 그 이유는 *ViewPager*는 내부적으로 각 페이지를 뷰(View)로써 직접 관리하지 않고, 각 페이지와 연관되는 **키 객체**(key object)로 관리하기 때문이다.
+ > **키 객체** 는 특별한 타입의 클래스 객체를 말하는 것은 아니고, 페이지 참조 및 식별을 위해 사용되는  Object  타입 객체를 말한다.
+키(key)는 ArrayList로 관리되는데, 이는 페이지의 위치와 관계없이 지정된 페이지를 추적하고 고유하게 식별하게 해준다.
+ ```
+ public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
+        return view == object;
+    }
+ ```
+ 5. **destroyItem()** 메소드 : 생성한 페이지뷰를 제거한다.  
+ ```
+ public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+        View v = (View) object;
+        container.removeView(v);
+    }
+ ```
+ * *ViewPager*의 페이지를 생성하고 유지하는 방법
+ <img src="https://user-images.githubusercontent.com/48484193/59297858-360fe200-8cc4-11e9-90ad-fe914b82a13d.PNG" width="400"><br>  
+ 
+ 출처 : https://recipes4dev.tistory.com/148
 ### 3. NFC 태그
+등록된 디바이스만 사용하기위해 NFC태그를 이용해 사용자를 구분한다. 
+- 휴대폰이 NFC기능을 지원하는지 확인 후 NFC가 활성화가 안되어있으면 Dialog를 띄워 환경을 설정하게 되고 활성화가 되면 onNewIntent(Intent intent)가 호출된다.
+ ```
+ //NFCActivity.class
+ public class NFCActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        //생략
+        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        if(nfcAdapter!=null)
+        {
+            if (!nfcAdapter.isEnabled())
+            {
+                show();
+            }
+            Intent intent = new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        }
+    }
+}
+```
+- NFC가 활성화 되면 태그가 되기를 기다린다. NFC태그가 이뤄지면 태그된 NFC의 ID를 가져온다. 이 ID는 데이터베이스에 등록되어있는지 확인 후 어플 사용 가능 여부가 결정된다.
+```
+//NFCActivity.class
+public class NFCActivity extends AppCompatActivity {
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+        if (tag != null) {
+            GetData task = new GetData();
+            // NFC 고유번호를 이용하여 사용하게 될 디바이스의 DB id 배정
+            byte[] tagId = tag.getId();
+            tid = toHexString(tagId);
+            task.execute(tid);
+        }
+    }
+}
+```
 ### 4. 프로필 입력
 - 아이 정보를 입력한다. 입력 정보는 이름, 나이, 보호자 전화번호이며 person 테이블에 값이 저장된다. 프로필 보기 창에서 데이터베이스를 통해 위 값들을 받는다.  
 <img src="https://user-images.githubusercontent.com/48272857/59279191-72c8e280-8c9e-11e9-84fe-e76585ab2d60.jpg" width="250px"/><br>  
@@ -375,9 +634,244 @@ https://webnautes.tistory.com/647
             //생략...
 ```
 ### 5. 아이와의 거리 확인
-1. RSSI
-2. 쓰레드
-3. 서비스
+###### 5.1.1 블루투스 Rssi 얻기 위한 예상 시나리오.
+1. 앱 실행시 명시적으로 창을 띄워 블루투스 활성화 시키기.
+2. 리스트 뷰를 활용하여 블루투스 기기 검색.
+3. 블루투스 페어링을 통해 지속적인 Rssi 값을 얻으려 함.  
+
+  _<u>RSSI : Received Signal Strength Indicator.</u>_
+ 
+###### 5.1.2 시나리오의 문제점.
+<img src = "https://user-images.githubusercontent.com/48505947/59268806-76ea0580-8c88-11e9-8396-6705bc20493b.png"></img><br>
+
+- Rssi 값은 블루투스 장치를 검색 할 때만 가져올 수 있다.
+- Back에서 장치검색을 계속 실행하여 Rssi를 불러와도 엄청난 배터리가 소모된다.
+
+###### 5.1.3 초기 시나리오의 문제점 해결방안.
+
+<img src = "https://user-images.githubusercontent.com/48505947/59269470-1a87e580-8c8a-11e9-9e20-2a53eeb946ac.png"></img><br>
+
+- 장치와의 페어링이 불필요하다.
+- UUID + Major + Minor + Measured Power(RSSI) 디바이스에 전송됨.  
+
+### 5.2 비콘 RSSI 얻는 법
+###### 5.2.1 Permission 설정.
+ ```
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.BLUETOOTH" />
+ ```
+
+ - BluetoothLeScanner.startScan(ScanCallback) 을 사용하기 위해 추가.
+ >[StartScan 가이드 바로가기](https://developer.android.com/reference/android/bluetooth/le/BluetoothLeScanner.html#startScan(android.bluetooth.le.ScanCallback))
+ 
+ - 블루투스 기능을 사용하기 위해서 BLUETOOTH를 선언해야 한다.
+ >[Bluetooth 가이드 바로가기](https://developer.android.com/reference/android/Manifest.permission.html?hl=ko#BLUETOOTH)
+ 
+ ###### 5.2.2 블루투스 권한 설정
+ ```
+ //ShowActivity.class
+ if (bluetoothAdapter == null) {
+                //핸드폰이 블루투스를 지원하지 않을 경우.
+        } else {
+            if (bluetoothAdapter.isEnabled()) {
+                //Bluetooth StartScan 생략. 
+                }
+            } else {
+                //명시적 블루투스 권환 허용창 
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+            }
+        }
+```
+1. bluetoothAdapter == null
+ - 블루투스를 지원하지 않는 핸드폰일 경우를 확인한다.
+
+2. bluetoothAdapter.isEnabled()
+ - 블루투스가 활성화된 상태일 경우를 확인한다.
+
+3. 블루투스를 허용할지 사용자에게 명시적으로 보여준다.
+```
+//ShowActivity.class
+Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+```
+- startActivityForResult()로 전달된 REQUEST_ENABLE_BT 상수는 시스템이 requestCode 매개변수로서 onActivityResult() 구현에서 개발자에게 다시 전달하는 지역적으로 정의된 정수(0보다 커야 함)다.
+>[Bluetooth 가이드 바로가기](https://developer.android.com/guide/topics/connectivity/bluetooth?hl=ko)
+
+4.
+
+``` 
+//ShowActivity.class
+protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            // 사용자가 확인신호를 누름
+            if (bluetoothAdapter.isEnabled()) {
+                // 블루투스 활성화 상태인지 체크한다.
+                //StartScan 생략.
+            }
+        }
+```
+ 
+ - 사용자가 블루투스 활성화 '확인'을 누르면 resultcode == RESULT_OK로 넘어온다.
+ - 블루투스 활성화에 성공하면 액티비티가 onActivityResult() 콜백에서 RESULT_OK 결과 코드를 수신한다. 오류 때문에 블루투스를 활성화하지 못한 경우(또는 사용자가 "No"를 선택한 경우) 결과 코드는 RESULT_CANCELED이다.
+ 
+>[Bluetooth 가이드 바로가기](https://developer.android.com/guide/topics/connectivity/bluetooth?hl=ko)
+ 
+ ###### 5.2.3 ScanCallback 클래스를 이용한 RSSI 얻기
+ ```
+ //ShowActivity.class
+  new ScanCallback() {
+            @Override
+            public void onScanResult(int callbackType, final ScanResult result) {
+                super.onScanResult(callbackType, result);
+                if (result.getDevice().getName() != null && result.getDevice().getName().equals("UnKnowN")) {
+                    rssi = result.getRssi();
+                    distance = calculateAccuracy(-59, rssi);
+                    //생략.
+                    }
+                }
+ ```
+ 
+ 1. ScanCallBack 클래스 메소드인 onScanResult를 사용한다.
+ 2. onScanResult(int callbackType, final ScanResult result) 파라미터 ScanResult 클래스를 사용한다.
+ 3. ScanResult 클래스 메소드인 getRssi()를 호출하여 Rssi를 받아온다.
+ 
+ 
+### 5.3 Thread
+###### 5.3.1 runOnUiThread
+```
+//ShowActivity.class
+public void settingScanCallback() {
+        call = new ScanCallback() {
+            @Override
+            public void onScanResult(int callbackType, final ScanResult result) {
+                super.onScanResult(callbackType, result);
+                if (result.getDevice().getName() != null && result.getDevice().getName().equals("UnKnowN")) {
+                    rssi = result.getRssi();
+                    distance = calculateAccuracy(-59, rssi);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Rssi.setText("Distance :" + " " + (Math.round(distance * 10) / 10.0) + " " + "(M)");
+                            deviceName.setText("DeviceName : " + " " + result.getDevice().getName());
+                            address.setText("Address : " + " " + result.getDevice().getAddress());
+                            //생략..
+                            }
+                        });
+                    }
+                }
+            }
+        }
+```
+ - ScanCallback의 콜백함수가  지속적인 BLE정보를 불러온다.
+ - 지속적으로 값을 TextView로 보여주기 위해서 runOnUiThread를 사용하였다.
+ 
+ ### 5.4 Service
+ ###### 5.4.1 서비스란?
+  - 백그라운드에서 실행되는 작업을 수행할 수 있는 애플리케이션 구성 요소이며 사용자 인터페이스를 제공하지 않는다.
+  - 즉, 어플리케이션 화면을 나가도 RSSI를 지속적으로 받기 위해 사용한다.
+  >[SerVice 가이드 바로가기](https://developer.android.com/guide/components/services?hl=ko)
+  
+  ###### 5.4.2 서비스 클래스 생성 및 서비스 동작.
+  1. AndroidManifest.xml에 다음 코드를 추가한다.
+  ```
+  <service
+            android:name=".MyIntentService"
+            android:exported="false"
+            android:theme="@android:style/Theme.Dialog" />
+  ```            
+  2. MyIntentSerVice.class 생성.
+  
+ ``` 
+  //MyIntentSerVice.class
+  public class MyIntentService extends IntentService {
+    //생략..
+    public MyIntentService() {
+        super("MyIntentService");
+    }
+    //생략..
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        //생략..
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        //생략..
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+
+    @SuppressLint("MissingPermission")
+    @Override
+    protected void onHandleIntent(Intent intent) {
+        //생략..
+    }
+}
+```
+ - 서비스가 여러 개의 요청을 동시에 처리하지 않아도 되는 경우에는 IntentService를 사용하는 것이 좋다.
+ - 결론적으로 작업을 수행하기 위해 onHandleIntent()를 구현하기만 하면 된다.
+ >[SerVice 가이드 바로가기](https://developer.android.com/guide/components/services?hl=ko)
+ 
+ >[SerVice 순환도 바로가기](https://t1.daumcdn.net/cfile/tistory/264BF04A5950B5D21A)
+ 
+ 
+ 
+ 3. onHandleIntent() 구현.
+ ```
+ public class MyIntentService extends IntentService {
+ //생략
+ public static volatile Boolean scanBLE;
+ //생략
+ protected void onHandleIntent(Intent intent) {
+        BluetoothLeScanner scanner = bluetoothAdapter.getBluetoothLeScanner();
+        if(scanBLE == true){
+            settingScanCallBack1();
+            scanner.startScan(call1);
+            Log.d("LJH", "SERVICE START");
+        }else{
+            scanner.stopScan(call1);
+            Log.d("LJH", "SERVICE STOP");
+        }
+    }
+    //생략
+}
+```    
+ - onHandleIntent에서 ScanCallback 콜백 함수를 호출하여 어플리케이션 화면 밖에서도 동작이 된다. 
+ - scanBLE가 true면 ScanCallback 콜백 시작, false면 ScanCallback 콜백 종료.  
+ 
+ 4. 서비스 시작.
+ ```
+ //ShowActivity.class
+ protected void onStop() {
+        super.onStop();
+        //생략
+        MyIntentService.scanBLE = true;
+        setServiceIntent();
+        startService(serviceIntent);
+        Log.d("LJH", "서비스 스타트!!!!");
+    }
+```    
+ - MyIntentService.class의 변수인 scanBLE = true로 초기화를 하여 서비스를 시작한다.
+ 
+ 5. 서비스 종료. 
+ ```
+ //ShowActivity.class
+ protected void onRestart() {
+        super.onRestart();
+        MyIntentService.scanBLE = false;
+        setServiceIntent();
+        startService(serviceIntent);
+        Log.d("LJH", "ScanBle False야, Stop SerVice");
+        //생략
+    }
+ ```
+  - ShowActivity.class 화면으로 다시 돌아오면 MyIntentService.class의 변수인 scanBLE = false로 초기화를 하여 서비스를 종료한다.
+ 
 ### 6. 다이얼로그 알림  
 
 <div>
@@ -390,16 +884,28 @@ https://webnautes.tistory.com/647
 
 아이(디바이스)와의 거리가 멀어지면 다이얼로그 알림이 소리와 함께 뜨게된다. 다이얼로그에는 '전화걸기'버튼과 '취소'버튼이 있는데 '전화걸기'버튼을 누르면 전화연결 화면으로 연결된다. 이 때 관리소 전화번호가 띄워져 있다.  
 하나의 액티비티 내에서 구현한 다이얼로그는 서비스를 통해 띄워 줄 수 없었는데 그 이유는 안드로이드 개발자들이 다른 어플리케이션 실행도중 (게임 혹은 다른어플) 갑자기 다이얼로그가 뜨게될 경우 때문에 막아 놓은 것이다.  
-따라서 본 프로젝트는 AlertDialogActivity.java파일을 새로 만들어 PendingIntent를 통해 알림을 구현한다.  
+따라서 본 프로젝트는 AlertDialogActivity.java파일을 새로 만들어 PendingIntent를 통해 알림을 구현한다. 원하는 상황에서만 다이얼로그를 띄우기 위해 PendingIntent를 사용한다.  
 
-- ndroidManifast.xml에서 액티비티의 테마를 다음과 같이 바꿔준다.
+- AlertDialogActivity.java파일을 새로 만들고 레이아웃 구성한 후 알림을 위해 AudioManager, MediaPlayer를 이용한 다음과 같은 코드를 작성한다.
+```
+//MyIntentService
+public class MyIntentService extends IntentService {
+    MediaPlayer mediaPlayer;
+    //생략...
+    public void onCreate() {
+        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.spacealarm);
+        //생략...
+    }
+}
+```
+- AndroidManifast.xml에서 액티비티의 테마를 다음과 같이 바꿔준다.
 ```
 //AndroidManifast.xml
 <activity
             android:name="com.example.SONZABA.AlertDialogActivity"
             android:theme="@android:style/Theme.Dialog">
 ```
-- AlertDialogActivity.java파일을 새로 만들고 레이아웃 구성한 후 알림을 위해 AudioManager, MediaPlayer를 이용한 다음과 같은 코드를 작성한다.
+- 미디어 볼륨 및 음악을 설정, 실행하고 '전화걸기'버튼과 '취소'버튼 이벤트를 처리한다. 미디어 파일은 app -> res우클릭 -> New -> Android Resource Directory클릭 -> Resource type을 raw로 바꾼 후 OK를 누르면 생성되는 폴더에 넣는다.
 ```
 //AlertDialogActivity.java
 public class AlertDialogActivity extends Activity {
@@ -415,6 +921,26 @@ public class AlertDialogActivity extends Activity {
         setContentView(R.layout.activity_alert_dialog);
         Button goToLobby = (Button)findViewById(R.id.gotolobby);
         Button Call = (Button)findViewById(R.id.call);
+        
+        goToLobby.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mediaPlayer.stop();
+                mediaPlayer.release();
+                finish();
+            }
+        });
+
+        Call.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mediaPlayer.stop();
+                mediaPlayer.release();
+                String tel = "tel:01023459527";
+                startActivity(new Intent("android.intent.action.DIAL", Uri.parse(tel)));
+                finish();
+            }
+        });
         //생략...
     }
 }
@@ -425,11 +951,16 @@ public class AlertDialogActivity extends Activity {
 public class AlertDialogActivity extends Activity {
     //생략...
     @Override
-        public boolean onTouchEvent(MotionEvent event) {
-            return false;
-        }
+    public boolean onTouchEvent(MotionEvent event) {
+        return false;
+    }
+}
 ```
-- 화면이 꺼져도 서비스가 돌면서 알림이 뜰 수 있게 하기위해 다음의 코드를 추가한다.
+- 화면이 꺼져도 서비스가 돌면서 다이얼로그 알림이 뜰 수 있게 하기위해 다음의 코드를 추가한다.
+```
+//AndroidManifest.xml
+<uses-permission android:name="android.permission.WAKE_LOCK"/>
+```
 ```
 //AlertDialogActivity.java
 public class AlertDialogActivity extends Activity {
@@ -448,7 +979,19 @@ public class AlertDialogActivity extends Activity {
     }
 }
 ```
-- 다이얼로그가 서비스에서 띄워져야하기 때문에 MyIntentService.java에서 dialog()함수를 만들어 실행한다.
+```
+//MyIntentService.java
+public class MyIntentService extends IntentService {
+    public static PowerManager.WakeLock wakeLock;
+    //생략...
+    @Override
+    public void onCreate() {
+        wakeLock=pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"DD:DDDD");//슬립상태에 빠진 핸드폰의 CPU만 킨다
+        wakeLock.acquire();
+        //생략...
+    }
+```
+- 다이얼로그가 서비스에서 띄워져야하기 때문에 MyIntentService.java에서 dialog()함수를 만들어 실행한다.  이전에 앱에서 마지막으로 보여졌던 액티비티가 배경으로 깔리는 현상을 막기위해 FLAG_ACTIVITY_NEW_TASK, FLAG_ACTIVITY_MULTIPLE_TASK 플래그를 추가한다.
 ```
 private void dialog(){
         Bundle bun = new Bundle();
@@ -470,8 +1013,11 @@ private void dialog(){
         }
     }
 ```
+- dialog()함수는 서비스 내에서 거리가 멀어졌을 때 불리며 계속 알림이 울리는걸 방지하기 위해 Handler를 이용해 딜레이를 준다.
 ```
+//MyIntentService.java
 public class MyIntentService extends IntentService {
+    public static PowerManager.WakeLock wakeLock;
     //생략...
     public void settingScanCallback1() {
         call1 = new ScanCallback() {
@@ -479,20 +1025,19 @@ public class MyIntentService extends IntentService {
             public void onScanResult(int callbackType, final ScanResult result) {
                 //생략...
                 if(result.getScanRecord().getDeviceName()!= null && result.getScanRecord().getDeviceName().equals("UnKnowN")){
-                if (rssi_avg < sa.bluetooth_intensity_far && flag==false) {
-                    //생략...
-                    NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
-                    notificationManager.notify(notificationId, builder.build());
-                    flag=true;
-                    dialog();
-                    new Handler().postDelayed(new Runnable()
-                    {
-                        @Override
-                        public void run()
+                    if (rssi_avg < sa.bluetooth_intensity_far && flag==false) {
+                        //생략...
+                        flag=true;
+                        dialog();
+                        new Handler().postDelayed(new Runnable()
                         {
-                            flag=false;
-                        }
-                    }, 60000);//60000 = 1분
+                            @Override
+                            public void run()
+                            {
+                                flag=false;
+                            }
+                        }, 60000);//60000 = 1분
+                    }
                 }
             }
         }
@@ -559,7 +1104,84 @@ public class MyIntentService extends IntentService {
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
     }
 ```  
-3. 지도
+3. 지도  
+<img src="https://user-images.githubusercontent.com/48484742/59299268-2e057180-8cc7-11e9-8321-2d0a234d9cae.jpg" width="200"> <br>
+아이의 키에 맞는 놀이기구를 보여준다. 마커 클릭시 자세한 정보를 확인할 수 있게 url을 연결한다. seekbar를 이용해 키를 조절하고 버튼을 통해 적용시켜 지도에 보여준다.  
+- 구글지도를 띄우기 위해 fragment를 사용한다.
+```
+//activity_map.xml
+<LinearLayout
+    <fragment
+        android:id="@+id/map"
+        class="com.google.android.gms.maps.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+        //생략...
+</LinearLayout>
+```
+- 키에 따라 놀이기구를 GoogleMarker로 표시한다. 놀이기구의 좌표(위도,경도), 이름, 제한 키, url정보를 markerOption을 통해 저장하고 지도에 보여준다.  
+```
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback{
+    //생략...
+    MarkerOptions markerOptions = new MarkerOptions();
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            FragmentManager fragmentManager = getFragmentManager();
+            MapFragment mapFragment = (MapFragment)fragmentManager                .findFragmentById(R.id.map);
+            mapFragment.getMapAsync(this);
+            //생략...
+        }
+        @Override
+        public void onMapReady(final GoogleMap map) {
+            list = new double[]{37.290163, 127.201815, ...};
+            name = new String[]{"T 익스프레스", ...};
+            att_url = new String[]{"http://www.everland.com/mobile/everland/favorite/attraction/22.el", ...}
+            height = new int[]{129, ...}
+            
+            for(int i =0; i < list.length; i+=2) {
+            locations.add(new LatLng(list[i],list[i+1]));
+            }
+            for(LatLng location : locations) {
+                markerOptions.position(location);
+                markerOptions.title(name[cnt]);
+                if(height[cnt] < child)
+                    map.addMarker(markerOptions);;
+            }
+            sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            //생략...
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        map.clear();
+                        for(LatLng location : locations) {
+                            markerOptions.position(location);
+                            markerOptions.title(name[cnt]);
+                            if(height[cnt] < child)
+                                map.addMarker(markerOptions);
+                            //생략...
+                        }
+                        //생략...
+                    }
+                });
+            }
+        });
+        map.setOnInfoWindowClickListener(infoWindowClickListener);
+        //생략...
+    }
+    GoogleMap.OnInfoWindowClickListener infoWindowClickListener = new GoogleMap.OnInfoWindowClickListener() {
+        @Override
+        public void onInfoWindowClick(Marker marker) {
+            //생략...
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            Uri uri = Uri.parse(att_url[cnt]);
+            intent.setData(uri);
+            startActivity(intent);
+        }
+    };
+}
+```
 4. 관리자 모드  
 - 상단 좌측을 더블클릭한다.  
 <img src="https://user-images.githubusercontent.com/48272857/59276127-aacd2700-8c98-11e9-8c2a-c2e383cba313.jpg" width="200px"/>
