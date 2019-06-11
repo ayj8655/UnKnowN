@@ -94,7 +94,7 @@ public class SplashActivity extends Activity {
                 {
                     if (isUsing==false) {
                         Toast.makeText(getApplicationContext(), R.string.All_Permissions_Approved, Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(this, NFCActivity.class));
+                        startActivity(new Intent(this, WelcomeActivity.class));
                         finish();
                     }
                 }

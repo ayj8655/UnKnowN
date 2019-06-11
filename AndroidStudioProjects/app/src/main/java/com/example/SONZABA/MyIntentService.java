@@ -109,6 +109,7 @@ public class MyIntentService extends IntentService {
         for (int i = 0; i <= 4; i++) {
             stack[i] = 0.0;
         }
+
         Log.d("LJH", "onCreate 들어온다. onStartCommand 전에 일회성 서비스 검사.");
         PowerManager pm =(PowerManager) getSystemService(Context.POWER_SERVICE);
         wakeLock=pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"DD:DDDD");//슬립상태에 빠진 핸드폰의 CPU만 키게합니다
@@ -146,13 +147,15 @@ public class MyIntentService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Log.d("LJH", "onHandleIntent로 들어옴");
         BluetoothLeScanner scanner = bluetoothAdapter.getBluetoothLeScanner();
-        if(scanBLE == true){
-            settingScanCallback1();
-            scanner.startScan(call1);
-            Log.d("LJH", "SERVICE START");
-        }else{
-            scanner.stopScan(call1);
-            Log.d("LJH", "SERVICE STOP");
+        if (bluetoothAdapter.isEnabled()) {
+            if (scanBLE == true) {
+                settingScanCallback1();
+                scanner.startScan(call1);
+                Log.d("LJH", "SERVICE START");
+            } else {
+                scanner.stopScan(call1);
+                Log.d("LJH", "SERVICE STOP");
+            }
         }
     }
 
