@@ -4,10 +4,10 @@
 ---
 # 주제를 선정하게 된 이유
 <center>
-<div>
+
 <img src="https://user-images.githubusercontent.com/48272857/59177151-1d091300-8b96-11e9-8e2e-f083d993f425.png">
 <img src="https://user-images.githubusercontent.com/48272857/59177153-1e3a4000-8b96-11e9-99e3-0ad131934872.png">
- </div>
+
  </center>
 [표. 미아발생 원인 및 발생장소]
 <br>
