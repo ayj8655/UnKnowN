@@ -34,20 +34,25 @@ public class MyIntentService extends IntentService {
     private boolean flag;
     private BluetoothManager bluetoothManager;
     private BluetoothAdapter bluetoothAdapter;
-    private int rssi;
+    private double rssi = 0;
+    private Double[] stack;
+    private double rssi_avg=0;
     private String CHANEL_ID = "UnKnowN";
     private Integer notificationId = 123;
     private double distance = 0 ;
     private NotificationCompat.Builder builder;
     public static volatile Boolean scanBLE = true;
     public static PowerManager.WakeLock wakeLock;
+    private ShowActivity sa;
 
     public void settingScanCallback1() {
         call1 = new ScanCallback() {
             @Override
             public void onScanResult(int callbackType, final ScanResult result) {
                 super.onScanResult(callbackType, result);
-
+                rssi = result.getRssi();
+                //distance = calculateAccuracy(-59, rssi);
+                distance = Math.round(Math.pow(10,(-56-rssi)/(10*2)))*100/100;
                 if(result.getScanRecord().getDeviceName()!= null && result.getScanRecord().getDeviceName().equals("UnKnowN")){
                     Log.d("LJH","1Size: " +  result.getDevice().getName());
                     Log.d("LJH","1Size: " + result.getScanRecord().getServiceUuids().size());
@@ -55,8 +60,28 @@ public class MyIntentService extends IntentService {
                     Log.d("LJH", "1Length: " + result.getScanRecord().getBytes().length);
                     Log.d("LJH", "1RSSI:" + result.getRssi());
                     Log.d("LJH","-------------------------------------------------");
+                    Log.d("LJH","AVG RSSI : "+Double.toString(rssi_avg));
+                    Log.d("LJH", "-------------------------------------------------");
+                    rssi = result.getRssi();
+                    rssi_stack(rssi);
+                    rssi_avg=(stack[0]+stack[1]+stack[2]+stack[3]+stack[4])/5.0;
+                    if (rssi_avg < sa.bluetooth_intensity_far && flag==false) {
+                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
+                        notificationManager.notify(notificationId, builder.build());
+                        flag=true;
+                        dialog();
+                        new Handler().postDelayed(new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                flag=false;
+                            }
+                        }, 60000);//60000 = 1분
+                    }
                 }
             }
+
 
             @Override
             public void onBatchScanResults(List<ScanResult> results) {
@@ -69,6 +94,7 @@ public class MyIntentService extends IntentService {
             }
         };
     }
+
     public MyIntentService() {
         super("MyIntentService");
     }
@@ -79,6 +105,10 @@ public class MyIntentService extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
+        stack = new Double[5];
+        for (int i = 0; i <= 4; i++) {
+            stack[i] = 0.0;
+        }
         Log.d("LJH", "onCreate 들어온다. onStartCommand 전에 일회성 서비스 검사.");
         PowerManager pm =(PowerManager) getSystemService(Context.POWER_SERVICE);
         wakeLock=pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"DD:DDDD");//슬립상태에 빠진 핸드폰의 CPU만 키게합니다
@@ -126,7 +156,50 @@ public class MyIntentService extends IntentService {
         }
     }
 
+    private void rssi_stack(double rssi) {
+        if (stack[0].equals(0.0))
+            stack[0]=rssi;
+        else {
+            if (stack[1].equals(0.0))
+                stack[1]=rssi;
+            else {
+                if (stack[2].equals(0.0))
+                    stack[2]=rssi;
+                else {
+                    if (stack[3].equals(0.0))
+                        stack[3]=rssi;
+                    else {
+                        if (stack[4].equals(0.0))
+                            stack[4]=rssi;
+                        else {
+                            stack[4]=stack[3];
+                            stack[3]=stack[2];
+                            stack[2]=stack[1];
+                            stack[1]=stack[0];
+                            stack[0]=rssi;
+                        }
+                    }
+                }
+            }
+        }
+    }
 
+    private void dialog(){
+        Bundle bun = new Bundle();
+
+        bun.putString("notiTitle",getString(R.string.lost_child));
+        bun.putString("notiMessage",getString(R.string.call_manager));
+        Intent popupIntent = new Intent(this, AlertDialogActivity.class);
+        popupIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        popupIntent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        popupIntent.putExtras(bun);
+        PendingIntent pie= PendingIntent.getActivity(this, 0, popupIntent, 0);
+        try {
+            pie.send();
+        } catch (PendingIntent.CanceledException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void createNotificationChannel(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){

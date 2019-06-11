@@ -56,4 +56,17 @@
     <string name="lost_child">見逃した子供!</string>
     <string name="call_manager">管理者に連絡しますか?</string>
     <string name="height">高さ</string>
+    <string name="slider1">アプリが正常にインストールされたことを確認してください!</string>
+    <string name="slider2">NFCタグ下さい!</string>
+    <string name="slider3">ロビー画面です!</string>
+    <string name="slider4">言語を変更することができます!</string>
+    <string name="slider5">アプリを使用した後ログアウトしてください!</string>
+    <string name="slider6">\'プロファイル入力\' をタップしてください!</string>
+    <string name="slider7">子供の情報を少なく \'入力\' をタップしてください!</string>
+    <string name="slider8">\'プロフィール\' タブし!</string>
+    <string name="slider9">情報を確認して子供から離れた時、アラームが鳴ります!</string>
+    <string name="slider10">\'地図を表示\' をタップしてください!</string>
+    <string name="slider11">子供のキーに合わせて搭乗可能な乗り物を示しています!</string>
+    <string name="slider12">STARTを押してアプリを起動してください!</string>
+    <string name="slider13">Introを再確認することができます！</string>
 </resources>

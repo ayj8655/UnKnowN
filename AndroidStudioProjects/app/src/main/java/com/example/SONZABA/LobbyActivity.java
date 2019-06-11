@@ -65,12 +65,15 @@ public class LobbyActivity extends AppCompatActivity {
     private ArrayList<HashMap<String, String>> mArrayList;
     private String mJsonString;
     private Locale myLocale;
+    private String id;
+    private String tid;
 
     ViewPager viewPager;
     LinearLayout sliderDotspanel;
     private int dotscount;
     private  ImageView[] dots;
     private static Intent serviceIntent = null;
+    SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,9 +151,12 @@ public class LobbyActivity extends AppCompatActivity {
             }
         });
 
+        sp = getSharedPreferences("NFC",MODE_PRIVATE);
+        id = Integer.toString(sp.getInt("id",0));
+        tid = sp.getString("tid","NULL");
         inProcessDevice = new String[2];
-        inProcessDevice[0]=Integer.toString(bundle.getInt("id"));
-        inProcessDevice[1]=bundle.getString("tid");
+        inProcessDevice[0]=id;
+        inProcessDevice[1]=tid;
 
         // GO TO PROFILE ACTIVITY THAT CAN ENTER USER PROFILE TO USE DEVICE WELL
         enterProfile = findViewById(R.id.EnterProfile_Image);
@@ -227,8 +233,14 @@ public class LobbyActivity extends AppCompatActivity {
                 logout_user();
                 break;
             case R.id.about:
-                Intent intent = new Intent(LobbyActivity.this, AboutActivity.class);
-                startActivity(intent);
+                Intent intent_about = new Intent(LobbyActivity.this, AboutActivity.class);
+                startActivity(intent_about);
+                break;
+            case R.id.intro:
+                Intent intent_intro = new Intent(LobbyActivity.this, WelcomeActivity.class);
+                finish();
+                startActivity(intent_intro);
+                break;
             default:
                 break;
         }
@@ -486,7 +498,6 @@ public class LobbyActivity extends AppCompatActivity {
             String postParameters = "id="+params[0];
 
             try {
-
                 URL url = new URL(serverURL);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 

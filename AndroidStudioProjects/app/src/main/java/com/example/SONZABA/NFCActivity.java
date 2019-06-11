@@ -31,7 +31,6 @@ import java.net.URL;
 
 public class NFCActivity extends AppCompatActivity {
 
-    private static String serial[] = {"A6D7A0D3"};
     private NfcAdapter nfcAdapter;
     private PendingIntent pendingIntent;
     private int id=0;
@@ -129,7 +128,7 @@ public class NFCActivity extends AppCompatActivity {
         id = 1;
         Bundle bun = new Bundle();
         bun.putInt("id",id);
-        bun.putString("tid",serial[0]);
+        bun.putString("tid","A6D7A0D3");
         i.putExtra("DeviceData",bun);
         startActivity(i);
     }

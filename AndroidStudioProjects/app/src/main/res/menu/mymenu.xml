@@ -15,6 +15,11 @@
 
     <item
         android:id="@+id/about"
-        android:title="about"
+        android:title="About"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/intro"
+        android:title="Intro"
         app:showAsAction="never"/>
 </menu>

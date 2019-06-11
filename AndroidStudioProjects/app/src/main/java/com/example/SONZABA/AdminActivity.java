@@ -131,12 +131,12 @@ public class AdminActivity extends AppCompatActivity {
                 while ((line = bufferedReader.readLine()) != null) { sb.append(line); }
 
                 bufferedReader.close();
-                Toast.makeText(AdminActivity.this, R.string.Notice_Update_Complete, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(AdminActivity.this, R.string.Notice_Update_Complete, Toast.LENGTH_SHORT).show();
                 return sb.toString();
 
             } catch (Exception e) {
-                Log.d(TAG, "InsertData: Error ", e);
-                Toast.makeText(AdminActivity.this, R.string.Notice_Update_Failed, Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "ResetData: Error ", e);
+                //Toast.makeText(AdminActivity.this, R.string.Notice_Update_Failed, Toast.LENGTH_SHORT).show();
                 return new String("Error: " + e.getMessage());
             }
         }

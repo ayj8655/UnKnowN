@@ -56,4 +56,17 @@
     <string name="lost_child">未打中儿童!</string>
     <string name="call_manager">您愿意与经理联系吗?</string>
     <string name="height">高度</string>
+    <string name="slider1">确保应用程序安装正确!</string>
+    <string name="slider2">标签NFC!</string>
+    <string name="slider3">大堂屏幕!</string>
+    <string name="slider4">你可以改变语言!</string>
+    <string name="slider5">请在使用该应用后退出!</string>
+    <string name="slider6">点按\'输入个人资料\'!</string>
+    <string name="slider7">写下您孩子的信息, 然后点击\'输入\'!</string>
+    <string name="slider8">点按\'查看个人资料\'!</string>
+    <string name="slider9">当您离开孩子时会发出警报声!</string>
+    <string name="slider10">点按\'显示地图\'!</string>
+    <string name="slider11">显示可根据孩子的身高登上的游乐设施!</string>
+    <string name="slider12">开始启动应用!</string>
+    <string name="slider13">你可以再次查看介绍！</string>
 </resources>

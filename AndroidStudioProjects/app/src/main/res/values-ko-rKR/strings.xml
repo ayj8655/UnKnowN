@@ -56,4 +56,17 @@
     <string name="lost_child">미아 발생 !</string>
     <string name="call_manager">관리자에게 연락하시겠습니까?</string>
     <string name="height">신장</string>
+    <string name="slider1">어플이 정상적으로 설치되었는지 확인하세요!</string>
+    <string name="slider2">NFC를 태그하세요!</string>
+    <string name="slider3">로비화면 입니다!</string>
+    <string name="slider4">언어를 변경할 수 있습니다!</string>
+    <string name="slider5">앱을 사용한 후에 로그아웃 해주세요!</string>
+    <string name="slider6">\'프로필 입력\'를 탭하세요!</string>
+    <string name="slider7">아이의 정보를 적고 \'입력\'을 탭하세요!</string>
+    <string name="slider8">\'프로필 보기\'를 탭하세요!</string>
+    <string name="slider9">정보를 확인하고 아이와 멀어졌을때 알람이 울립니다!</string>
+    <string name="slider10">\'지도 보기\'를 탭하세요!</string>
+    <string name="slider11">아이의 키에 맞춰 탑승가능한 놀이기구를 보여줍니다!</string>
+    <string name="slider12">\'START\'를 눌러 앱을 시작하세요!</string>
+    <string name="slider13">인트로를 다시 확인 할 수 있습니다!</string>
 </resources>

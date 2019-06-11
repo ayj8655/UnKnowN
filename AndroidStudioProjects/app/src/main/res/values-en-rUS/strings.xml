@@ -56,4 +56,17 @@
     <string name="lost_child">A CHILD MISSED!</string>
     <string name="call_manager">Would you like to contact the manager?</string>
     <string name="height">height</string>
+    <string name="slider1">Make sure your app is installed properly!</string>
+    <string name="slider2">Tag NFC!</string>
+    <string name="slider3">Lobby screen!</string>
+    <string name="slider4">You can change the language!</string>
+    <string name="slider5">Log out after using the app!</string>
+    <string name="slider6">Tab \'Enter the PROFILE\'!</string>
+    <string name="slider7">Write your child\'s information and tab \'Insert\'!</string>
+    <string name="slider8">Tab \'Show the PROFILE\'!</string>
+    <string name="slider9">Check your child\'s information and an alarm sounds when you are away from your child!</string>
+    <string name="slider10">Tab \'View Map\'!</string>
+    <string name="slider11">Show rides that can be boarded according to your child\'s height!</string>
+    <string name="slider12">Press \'START\' to start the app!</string>
+    <string name="slider13">You can check the intro again !</string>
 </resources>

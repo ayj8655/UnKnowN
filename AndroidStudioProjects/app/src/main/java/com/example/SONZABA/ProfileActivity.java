@@ -41,7 +41,6 @@ public class ProfileActivity extends AppCompatActivity {
     private EditText mEditTextName;
     private EditText mEditTextAge;
     private EditText mEditTextPhone;
-    private TextView mTextViewResult;
     private TextView mTextViewId;
 
     @Override
@@ -61,22 +60,11 @@ public class ProfileActivity extends AppCompatActivity {
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         mTextViewId.setText(Integer.toString(sp.getInt("id",0)));
-        final Button buttonInsert = findViewById(R.id.button_main_insert);
+        Button buttonInsert = findViewById(R.id.button_main_insert);
         buttonInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                hideKeyboard();
-                String name = mEditTextName.getText().toString();
-                String age = mEditTextAge.getText().toString();
-                String phone = mEditTextPhone.getText().toString();
-                String id = mTextViewId.getText().toString();
-
-                InsertData task = new InsertData();
-                task.execute("http://" + IP_ADDRESS + "/insert.php",id,name,age,phone);
-                mEditTextName.setText("");
-                mEditTextAge.setText("");
-                mEditTextPhone.setText("");
-                finish();
+                insert_info();
             }
         });
         Button btnExit = findViewById(R.id.button3);
@@ -92,13 +80,28 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                    buttonInsert.performClick();
+                    insert_info();
                     finish();
                     return true;
                 }
                 else return false;
             }
         });
+    }
+
+    private void insert_info() {
+        hideKeyboard();
+        String name = mEditTextName.getText().toString();
+        String age = mEditTextAge.getText().toString();
+        String phone = mEditTextPhone.getText().toString();
+        String id = mTextViewId.getText().toString();
+
+        InsertData task = new InsertData();
+        task.execute("http://" + IP_ADDRESS + "/insert.php",id,name,age,phone);
+        mEditTextName.setText("");
+        mEditTextAge.setText("");
+        mEditTextPhone.setText("");
+        finish();
     }
 
     class InsertData extends AsyncTask<String, Void, String> {

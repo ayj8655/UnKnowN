@@ -81,6 +81,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/LobbyTheme" />
         <activity android:name="com.example.SONZABA.ProfileActivity" />
+        <activity
+            android:name="com.example.SONZABA.WelcomeActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

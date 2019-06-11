@@ -51,9 +51,11 @@ public class SplashActivity extends Activity {
         {
             // All Permission Accepted
             if (isUsing==false) {
-                startActivity(new Intent(this, NFCActivity.class));
+                Intent intent = new Intent(this, WelcomeActivity.class);
+                startActivity(intent);
                 finish();
             }
+
         }
         else {
             // Start Granting Permission From User
@@ -78,6 +80,7 @@ public class SplashActivity extends Activity {
             startActivity(intent);
             finish();
         }
+
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

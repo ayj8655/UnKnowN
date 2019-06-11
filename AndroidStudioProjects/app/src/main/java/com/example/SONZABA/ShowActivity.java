@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.renderscript.Double3;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -68,13 +69,15 @@ public class ShowActivity extends AppCompatActivity {
 
     private double distance = 0;
     private double rssi = 0;
+    public Double[] stack;
+    private double rssi_avg=0;
     private static Intent serviceIntent = null;
     private ScanCallback call = null;
     private ImageView emoticon;
 
-    private static int bluetooth_intensity_far = 15;
-    private static int bluetooth_intensity_normal = 10;
-    private static int bluetooth_intensity_safe = 5;
+    public static int bluetooth_intensity_far = -80;
+    private static int bluetooth_intensity_normal = -70;
+    private static int bluetooth_intensity_safe = -60;
 
     public void setServiceIntent() {
         serviceIntent = new Intent(this, MyIntentService.class);
@@ -94,16 +97,21 @@ public class ShowActivity extends AppCompatActivity {
                     Log.d("LJH", "Length: " + result.getScanRecord().getBytes().length);
                     Log.d("LJH", "RSSI:" + result.getRssi());
                     rssi = result.getRssi();
-                    distance = calculateAccuracy(-59, rssi);
-
+                    rssi_stack(rssi);
+                    rssi_avg=(stack[0]+stack[1]+stack[2]+stack[3]+stack[4])/5.0;
+                    Log.d("LJH","AVG RSSI : "+Double.toString(rssi_avg));
+                    //distance = calculateAccuracy(-59, rssi);
+                    distance = (Math.pow(10,(-56-rssi_avg)/(10*2)));
+                    Log.d("LJH","distance : "+distance);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Rssi.setText("Distance :" + " " + (Math.round(distance * 10) / 10.0) + " " + "(M)");
+                            //Rssi.setText("Distance :" + " " + (Math.round(distance * 10) / 10.0) + " " + "(M)");
+                            Rssi.setText("Rssi :" + " " + String.format("%.3f",rssi_avg));
                             deviceName.setText("DeviceName : " + " " + result.getDevice().getName());
-                            address.setText("Address : " + " " + result.getDevice().getAddress());
+                            address.setText("Distance : " + " " + String.format("%.2f",distance));
 
-                            if (distance <= bluetooth_intensity_safe) { //안전
+                            if (rssi_avg >= bluetooth_intensity_safe) { //안전
                                 under_notification.setText("안전");
                                 under_notification.setTextColor(0xFF20E801);
 
@@ -114,8 +122,8 @@ public class ShowActivity extends AppCompatActivity {
 
                                 Drawable img = (Drawable) getResources().getDrawable(R.drawable.smile, null);
                                 emoticon.setImageDrawable(img);
-                            } else if (bluetooth_intensity_safe < distance
-                                    && distance <= bluetooth_intensity_normal) {//주의
+                            } else if (bluetooth_intensity_safe > rssi_avg
+                                    && rssi_avg >= bluetooth_intensity_normal) {//주의
                                 under_notification.setText("주의");
                                 under_notification.setTextColor(0xFFFF9900);
 
@@ -126,8 +134,8 @@ public class ShowActivity extends AppCompatActivity {
 
                                 Drawable img = getResources().getDrawable(R.drawable.smilely, null);
                                 emoticon.setImageDrawable(img);
-                            } else if (bluetooth_intensity_normal < distance
-                                    && distance <= bluetooth_intensity_far) { //위험
+                            } else if (bluetooth_intensity_normal > rssi_avg
+                                    && rssi_avg >= bluetooth_intensity_far) { //위험
                                 under_notification.setText("위험");
                                 under_notification.setTextColor(0xFFFF0000);
 
@@ -138,7 +146,7 @@ public class ShowActivity extends AppCompatActivity {
 
                                 Drawable img = getResources().getDrawable(R.drawable.sad, null);
                                 emoticon.setImageDrawable(img);
-                            } else if (distance > bluetooth_intensity_far && flag == false) { //미아발생
+                            } else if (rssi_avg < bluetooth_intensity_far && flag == false) { //미아발생
                                 under_notification.setText("미아발생");
                                 under_notification.setTextColor(0xFF800000);
 
@@ -163,7 +171,7 @@ public class ShowActivity extends AppCompatActivity {
                                     public void run() {
                                         flag = false;
                                     }
-                                }, 10000);//60000 = 1분
+                                }, 60000);//60000 = 1분
                             }
                         }
                     });
@@ -183,10 +191,43 @@ public class ShowActivity extends AppCompatActivity {
         };
     }
 
+    private void rssi_stack(double rssi) {
+        if (stack[0].equals(0.0))
+            stack[0]=rssi;
+        else {
+            if (stack[1].equals(0.0))
+                stack[1]=rssi;
+            else {
+                if (stack[2].equals(0.0))
+                    stack[2]=rssi;
+                else {
+                    if (stack[3].equals(0.0))
+                        stack[3]=rssi;
+                    else {
+                        if (stack[4].equals(0.0))
+                            stack[4]=rssi;
+                        else {
+                            stack[4]=stack[3];
+                            stack[3]=stack[2];
+                            stack[2]=stack[1];
+                            stack[1]=stack[0];
+                            stack[0]=rssi;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show);
+        stack = new Double[5];
+        for (int i = 0; i <= 4; i++) {
+            stack[i] = 0.0;
+        }
+        Log.d("LJH","init STACK : "+Double.toString(stack[0])+" "+Double.toString(stack[1])+" "+Double.toString(stack[2]));
         View backgroundimage = findViewById(R.id.background_show);
         Drawable background = backgroundimage.getBackground();
         background.setAlpha(100);
