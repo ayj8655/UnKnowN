@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.Locale;
@@ -18,6 +19,7 @@ public class SplashActivity extends Activity {
 
     private SharedPreferences sp;
     private boolean isUsing;
+    private boolean isProfile;
     private Locale myLocale;
 
     //permission
@@ -37,6 +39,7 @@ public class SplashActivity extends Activity {
         // Is User Using?
         sp = getSharedPreferences("NFC",MODE_PRIVATE);
         isUsing = sp.getBoolean("isUsing",false);
+        isProfile = sp.getBoolean("isProfile",false);
 
         // Checking Permission
         int permissionCheck= ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
@@ -50,6 +53,7 @@ public class SplashActivity extends Activity {
                 permissionCheck4 == PackageManager.PERMISSION_GRANTED)
         {
             // All Permission Accepted
+
             if (isUsing==false) {
                 Intent intent = new Intent(this, WelcomeActivity.class);
                 startActivity(intent);
@@ -72,13 +76,20 @@ public class SplashActivity extends Activity {
                 finish();
                 return;
             }
-            Intent intent = new Intent(SplashActivity.this, LobbyActivity.class);
-            Bundle bun = new Bundle();
-            bun.putInt("id", usingId);
-            bun.putString("tid", usingTid);
-            intent.putExtra("DeviceData", bun);
-            startActivity(intent);
-            finish();
+            if (isProfile==false) {
+                Intent intent = new Intent(SplashActivity.this, ProfileActivity.class);
+                startActivity(intent);
+                finish();
+            }
+            else {
+                Intent intent = new Intent(SplashActivity.this, LobbyActivity.class);
+                Bundle bun = new Bundle();
+                bun.putInt("id", usingId);
+                bun.putString("tid", usingTid);
+                intent.putExtra("DeviceData", bun);
+                startActivity(intent);
+                finish();
+            }
         }
 
     }

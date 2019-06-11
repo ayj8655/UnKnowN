@@ -74,7 +74,7 @@ public class NFCActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.nfc_title));
         builder.setMessage(getString(R.string.nfc_message));
-        // builder.setCancelable(false);
+        builder.setCancelable(false);
         builder.setPositiveButton(getString(R.string.move_to_setting), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));

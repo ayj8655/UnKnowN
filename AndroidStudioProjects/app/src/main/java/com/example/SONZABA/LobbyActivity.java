@@ -418,7 +418,7 @@ public class LobbyActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 SharedPreferences sp = getSharedPreferences("NFC",MODE_PRIVATE);
                 SharedPreferences.Editor editor = sp.edit();
-                editor.remove("isUsing"); editor.remove("id"); editor.remove("tid");
+                editor.clear();
                 editor.commit();
                 Toast.makeText(LobbyActivity.this,R.string.textView_logout_confirm, Toast.LENGTH_SHORT).show();
                 MyIntentService.scanBLE = false;

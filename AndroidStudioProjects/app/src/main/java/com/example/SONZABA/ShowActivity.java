@@ -112,8 +112,6 @@ public class ShowActivity extends AppCompatActivity {
                             address.setText("Distance : " + " " + String.format("%.2f",distance));
 
                             if (rssi_avg >= bluetooth_intensity_safe) { //안전
-                                under_notification.setText(R.string.safe);
-                                under_notification.setTextColor(0xFF20E801);
 
                                 status1.setTextColor(0xFF20E801);
                                 status2.setTextColor(0xFF666666);
@@ -124,8 +122,6 @@ public class ShowActivity extends AppCompatActivity {
                                 emoticon.setImageDrawable(img);
                             } else if (bluetooth_intensity_safe > rssi_avg
                                     && rssi_avg >= bluetooth_intensity_normal) {//주의
-                                under_notification.setText(R.string.warning);
-                                under_notification.setTextColor(0xFFFF9900);
 
                                 status2.setTextColor(0xFFFF9900);
                                 status1.setTextColor(0xFF666666);
@@ -136,8 +132,6 @@ public class ShowActivity extends AppCompatActivity {
                                 emoticon.setImageDrawable(img);
                             } else if (bluetooth_intensity_normal > rssi_avg
                                     && rssi_avg >= bluetooth_intensity_far) { //위험
-                                under_notification.setText(R.string.danger);
-                                under_notification.setTextColor(0xFFFF0000);
 
                                 status3.setTextColor(0xFFFF0000);
                                 status1.setTextColor(0xFF666666);
@@ -147,8 +141,6 @@ public class ShowActivity extends AppCompatActivity {
                                 Drawable img = getResources().getDrawable(R.drawable.sad, null);
                                 emoticon.setImageDrawable(img);
                             } else if (rssi_avg < bluetooth_intensity_far && flag == false) { //미아발생
-                                under_notification.setText(R.string.missing);
-                                under_notification.setTextColor(0xFF800000);
 
                                 status4.setTextColor(0xFF800000);
                                 status1.setTextColor(0xFF666666);
@@ -248,7 +240,6 @@ public class ShowActivity extends AppCompatActivity {
         status2 = findViewById(R.id.Status2);
         status3 = findViewById(R.id.Status3);
         status4 = findViewById(R.id.Status4);
-        under_notification = findViewById(R.id.Under_Notification);
 
         // 나가기 버튼
         btnExit = findViewById(R.id.button9);

@@ -33,6 +33,7 @@ public class ProfileActivity extends AppCompatActivity {
     private static String TAG = "unknown";
     private SharedPreferences sp;
 
+    private int flag=0;
     public String id;
     public String name;
     public String age;
@@ -118,7 +119,14 @@ public class ProfileActivity extends AppCompatActivity {
 
             progressDialog.dismiss();
             Intent intent = new Intent(ProfileActivity.this, ShowActivity.class);
-            startActivity(intent);
+            sp = getSharedPreferences("NFC",MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putBoolean("isProfile",true);
+            editor.commit();
+            if (flag==0)
+                startActivity(intent);
+            flag++;
+            finish();
             //mTextViewResult.setText(result);
             Log.d(TAG, "POST response  - " + result);
         }

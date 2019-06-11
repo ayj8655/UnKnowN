@@ -33,6 +33,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private SharedPreferences ref, sp;
     private Boolean FirstTime, isUsing;
     private Locale myLocale;
+    private boolean isProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class WelcomeActivity extends AppCompatActivity {
         }
         sp = getSharedPreferences("NFC",MODE_PRIVATE);
         isUsing = sp.getBoolean("isUsing",false);
+        isProfile = sp.getBoolean("isProfile",false);
 
         setStatusBarTransparent();
 
@@ -59,6 +61,8 @@ public class WelcomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (isUsing == false)
                     startMainActivity();
+                else if (isProfile == false)
+                    startActivity(new Intent(WelcomeActivity.this, ProfileActivity.class));
                 else
                     startActivity(new Intent(WelcomeActivity.this, LobbyActivity.class));
                 finish();
@@ -74,7 +78,8 @@ public class WelcomeActivity extends AppCompatActivity {
                 } else {
                     if (isUsing == false)
                         startMainActivity();
-
+                    else if (isProfile == false)
+                        startActivity(new Intent(WelcomeActivity.this, ProfileActivity.class));
                     else
                         startActivity(new Intent(WelcomeActivity.this, LobbyActivity.class));
                     finish();

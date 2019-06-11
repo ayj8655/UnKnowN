@@ -164,9 +164,10 @@
             android:id="@+id/Status2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2.6"
+            android:layout_weight="2.4"
             android:text="@string/warning"
             android:layout_gravity="center"
+            android:textAlignment="center"
             android:fontFamily="@font/font_scdream4"
             android:textSize="15sp"
             android:textColor="#FFFFFF" />
@@ -175,7 +176,7 @@
             android:id="@+id/Status3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2.2"
+            android:layout_weight="2.4"
             android:text="@string/danger"
             android:layout_gravity="center"
             android:textAlignment="center"
@@ -187,7 +188,7 @@
             android:id="@+id/Status4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="2.4"
             android:text="@string/missing"
             android:layout_gravity="center"
             android:textAlignment="center"
@@ -195,7 +196,10 @@
             android:textSize="15sp"
             android:textColor="#FFFFFF" />
     </LinearLayout>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.5"/>
     <ImageView
         android:id="@+id/Emoticon"
         android:layout_width="match_parent"
@@ -205,19 +209,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/Under_Notification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="(Status)"
-            android:fontFamily="@font/font_scdream4"
-            android:textAlignment="center"
-            android:textSize="20dp"/>
-
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_weight="1.5"/>
     <TextView
         android:id="@+id/devicename"
         android:text="deviceName"
