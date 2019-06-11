@@ -123,16 +123,6 @@ public class NFCActivity extends AppCompatActivity {
         return sb.toString();
     }
 
-    public void Tagging(View view) {
-        Intent i = new Intent(this, LobbyActivity.class);
-        id = 1;
-        Bundle bun = new Bundle();
-        bun.putInt("id",id);
-        bun.putString("tid","A6D7A0D3");
-        i.putExtra("DeviceData",bun);
-        startActivity(i);
-    }
-
     private class GetData extends AsyncTask<String, Void, String> {
         Intent intent = new Intent(NFCActivity.this, ProfileActivity.class);
         ProgressDialog progressDialog;
