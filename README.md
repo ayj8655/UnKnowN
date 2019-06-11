@@ -413,7 +413,6 @@ public class SplashActivity extends Activity {
 }
 ```
 ### 2. 인트로 슬라이드
-<img src="https://github.com/RickStrahl/MarkdownMonster/raw/master/Art/MarkdownMonster_Icon_128.png" align="right" style="height: 64px"/>
 
 인트로 슬라이드에 대한 설명은 다음과 같다.
 
@@ -574,7 +573,7 @@ public int getCount() {
         container.removeView(v);
     }
  ```
- * *ViewPager*의 페이지를 생성하고 유지하는 방법
+ * *ViewPager*의 페이지를 생성하고 유지하는 방법  
  <img src="https://user-images.githubusercontent.com/48484193/59297858-360fe200-8cc4-11e9-90ad-fe914b82a13d.PNG" width="400"><br>  
  
  출처 : https://recipes4dev.tistory.com/148
@@ -1046,17 +1045,18 @@ public class MyIntentService extends IntentService {
 ```
 ### 7. 로비화면
 1. 공지사항  
+
+<img src="https://user-images.githubusercontent.com/48272857/59277314-f254b280-8c9a-11e9-9668-8d439c398347.jpg" width="250px"/>   
 -  로비 중앙에 공지사항이 표시되고 1분 간격으로 서버로부터 업데이트 받는다.  
-<img src="https://user-images.githubusercontent.com/48272857/59277314-f254b280-8c9a-11e9-9668-8d439c398347.jpg" width="250px"/> 
+
 2. 언어설정  
-국내에서만 국한되는 것이 아닌 세계화 동향에 맞춰 많은 수요가 예상되는 주요나라들의 언어기능을 추가하여 외국인들의 사용성 및 접근성을 높였다. 
 
 <div>
-<center>
 <img src="https://user-images.githubusercontent.com/48484742/59271663-3772e780-8c8f-11e9-8d3c-28dc907c9ce0.png" width="200">
 <img src="https://user-images.githubusercontent.com/48484742/59277240-cdf8d600-8c9a-11e9-9330-ad73f451526f.png" width="200">
-</center>
 </div>  
+
+국내에서만 국한되는 것이 아닌 세계화 동향에 맞춰 많은 수요가 예상되는 주요나라들의 언어기능을 추가하여 외국인들의 사용성 및 접근성을 높였다.    
 
 - 각 언어에 맞는 string파일을 만든다. 그림과 같이 app->res->values->strings경로로 들어가 strings폴더를 우클릭 하고 new->values resouces file를 선택한다. Available qualifiers 목록중에 Locale을 선택해주면 다국적 언어 리스트가 나오며 만들고자 하는 언어를 선택한다. 하드코딩으로 작성해야 언어 설정이 가능하다.  
 
