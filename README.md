@@ -198,9 +198,9 @@ SET PASSWORD FOR root@localhost = PASSWORD('변경할 비밀번호');
 
   - 이 설정은 공유기의 네트워크를 사용하는 다른 PC나 스마트폰에서 웹서버에 접속할 수 있도록 한다.
 
-16. 다음 링크에서 php 파일들을 다운받아서 wampServer 내의 www폴더에 넣는다. (메뉴에서 www 클릭)
+16. 다음 링크에서 php 파일들을 다운받아서 wampServer 내의 www폴더에 넣는다. (메뉴에서 www 클릭)  
 
- --- 링크 ---
+<a href="https://drive.google.com/open?id=1rCrviGAQhRPAexc7suhNIqkP7Sxg4FfQ">다운로드</a>
  
  
 (이후부터는 프로젝트 환경을 따라가고 있다.)
@@ -248,7 +248,9 @@ mysql > show tables로 테이블이 잘 생성되었는지 확인한다.
 ```
 20. Lobby, NFC, Profile Activity의 'IP_ADDRESS' 를 본인 ip로 변경한다.
 
-21. phpMyAdmin에 설정해둔 계정으로 접속한 후 person 테이블에 찾아낸 nfc 고유번호를 serial속성에 추가한다. (id는 자동 갱신된다.)
+21. phpMyAdmin에 설정해둔 계정으로 접속한 후 person 테이블에 찾아낸 nfc 고유번호를 serial속성에 추가한다. (id는 자동 갱신된다.)  
+다음 링크는 위의 데이터베이스 sql 파일이다.  
+<a href="https://drive.google.com/open?id=1wcrcRolH00Ufjj1id6zKa2Gi-5Lhxn2G">다운로드</a>
 
 ---
 
@@ -579,7 +581,7 @@ public int getCount() {
  출처 : https://recipes4dev.tistory.com/148
 ### 3. NFC 태그
 등록된 디바이스만 사용하기위해 NFC태그를 이용해 사용자를 구분한다. 
-- 휴대폰이 NFC기능을 지원하는지 확인 후 NFC가 활성화가 안되어있으면 Dialog를 띄워 환경을 설정하게 되고 활성화가 되면 onNewIntent(Intent intent)가 호출된다.
+- 휴대폰이 NFC기능을 지원하는지 확인 후 NFC가 활성화가 안되어있으면 Dialog를 띄워 활성화를 요구한다. 어플을 재시작 후 태그를 올바로 진행하면 onNewIntent(Intent intent)가 호출된다.
  ```
  //NFCActivity.class
  public class NFCActivity extends AppCompatActivity {
@@ -599,7 +601,7 @@ public int getCount() {
     }
 }
 ```
-- NFC가 활성화 되면 태그가 되기를 기다린다. NFC태그가 이뤄지면 태그된 NFC의 ID를 가져온다. 이 ID는 데이터베이스에 등록되어있는지 확인 후 어플 사용 가능 여부가 결정된다.
+- NFC가 활성화 되면 태그가 되기를 기다린다. NFC태그가 이뤄지면 태그된 NFC의 ID를 가져온다. 이 ID는 데이터베이스에 등록되어있는지 확인 후(task) 어플 사용 가능 여부가 결정된다. 
 ```
 //NFCActivity.class
 public class NFCActivity extends AppCompatActivity {
@@ -696,11 +698,9 @@ public class NFCActivity extends AppCompatActivity {
 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
 ```
-- startActivityForResult()로 전달된 REQUEST_ENABLE_BT 상수는 시스템이 requestCode 매개변수로서 onActivityResult() 구현에서 개발자에게 다시 전달하는 지역적으로 정의된 정수(0보다 커야 함)다.
->[Bluetooth 가이드 바로가기](https://developer.android.com/guide/topics/connectivity/bluetooth?hl=ko)
+- startActivityForResult()로 전달된 REQUEST_ENABLE_BT 상수는 시스템이 requestCode 매개변수로서 onActivityResult() 구현에서 개발자에게 다시 전달하는 지역적으로 정의된 0보다 큰 정수다.
 
-4.
-
+4. 블루투스 활성화 후
 ``` 
 //ShowActivity.class
 protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -1048,6 +1048,30 @@ public class MyIntentService extends IntentService {
 
 <img src="https://user-images.githubusercontent.com/48272857/59277314-f254b280-8c9a-11e9-9668-8d439c398347.jpg" width="250px"/>   
 -  로비 중앙에 공지사항이 표시되고 1분 간격으로 서버로부터 업데이트 받는다.  
+
+```
+// METHOD TO UPDATE NOTICE TEXTVIEW
+    public void UpdateNotice()
+    {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (!Thread.interrupted())
+                    try {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                new GetNotice().execute();
+                            }
+                        });
+                        Thread.sleep(60000); // EXECUTE METHOD EVERY MINUTE
+                    }
+                    catch (InterruptedException e) { Log.d(TAG, "UpdateNotice : ", e); }
+            }
+        }).start();
+    }
+```
+
 
 2. 언어설정  
 
