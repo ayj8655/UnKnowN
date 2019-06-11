@@ -4,10 +4,12 @@
 ---
 # 주제를 선정하게 된 이유
 <div>
+<center>
 <img src="https://user-images.githubusercontent.com/48272857/59177151-1d091300-8b96-11e9-8e2e-f083d993f425.png">
 <img src="https://user-images.githubusercontent.com/48272857/59177153-1e3a4000-8b96-11e9-99e3-0ad131934872.png">
+</center>
  </div>
-[표. 미아발생 원인 및 발생장소]
+<center>[표1. 미아발생 원인 및 발생장소]</center>
 <br>
 위 표의 결과와 같이 미아가 발생하는 원인의 86.2%는 보호자의 부주의와 관련되어 있음을 시사하고 있다. 
 <br>달리 말해, 보호자의 부주의를 막기 위한 보조기술이 적용된다면 미아방지를 비약적으로 줄일 수 있다. 
@@ -37,20 +39,24 @@
 # 하드웨어 
 * 구성 
   1. 블루투스 모듈  
-  <img src="https://user-images.githubusercontent.com/48484742/59264651-8bc19b80-8c7e-11e9-93b3-00fe51714850.jpg" width="150" height="150"><br>
+  <center><img src="https://user-images.githubusercontent.com/48484742/59264651-8bc19b80-8c7e-11e9-93b3-00fe51714850.jpg" width="150" height="150"></center><br>
   아이와의 거리를 계산하기위해 비콘 기능을 가진 블루투스 모듈을 사용하였다. 모듈은 HM-10을 사용하였다.  
   비콘 기능이 없는 블루투스 모듈의 경우 RSSI값을 받아오는데에 있어 어려움이 있고 배터리소모가 많아 비효율적이기 때문에 비콘 기능이 있는 블루투스 모듈을 사용하였다.
+  
   2. 배터리  
-  <img src="https://user-images.githubusercontent.com/48484742/59264686-a09e2f00-8c7e-11e9-9774-d218b6b5fbd4.jpg" width="150" height="150"><br>
+  <center><img src="https://user-images.githubusercontent.com/48484742/59264686-a09e2f00-8c7e-11e9-9774-d218b6b5fbd4.jpg" width="150" height="150"></center><br>
   미아방지 팔찌의 유지보수 증대를 위해 CR2450 수은전지를 사용하며 이는 620mAh의 용량을 가진다. 
+  
   3. NFC  
-  <img src="https://user-images.githubusercontent.com/48484742/59266598-f96fc680-8c82-11e9-9f37-7758277827bd.jpg"><br>
+  <center><img src="https://user-images.githubusercontent.com/48484742/59266598-f96fc680-8c82-11e9-9f37-7758277827bd.jpg"></center><br>
   NFC에 부여된 고유 ID값을 이용해 놀이공원이 소유한 티켓인지를 구분한다. 고유 ID값은 데이터베이스에 저장되어 있으며 등록된 NFC를 휴대폰에 태그 한 경우에만 어플리케이션 사용이 가능하다.
+  
   4. 아두이노  
-  <img src="https://user-images.githubusercontent.com/48484742/59267009-06d98080-8c84-11e9-8fa1-db883677eb76.png" width="50%" height="50%"><br>
+  <center><img src="https://user-images.githubusercontent.com/48484742/59267009-06d98080-8c84-11e9-8fa1-db883677eb76.png" width="50%" height="50%"></center><br>
   놀이공원의 티켓 검사 자동화를 위해 Arduino Uno (R3) 호환보드, RFID Rc522모듈, 서보모터를 사용하여 구현했다. NFC를 RFID에 태그하게 되면 서보모터가 작동하며 문이 열리게 된다.
+  
   5. 케이스  
-  <img src="https://user-images.githubusercontent.com/48272857/59179677-ca335980-8b9d-11e9-91dc-a0ebfb733aec.png"><br>
+  <center><img src="https://user-images.githubusercontent.com/48272857/59179677-ca335980-8b9d-11e9-91dc-a0ebfb733aec.png"></center><br>
   사용자를 비롯한 관리자의 유지보수와 지속가능성 증대를 위해 왼쪽 그림과 같은 디바이스를 3D모델링을 통해 고안하였다. 이 디바이스는 배터리, 블루투스, NFC를 장착하여 사용하는 모델이다.  사용자는 디바이스에 벨크로를 연결하여 착용한다.
   
 ---
@@ -88,7 +94,7 @@
 ```
 2. 블루투스 모듈을 다음과 같이 아두이노에 연결합니다.  
   
-<img src="https://miro.medium.com/max/700/1*wh7iuFpmXctFGUWvhhaNpA.png" width="500px">  
+<center><img src="https://miro.medium.com/max/700/1*wh7iuFpmXctFGUWvhhaNpA.png" width="500px">  </center>
 
 3. 아래 코드를 아두이노 스케치에 입력 후 업로드합니다.
 ```
@@ -243,6 +249,45 @@ mysql > show tables로 테이블이 잘 생성되었는지 확인합니다.
 
 21. phpMyAdmin에 설정해둔 계정으로 접속한 후 person 테이블에 찾아낸 nfc 고유번호를 serial속성에 추가합니다. (id는 자동 갱신됩니다.)
 
+---
+
+### 주요 코드 설명
+### (안드로이드 <-> PHP 서버 통신)
+- HttpURLConnection을 이용한 서버 연결   
+serverURL는 실행할 php주소를 입력합니다. postParameters는 php에 전달해줄 값입니다.
+```java
+// ShowActivity.java의 GetData
+@Override
+        protected String doInBackground(String... params) {
+            String serverURL = "http://" + IP_ADDRESS + "/query.php";
+            // DEVICE NUMBER
+            String postParameters = "id="+params[0];
+
+            try {
+                URL url = new URL(serverURL);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+                httpURLConnection.setReadTimeout(5000);
+                httpURLConnection.setConnectTimeout(5000);
+                httpURLConnection.setRequestMethod("POST");
+                // 생략
+```
+ - JSONObject와 JSONArray을 이용한 JSON Parsing  
+ JSONObject로 php에서 넘어온 JSON형태의 데이터를 입력합니다.
+ JSONArray로 Parsing을 진행합니다.
+```java
+// ShowActivity.java의 onPostExecute
+try {
+        JSONObject jsonObject = new JSONObject(mJsonString);
+        JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
+        for(int i=0;i<jsonArray.length();i++) {
+
+        JSONObject item = jsonArray.getJSONObject(i);
+
+        nameView.setText(item.getString(lb.TAG_NAME));
+        // 생략
+```
+
 wampServer 설치와 설정, php코드는 다음 사이트의 도움을 받았습니다.   
 
 개인 환경에 따라 차이가 있을 수 있고 해결법은 출처에서 확인할 수 있습니다.  
@@ -276,10 +321,10 @@ https://console.developers.google.com/apis/library
 <img src="https://user-images.githubusercontent.com/48484742/59256577-3631c280-8c6f-11e9-8168-50d8a1fc4d5b.png"> <br>
 
 6. '이름'은 원하는대로 설정하고 '애플리케이션 제한사항'은 Android 앱을 선택하고 'API 제한사항'은 키 제한을 선택한 후 Maps SDK for Android 를 선택합니다.  
-<img src="https://user-images.githubusercontent.com/48484742/59256609-45187500-8c6f-11e9-98dd-0126f8d44861.png"> <br>
+<center><img src="https://user-images.githubusercontent.com/48484742/59256609-45187500-8c6f-11e9-98dd-0126f8d44861.png"></center> <br>
 
 7. Android 앱의 사용량 제한 '항목추가'를 누르게 되면 다음 화면이 뜨게 되고 SHA-1 인증서 지문을 얻기 위한 과정부터 진행합니다.  윈도우키 + R을 누른 후 cmd를 입력하고 엔터를 눌러서 명령 프롬프트 창을 열고 다음 명령을 입력합니다.
-<img src="https://user-images.githubusercontent.com/48484742/59256696-6da06f00-8c6f-11e9-8494-241bc09956e8.png"> <br>
+<center><img src="https://user-images.githubusercontent.com/48484742/59256696-6da06f00-8c6f-11e9-8494-241bc09956e8.png"></center> <br>
 
 ```sh
 "C:\Program Files\Android\Android Studio\jre\bin\keytool" -list -v -keystore "%USERPROFILE%\.android\debug.keystore" -alias androiddebugkey -storepass android -keypass android
@@ -322,12 +367,73 @@ https://webnautes.tistory.com/647
 3. 서비스
 ### 6. 다이얼로그 알림
 ### 7. 로비화면
-1. 공지
+1. 공지사항  
+-  로비 중앙에 공지사항이 표시되고 1분 간격으로 서버로부터 업데이트 받습니다.  
+<img src="https://user-images.githubusercontent.com/48272857/59277314-f254b280-8c9a-11e9-9668-8d439c398347.jpg" width="250px"/> 
 2. 언어설정  
-<img src="https://user-images.githubusercontent.com/48484742/59271663-3772e780-8c8f-11e9-8d3c-28dc907c9ce0.png" width="200"> <br>
-(1) 각 언어에 맞는 string파일을 만든다. 그림과 같이 app->res->values->strings경로로 들어가 strings폴더를 우클릭 하고 new->values resouces file를 선택한다. Available qualifiers 목록중에 Locale을 선택해주면 다국적 언어 리스트가 나오며 만들고자 하는 언어를 선택한다.
+<div>
+<center>
+<img src="https://user-images.githubusercontent.com/48484742/59271663-3772e780-8c8f-11e9-8d3c-28dc907c9ce0.png" width="200">
+<img src="https://user-images.githubusercontent.com/48484742/59277240-cdf8d600-8c9a-11e9-9330-ad73f451526f.png" width="200">
+</center>
+</div>  
+
+(1) 각 언어에 맞는 string파일을 만든다. 그림과 같이 app->res->values->strings경로로 들어가 strings폴더를 우클릭 하고 new->values resouces file를 선택한다. Available qualifiers 목록중에 Locale을 선택해주면 다국적 언어 리스트가 나오며 만들고자 하는 언어를 선택한다. 하드코딩으로 작성해야 언어 설정이 가능하다.  
+(2) mymenu.xml 파일을 만들고 Item을 이용해 어플 내에서 버튼을 통해 언어변경이 가능하도록 한다.  
+```
+//LobbyActivity.java
+@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // action with ID action_refresh was selected
+            case R.id.lang_change_btn:
+                change_lang();
+                break;
+            //생략...
+        }
+        return true;
+    }
+```  
+(3) 언어 변경 후 앱을 재실행 했을 때 언어 설정이 유지가 되지 않는 문제점이 발생하는데 sharedpreferences를 사용해 xml파일에 필요한 데이터를 저장하여 쉽게 읽고 쓰게 해주어 해당 문제점을 해결 할 수 있다.  
+```
+//SplashActivity
+@Override
+    protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+        // Load Current Language in App
+        try {
+            setLanguage();
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //생략...
+    }
+    
+    private void setLanguage()
+    {
+        SharedPreferences langSp = getSharedPreferences("CommonPrefs",MODE_PRIVATE);
+        String lang = langSp.getString("Language", Locale.getDefault().getLanguage());
+        if (lang.equalsIgnoreCase(""))
+            return;
+        myLocale = new Locale(lang);
+        Locale.setDefault(myLocale);
+        android.content.res.Configuration config = new android.content.res.Configuration();
+        config.setLocale(myLocale);
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+    }
+```  
 3. 지도
-4. 관리자 모드
+4. 관리자 모드  
+- 상단 좌측을 더블클릭합니다.  
+<img src="https://user-images.githubusercontent.com/48272857/59276127-aacd2700-8c98-11e9-8c2a-c2e383cba313.jpg" width="200px"/>
+- 사전 설정된 비밀번호나 따로 설정한 비밀번호를 입력합니다.  
+<img src="https://user-images.githubusercontent.com/48272857/59276579-8b82c980-8c99-11e9-9d0c-423bfc30d0f3.jpg" width="250px"/>  
+- '사용자 데이터 리셋' 버튼으로 사용자가 팔찌를 반납했을 경우 초기화가 가능합니다.  
+- '공지사항 작성' 버튼으로 로비에 표시되는 공지사항을 작성할 수 있습니다.  
+- 결과창에 기능들의 작동결과가 출력됩니다.  
+<img src="https://user-images.githubusercontent.com/48272857/59276126-aacd2700-8c98-11e9-8cb7-78270b231a85.jpg" width="200px"/>
+
 ---
 ### 개발 관련
 
