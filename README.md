@@ -263,12 +263,11 @@ https://console.developers.google.com/apis/library
 5. 사용자 인증 정보 만들기를 클릭 > API 키를 클릭 > 키 제한을 누릅니다. 이 때 생성된 API키는 AndroidManifest.xml에 사용이 됩니다.
 <img src="https://user-images.githubusercontent.com/48484742/59256577-3631c280-8c6f-11e9-8168-50d8a1fc4d5b.png"> <br>
 
-6. '이름'은 원하는대로 설정하고 '애플리케이션 제한사항'은 Android 앱을 선택하고 'API 제한사항'은 키 제한을 선택한 후 Maps SDK for Android 를 선택합니다.
+6. '이름'은 원하는대로 설정하고 '애플리케이션 제한사항'은 Android 앱을 선택하고 'API 제한사항'은 키 제한을 선택한 후 Maps SDK for Android 를 선택합니다.  
 <img src="https://user-images.githubusercontent.com/48484742/59256609-45187500-8c6f-11e9-98dd-0126f8d44861.png"> <br>
 
 7. Android 앱의 사용량 제한 부분에서 SHA-1 인증서 지문을 얻기 위한 과정부터 진행합니다.  윈도우키 + R을 누른 후 cmd를 입력하고 엔터를 눌러서 명령 프롬프트 창을 엽니다.
-<img src="https://user-images.githubusercontent.com/48484742/59256696-6da06f00-8c6f-11e9-8494-241bc09956e8.png"> <br>  
-
+<img src="https://user-images.githubusercontent.com/48484742/59256696-6da06f00-8c6f-11e9-8494-241bc09956e8.png"> <br>
 다음 명령을 입력합니다.
 ```sh
 "C:\Program Files\Android\Android Studio\jre\bin\keytool" -list -v -keystore "%USERPROFILE%\.android\debug.keystore" -alias androiddebugkey -storepass android -keypass android
