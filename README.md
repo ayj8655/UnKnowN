@@ -889,10 +889,10 @@ public void settingScanCallback() {
   <img src="https://user-images.githubusercontent.com/48273766/59306345-fef6fc00-8cd6-11e9-9021-0eefdfe96fa5.png" width="50%" height="50%"><br>
   상기 식은 사용자와 팔찌와의 거리를 수식화하기 위해 측정된 Rssi 값을 거리로 변환하는 식을 나타낸다.
   RSSI의 단위는 dBm이며 수신기에서 측정된 값이다.<br>
-  n = 2(In free space)로 경로손실 지수를 나타내며 는 송신기와 수신기 사이의 거리가 1m일 때 수신 신호 세기를 나타낸다. 상기 식을 이용하여 Rssi를 미터(m) 단위의 거리로 변환가능하다.
+  n = 2(In free space)로 경로손실 지수를 나타내며 는 송신기와 수신기 사이의 거리가 1m일 때 수신 신호 세기를 나타낸다. 상기 식을 이용하여 Rssi를 미터(m) 단위의 거리로 변환가능하다.  
   5.5.3 Rssi 측정결과  
   <img src="https://user-images.githubusercontent.com/48273766/59306658-b7bd3b00-8cd7-11e9-9f89-e4fe5c55a7bc.png" width="50%" height="50%"><br>
-  위 표를 볼 때 블루투스 모듈을 팔찌 안에 넣고 측정했을시 오차율이 증가하는 것으로 보인다. 이는 모듈이 팔찌에 의해 간섭이 발생된 결과이며 이는 의 값의 변경으로 보정된다. 
+  위 표를 볼 때 블루투스 모듈을 팔찌 안에 넣고 측정했을시 오차율이 증가하는 것으로 보인다. 이는 모듈이 팔찌에 의해 간섭이 발생된 결과이며 이는 의 값의 변경으로 보정된다.   
   5.5.4 Rssi 기반의 거리 추정 정확도  
   <img src="https://user-images.githubusercontent.com/48273766/59306897-4336cc00-8cd8-11e9-993e-ab0f159b0f0a.png" width="50%" height="50%"><br>
   상기 Rssi 기반의 거리추정 수식을 적용하여 추정된 거리별 정확도이다. 평균 정확도는 팔찌 케이스 미적용시, 적용시 각각 86.97%, 90.52%로 정확도는 Rssi 하나로는 정확도는 다소 낮으나 사용자가 참고하는 수준임을 고려할 때 양호한 수치이다. 또한, 상기 수식의 txPower 상수를 보정함으로써 오차율을 감소시킬수 있다.
