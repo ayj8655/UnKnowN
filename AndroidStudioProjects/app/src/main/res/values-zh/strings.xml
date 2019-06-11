@@ -69,4 +69,10 @@
     <string name="slider11">显示可根据孩子的身高登上的游乐设施!</string>
     <string name="slider12">开始启动应用!</string>
     <string name="slider13">你可以再次查看介绍！</string>
+    <string name="safe">SAFE</string>
+    <string name="warning">WARNING</string>
+    <string name="danger">DANGER</string>
+    <string name="missing">MISSING!</string>
+    <string name="child_info">儿童信息</string>
+    <string name="status">状态</string>
 </resources>

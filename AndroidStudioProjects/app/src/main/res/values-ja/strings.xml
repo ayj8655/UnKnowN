@@ -69,4 +69,10 @@
     <string name="slider11">子供のキーに合わせて搭乗可能な乗り物を示しています!</string>
     <string name="slider12">STARTを押してアプリを起動してください!</string>
     <string name="slider13">Introを再確認することができます！</string>
+    <string name="safe">SAFE</string>
+    <string name="warning">WARNING</string>
+    <string name="danger">DANGER</string>
+    <string name="missing">MISSING!</string>
+    <string name="child_info">子供について</string>
+    <string name="status">状態</string>
 </resources>

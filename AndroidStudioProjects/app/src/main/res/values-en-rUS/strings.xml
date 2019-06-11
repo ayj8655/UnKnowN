@@ -69,4 +69,10 @@
     <string name="slider11">Show rides that can be boarded according to your child\'s height!</string>
     <string name="slider12">Press \'START\' to start the app!</string>
     <string name="slider13">You can check the intro again !</string>
+    <string name="safe">SAFE</string>
+    <string name="warning">WARNING</string>
+    <string name="danger">DANGER</string>
+    <string name="missing">MISSING!</string>
+    <string name="child_info">Child Information</string>
+    <string name="status">Status</string>
 </resources>

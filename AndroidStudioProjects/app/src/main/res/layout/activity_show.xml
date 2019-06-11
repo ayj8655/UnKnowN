@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1.5"
-        android:text="사용자 정보"
+        android:text="@string/child_info"
         android:textSize="25dp"
         android:textAlignment="center"
         android:textStyle="bold"
@@ -129,7 +129,7 @@
         android:id="@+id/Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="상태창"
+        android:text="@string/status"
         android:textSize="25dp"
         android:textAlignment="center"
         android:textStyle="bold"
@@ -153,23 +153,22 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2.4"
-            android:text="안전"
+            android:text="@string/safe"
             android:layout_gravity="center"
             android:textAlignment="center"
             android:fontFamily="@font/font_scdream4"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:textColor="#FFFFFF"/>
 
         <TextView
             android:id="@+id/Status2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2.2"
-            android:text="주의"
+            android:layout_weight="2.6"
+            android:text="@string/warning"
             android:layout_gravity="center"
-            android:textAlignment="center"
             android:fontFamily="@font/font_scdream4"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:textColor="#FFFFFF" />
 
         <TextView
@@ -177,11 +176,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2.2"
-            android:text="위험"
+            android:text="@string/danger"
             android:layout_gravity="center"
             android:textAlignment="center"
             android:fontFamily="@font/font_scdream4"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:textColor="#FFFFFF"/>
 
         <TextView
@@ -189,11 +188,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="미아발생"
+            android:text="@string/missing"
             android:layout_gravity="center"
             android:textAlignment="center"
             android:fontFamily="@font/font_scdream4"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:textColor="#FFFFFF" />
     </LinearLayout>
 

@@ -112,7 +112,7 @@ public class ShowActivity extends AppCompatActivity {
                             address.setText("Distance : " + " " + String.format("%.2f",distance));
 
                             if (rssi_avg >= bluetooth_intensity_safe) { //안전
-                                under_notification.setText("안전");
+                                under_notification.setText(R.string.safe);
                                 under_notification.setTextColor(0xFF20E801);
 
                                 status1.setTextColor(0xFF20E801);
@@ -124,7 +124,7 @@ public class ShowActivity extends AppCompatActivity {
                                 emoticon.setImageDrawable(img);
                             } else if (bluetooth_intensity_safe > rssi_avg
                                     && rssi_avg >= bluetooth_intensity_normal) {//주의
-                                under_notification.setText("주의");
+                                under_notification.setText(R.string.warning);
                                 under_notification.setTextColor(0xFFFF9900);
 
                                 status2.setTextColor(0xFFFF9900);
@@ -136,7 +136,7 @@ public class ShowActivity extends AppCompatActivity {
                                 emoticon.setImageDrawable(img);
                             } else if (bluetooth_intensity_normal > rssi_avg
                                     && rssi_avg >= bluetooth_intensity_far) { //위험
-                                under_notification.setText("위험");
+                                under_notification.setText(R.string.danger);
                                 under_notification.setTextColor(0xFFFF0000);
 
                                 status3.setTextColor(0xFFFF0000);
@@ -147,7 +147,7 @@ public class ShowActivity extends AppCompatActivity {
                                 Drawable img = getResources().getDrawable(R.drawable.sad, null);
                                 emoticon.setImageDrawable(img);
                             } else if (rssi_avg < bluetooth_intensity_far && flag == false) { //미아발생
-                                under_notification.setText("미아발생");
+                                under_notification.setText(R.string.missing);
                                 under_notification.setTextColor(0xFF800000);
 
                                 status4.setTextColor(0xFF800000);
