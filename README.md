@@ -50,25 +50,25 @@
   미아방지 팔찌의 유지보수 증대를 위해 CR2450 수은전지를 사용하며 이는 620mAh의 용량을 가진다. 
   
   3. NFC  
-  <center><img src="https://user-images.githubusercontent.com/48484742/59266598-f96fc680-8c82-11e9-9f37-7758277827bd.jpg"></center><br>
+  <center><img src="https://user-images.githubusercontent.com/48484742/59266598-f96fc680-8c82-11e9-9f37-7758277827bd.jpg" width="150"></center><br>
   NFC에 부여된 고유 ID값을 이용해 놀이공원이 소유한 티켓인지를 구분한다. 고유 ID값은 데이터베이스에 저장되어 있으며 등록된 NFC를 휴대폰에 태그 한 경우에만 어플리케이션 사용이 가능하다.
   
   4. 아두이노  
   <center><img src="https://user-images.githubusercontent.com/48484742/59267009-06d98080-8c84-11e9-8fa1-db883677eb76.png" width="50%" height="50%"></center><br>
   놀이공원의 티켓 검사 자동화를 위해 Arduino Uno (R3) 호환보드, RFID Rc522모듈, 서보모터를 사용하여 구현했다. NFC를 RFID에 태그하게 되면 서보모터가 작동하며 문이 열리게 된다.
   
-  5. 케이스    
-  -1차 모델  
-  <center><img src="https://user-images.githubusercontent.com/48273766/59301890-a40cd700-8ccd-11e9-99b6-98dac746faa3.png"width="50%" height="30%"></center><br>  
-  -2차 모델
-   <center><img src="https://user-images.githubusercontent.com/48273766/59302736-935d6080-8ccf-11e9-8d98-4c5c6b736f46.png"width="50%" height="30%"></center><br>
-   -3차 모델
-   <center><img src="https://user-images.githubusercontent.com/48273766/59303341-f56a9580-8cd0-11e9-9ae5-029817283fef.png"width="50%" height="30%"></center><br>
-   -배터리 모듈
-   <center><img src="https://user-images.githubusercontent.com/48273766/59303522-56926900-8cd1-11e9-8cf3-1ea0ecaf027c.png"width="50%" height="30%"></center><br>
-   -최종 팔찌 모델
-   <center><img src="https://user-images.githubusercontent.com/48273766/59303948-49c24500-8cd2-11e9-9274-9b91ce5de6df.png"width="50%" height="30%"></center><br>
-  <center><img src="https://user-images.githubusercontent.com/48272857/59179677-ca335980-8b9d-11e9-91dc-a0ebfb733aec.png"></center><br>
+ 5. 케이스    
+  -1차 모델   
+  <img src="https://user-images.githubusercontent.com/48273766/59301890-a40cd700-8ccd-11e9-99b6-98dac746faa3.png" width="40%" height="30%">  
+  -2차 모델  
+  <img src="https://user-images.githubusercontent.com/48273766/59302736-935d6080-8ccf-11e9-8d98-4c5c6b736f46.png" width="40%" height="30%">   
+  -3차 모델  
+   <img src="https://user-images.githubusercontent.com/48273766/59303341-f56a9580-8cd0-11e9-9ae5-029817283fef.png" width="40%" height="30%">  
+  -배터리 모듈  
+   <img src="https://user-images.githubusercontent.com/48273766/59303522-56926900-8cd1-11e9-8cf3-1ea0ecaf027c.png"  width="40%" height="30%">  
+  -최종 팔찌 모델  
+  <img src="https://user-images.githubusercontent.com/48273766/59303948-49c24500-8cd2-11e9-9274-9b91ce5de6df.png"  width="40%">
+  <img src="https://user-images.githubusercontent.com/48272857/59179677-ca335980-8b9d-11e9-91dc-a0ebfb733aec.png">  
   사용자를 비롯한 관리자의 유지보수와 지속가능성 증대를 위해 왼쪽 그림과 같은 디바이스를 3D모델링을 통해 고안하였다. 이 디바이스는 배터리, 블루투스, NFC를 장착하여 사용하는 모델이다.  사용자는 디바이스에 벨크로를 연결하여 착용한다.
   
 ---
@@ -880,7 +880,23 @@ public void settingScanCallback() {
     }
  ```
   - ShowActivity.class 화면으로 다시 돌아오면 MyIntentService.class의 변수인 scanBLE = false로 초기화를 하여 서비스를 종료한다.
- 
+  
+ ### 5.4 Rssi 가공 및 실험결과
+  5.4.1 Rssi 노이즈 보정  
+  <img src="https://user-images.githubusercontent.com/48273766/59305831-f9e57d00-8cd5-11e9-805a-ee7728995737.png" width="50%" height="50%"><br>
+  통신모듈의 특성상 신호값을 받아오는데 있어 노이즈가 발생하게 된다. 이러한 갑작스러운 변화값을 보정하기 위한 Size=5의 큐를 생성하며 이 큐전체의 원소값을 상기 식을 이용하여 Rssi의 평균을 구해 신호값을 안정화한다.  
+  5.4.2 Rssi 기반의 거리 추정  
+  <img src="https://user-images.githubusercontent.com/48273766/59306345-fef6fc00-8cd6-11e9-9021-0eefdfe96fa5.png" width="50%" height="50%"><br>
+  상기 식은 사용자와 팔찌와의 거리를 수식화하기 위해 측정된 Rssi 값을 거리로 변환하는 식을 나타낸다.
+  RSSI의 단위는 dBm이며 수신기에서 측정된 값이다.<br>
+  n = 2(In free space)로 경로손실 지수를 나타내며 는 송신기와 수신기 사이의 거리가 1m일 때 수신 신호 세기를 나타낸다. 상기 식을 이용하여 Rssi를 미터(m) 단위의 거리로 변환가능하다.
+  5.4.3 Rssi 측정결과  
+  <img src="https://user-images.githubusercontent.com/48273766/59306658-b7bd3b00-8cd7-11e9-9f89-e4fe5c55a7bc.png" width="50%" height="50%"><br>
+  위 표를 볼 때 블루투스 모듈을 팔찌 안에 넣고 측정했을시 오차율이 증가하는 것으로 보인다. 이는 모듈이 팔찌에 의해 간섭이 발생된 결과이며 이는 의 값의 변경으로 보정된다. 
+  5.4.4 Rssi 기반의 거리 추정 정확도  
+  <img src="https://user-images.githubusercontent.com/48273766/59306897-4336cc00-8cd8-11e9-993e-ab0f159b0f0a.png" width="50%" height="50%"><br>
+  상기 Rssi 기반의 거리추정 수식을 적용하여 추정된 거리별 정확도이다. 평균 정확도는 팔찌 케이스 미적용시, 적용시 각각 86.97%, 90.52%로 정확도는 Rssi 하나로는 정확도는 다소 낮으나 사용자가 참고하는 수준임을 고려할 때 양호한 수치이다. 또한, 상기 수식의 txPower 상수를 보정함으로써 오차율을 감소시킬수 있다.
+  
 ### 6. 다이얼로그 알림  
 
 <div>
