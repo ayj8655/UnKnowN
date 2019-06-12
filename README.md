@@ -1377,7 +1377,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 - 결과창에 기능들의 작동결과가 출력된다.  
 <img src="https://user-images.githubusercontent.com/48272857/59276126-aacd2700-8c98-11e9-8cb7-78270b231a85.jpg" width="200px"/>
 
-### 시장성  및 차별성  
+### 시장성 
 - 시장성  
 우선적으로 높은 입장객 수를 보유한 놀이공원에 본 연구결과인 팔찌를 공급했을 때 높은 수익이 기대된다. 현재 놀이공원의 한해 방문객 수는 다음과 같다.  
 <img src="https://user-images.githubusercontent.com/48273766/59314754-aaad4580-8cf1-11e9-9308-e20eafbad2e9.png" width="500px"/>  
@@ -1397,8 +1397,6 @@ NFC: 약 250원<br>
 미국과 영국은 매년 각각 약 46만명, 11만명의 미아가 발생하고 있으며 이는 미아 문제가 국내만이 아니며 전세계의 사회적 문제임을 보여준다. 
 이는 세계시장에 충분한 시장성을 가졌음을 의미한다.<br>
 REFERENCE: International Centre for missing & exploited children, Missing Children’s Statistics, International Centre for missing & exploited children. <br>  
-  
-- 차별성
 
 ---
 
