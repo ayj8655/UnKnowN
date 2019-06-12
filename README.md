@@ -1102,7 +1102,7 @@ public class MyIntentService extends IntentService {
     }
 }
 ```
-### 7. 로비화면
+### 7. 로비화면 2
 1. ViewPager를 활용한 정보제공
 놀이공원에서 진행중인 이벤트들에 대한 정보를 제공해준다. 이미지 뷰를 클릭 시 자세한 정보를 확인 할 수 있도록 uri를 연결한다.
 
