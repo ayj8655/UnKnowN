@@ -35,7 +35,7 @@
     - 아이의 키에 맞는 놀이기구를 표시하고 자세한 정보를 확인
 
   6. QR코드  
-  --QR코드이미지--  
+  <img src="https://user-images.githubusercontent.com/48484742/59318197-1e0a8380-8d01-11e9-91b1-72f0afbc36ed.jpg"> <br> 
   놀이공원에 온 손님이 미아방지팔찌를 원하는 경우 미아방지팔찌에 맞는 어플을 부모의 핸드폰에 다운로드 하기 위해 놀이공원 측에서 QR코드를 제공한다. QR코드는 네이버에서 제공하는 네이버QR코드를 이용하여 만들었다.
 ---
 # 하드웨어 
@@ -466,10 +466,10 @@ public class SplashActivity extends Activity {
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 ```
-*ViewPager* 클래스이다. 
+*ViewPager* 이다. 
 
-*ViewPager* 클래스는 페이지가 슬라이드 되어 좌우로 넘어갈 수 있도록 해주는 기능이다. 
-주의해야 할 점은 *ViewPager*클래스는 support v4에서 제공하므로, *프래그먼트도 이에 맞춰주어야 한다.  
+*ViewPager* 는 페이지가 슬라이드 되어 좌우로 넘어갈 수 있도록 해주는 기능이다. 
+주의해야 할 점은 *ViewPager* 는 support v4에서 제공하므로, *프래그먼트도 이에 맞춰주어야 한다.  
 
 
 > **프래그먼트:** 하나의 액티비티가 여러 개의 화면을 가지도록 만들기위해 고안된 개념이다.  
