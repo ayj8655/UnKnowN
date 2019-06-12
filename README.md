@@ -740,9 +740,10 @@ public class NFCActivity extends AppCompatActivity {
 }
 ```
 ### 4. 프로필 입력
-- 아이 정보를 입력한다. 입력 정보는 이름, 나이, 보호자 전화번호이며 person 테이블에 값이 저장된다. 프로필 보기 창에서 데이터베이스를 통해 위 값들을 받는다.  
-<img src="https://user-images.githubusercontent.com/48272857/59279191-72c8e280-8c9e-11e9-84fe-e76585ab2d60.jpg" width="250px"/><br>  
-- 다음처럼 php로 사용자 분별을 위한 id와 사용자가 입력한 데이터인 name, age, phone이 전달된다.
+- 아이 정보를 입력한다. 입력 정보는 이름, 나이, 보호자 전화번호이며 person 테이블에 값이 저장된다.  
+<img src="https://user-images.githubusercontent.com/48272857/59279191-72c8e280-8c9e-11e9-84fe-e76585ab2d60.jpg" width="250px"/><br>
+   
+다음처럼 php로 사용자 분별을 위한 id와 사용자가 입력한 데이터인 name, age, phone이 전달된다.
 ```java
 //ProfileActivity.java
 @Override
@@ -755,6 +756,29 @@ public class NFCActivity extends AppCompatActivity {
             String postParameters = "id=" + id + "&name=" + name + "&age=" + age + "&phone=" + phone;
             //생략...
 ```
+전달된 데이터를 id에 맞게 데이터를 입력한다.  
+```
+if(!isset($errMSG))
+        {
+            try{
+                $stmt = $con->prepare('UPDATE person SET name=:name, age=:age, phone=:phone WHERE id=:id');
+                $stmt->bindParam(':id', $id);
+                $stmt->bindParam(':name', $name);
+                $stmt->bindParam(':age', $age);
+                $stmt->bindParam(':phone', $phone);
+
+                if($stmt->execute())
+                {
+                    $successMSG = "새로운 사용자를 추가했습니다.";
+                }
+                else
+                {
+                    $errMSG = "사용자 추가 에러";
+                }
+        // 생략...
+```
+프로필 보기 창에서 데이터베이스를 통해 위 값들을 받는다.<br>
+
 ### 5. 아이와의 거리 확인
 ###### 5.1.1 블루투스 Rssi 얻기 위한 예상 시나리오.
 1. 앱 실행시 명시적으로 창을 띄워 블루투스 활성화 시키기.
