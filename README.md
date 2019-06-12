@@ -127,8 +127,8 @@
 # 사전 설정 및 환경 구축
 
 ### 안드로이드 공통  
-모든 프로젝트는 app/res/xml 안에 network_security_config.xml 을 만들고 다음 내용을 입력한다.  
-(api 28 이상부터 네트워크 작업에 추가 권한이 필요함)  
+모든 프로젝트는 app/res/xml 안에 network_security_config.xml을 만들고 다음 내용을 입력한다.  
+(api 28 이상부터 네트워크 작업에 추가 권한이 필요하다)  
 ```
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
