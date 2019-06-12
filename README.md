@@ -1258,7 +1258,7 @@ NFC: 약 250원<br>
 국내 미취학 아동 기준: 7280*120만=약 87억<br>
 현재 국내에서는 약 90억 정도의 시장규모를 보이며 출산율을 고려해볼 때 매년 약 40만명의 잠재적 소비자가 지속적으로 발생한다. 국내의 대표적인 놀이공원 두곳을 기준으로 작성되었고 국내시장은 제한적인 특성을 보여주고 있다.<br>
 미국과 영국은 매년 각각 약 46만명, 11만명의 미아가 발생하고 있으며 이는 미아 문제가 국내만이 아니며 전세계의 사회적 문제임을 보여준다. 
-이는 세계시장에 충분한 시장성을 가졌음을 의미한다.  
+이는 세계시장에 충분한 시장성을 가졌음을 의미한다.  <br>
 REFERENCE: International Centre for missing & exploited children, Missing Children’s Statistics, International Centre for missing & exploited children.
 
 ---
