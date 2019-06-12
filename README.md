@@ -1397,7 +1397,7 @@ NFC: 약 250원<br>
 미국과 영국은 매년 각각 약 46만명, 11만명의 미아가 발생하고 있으며 이는 미아 문제가 국내만이 아니며 전세계의 사회적 문제임을 보여준다. 
 이는 세계시장에 충분한 시장성을 가졌음을 의미한다.<br>
 REFERENCE: International Centre for missing & exploited children, Missing Children’s Statistics, International Centre for missing & exploited children. <br>  
-
+  
 - 차별성
 
 ---
