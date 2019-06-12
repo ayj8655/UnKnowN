@@ -290,8 +290,11 @@ mysql > show tables로 테이블이 잘 생성되었는지 확인한다.
 
 ---
 
-### 주요 코드 설명
-### (안드로이드 <-> PHP 서버 통신)
+### Android <--> PHP <--> MySQL  
+<img src="https://user-images.githubusercontent.com/48272857/59321469-1b159000-8d0d-11e9-9363-23743b6fe1eb.png"/>  
+안드로이드는 보안상의 이유로 직접적인 외부 라이브러리와 연동할 수 없게 막아놓았다. 따라서 MySQL 데이터베이스에 직접적인 접속이 불가능하다. 그렇기 때문에 PHP를 중간 매개로 이용하여 데이터를 가져와야 한다.  
+HTTP요청으로 웹서버의 PHP파일이 MySQL에 있는 데이터를 가져오며 웹페이지에 저장되어있던 내용을 띄운다. 그 후 안드로이드는 PHP파일이 웹페이지에 출력하고 있는 내용을 읽어온다. 이 때 미리 약속한 태그가 부여된 정보를 받아오며 형태는 JSON Object형태이다. 안드로이드에서 JSON Object와 JSON Array를 이용한 JSON Parsing을 통해 데이터를 가공해서 사용한다.  
+
 - HttpURLConnection을 이용한 서버 연결   
 serverURL는 실행할 php주소를 입력한다. postParameters는 php에 전달해줄 값이다.
 ```java
@@ -1177,7 +1180,35 @@ public class MyTimerTask extends TimerTask {
 
 2. 공지사항  
 
-<img src="https://user-images.githubusercontent.com/48272857/59277314-f254b280-8c9a-11e9-9668-8d439c398347.jpg" width="250px"/><br>
+<img src="https://user-images.githubusercontent.com/48272857/59277314-f254b280-8c9a-11e9-9668-8d439c398347.jpg" width="250px"/><br>  
+
+- 공지사항을 DB에서 불러오는 과정  
+```
+private class GetNotice extends AsyncTask<String, Void, String> {
+        String errorString = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        // 생략...
+                try {
+                    JSONObject jsonObject = new JSONObject(mJsonString);
+                    JSONArray jsonArray = jsonObject.getJSONArray("notice");
+                    for(int i=0;i<jsonArray.length();i++) {
+                        JSONObject item = jsonArray.getJSONObject(i);
+                        String content = item.getString("content");
+                        String date = item.getString("date");
+
+                        textNotice.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+                        textNotice.setText(content+"  :  "+date);
+                        textNotice.setSelected(true);
+                        textNotice.setSingleLine(true);
+                    }
+                // 생략...
+```
+
 - 로비 중앙에 공지사항이 표시되고 1분 간격으로 서버로부터 업데이트 받는다.  
 
 ```
@@ -1341,10 +1372,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 5. 관리자 모드  
 - 상단 좌측을 더블클릭한다.  
-<img src="https://user-images.githubusercontent.com/48272857/59276127-aacd2700-8c98-11e9-8c2a-c2e383cba313.jpg" width="200px"/>
-- 사전 설정된 비밀번호나 따로 설정한 비밀번호를 입력한다.  
+<img src="https://user-images.githubusercontent.com/48272857/59276127-aacd2700-8c98-11e9-8c2a-c2e383cba313.jpg" width="200px"/>  
+
+- 사전 설정된 비밀번호나 따로 설정한 비밀번호를 입력한다. 
+
 - '사용자 데이터 리셋' 버튼으로 사용자가 팔찌를 반납했을 경우 초기화가 가능하다.  
+
 - '공지사항 작성' 버튼으로 로비에 표시되는 공지사항을 작성할 수 있다.  
+
 - 결과창에 기능들의 작동결과가 출력된다.  
 <img src="https://user-images.githubusercontent.com/48272857/59276126-aacd2700-8c98-11e9-8cb7-78270b231a85.jpg" width="200px"/>
 
