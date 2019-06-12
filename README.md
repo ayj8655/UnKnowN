@@ -55,7 +55,7 @@
   
   4. 아두이노  
   <center><img src="https://user-images.githubusercontent.com/48484742/59267009-06d98080-8c84-11e9-8fa1-db883677eb76.png" width="50%" height="50%"></center><br>
-  놀이공원의 티켓 검사 자동화를 위해 Arduino Uno (R3) 호환보드, RFID Rc522모듈, 서보모터를 사용하여 구현했다. NFC를 RFID에 태그하게 되면 서보모터가 작동하며 문이 열리게 된다.
+  블루투스 모듈 사전 설정 및 놀이공원의 티켓 검사 자동화를 위해 Arduino Uno (R3) 호환보드, RFID Rc522모듈, 서보모터를 사용하여 구현했다. NFC를 RFID에 태그하게 되면 서보모터가 작동하며 문이 열리게 된다.
   
  5. 케이스    
   -1차 모델   
@@ -155,7 +155,7 @@ void loop() {
 
 2. 서보 모터 PIN을 6번 PIN으로  RFID모듈의 SDA, RST PIN을 각각 10, 9 PIN으로로 정의해준 다음 아래 연결도와 같이 서보모터와 RFID모듈, 우노 보드를 연결한다. ( 나머지 RFID PIN은 SPI 라이브러리를 사용하기에 별도의 설정이 필요없다. )
 
-![Image and Preview Themes on the toolbar](https://user-images.githubusercontent.com/48374494/59271252-63da3400-8c8e-11e9-8822-e5d840dd4ac9.PNG)
+<center><img src="https://user-images.githubusercontent.com/48484742/59267009-06d98080-8c84-11e9-8fa1-db883677eb76.png" width="50%" height="50%"></center><br>
 
 3. 서보모터와 RFID 라이브러리를 생성한다.
 ```csharp
