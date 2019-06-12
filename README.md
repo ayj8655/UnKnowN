@@ -155,7 +155,7 @@ void loop() {
 #include <MFRC522.h>// RFID 라이브러리
 ```
 
-2. 서보 모터 PIN을 6번 PIN으로  RFID모듈의 SDA, RST PIN을 각각 10, 9 PIN으로로 정의해준 다음 아래 연결도와 같이 서보모터와 RFID모듈, 우노 보드를 연결한다. ( 나머지 RFID PIN은 SPI 라이브러리를 사용하기에 별도의 설정이 필요없다. )
+2. 서보 모터 PIN을 6번 PIN으로  RFID모듈의 SDA, RST PIN을 각각 10, 9 PIN으로 정의해준 다음 아래 연결도와 같이 서보모터와 RFID모듈, 우노 보드를 연결한다. ( 나머지 RFID PIN은 SPI 라이브러리를 사용하기에 별도의 설정이 필요없다. )
 
 <center><img src="https://user-images.githubusercontent.com/48484742/59267009-06d98080-8c84-11e9-8fa1-db883677eb76.png" width="50%" height="50%"></center><br>
 
@@ -590,6 +590,8 @@ public int getCount() {
 
 2. **ViewPager**의 페이지 생성과 관리 :
 *ViewPager*는 항상 현재 페이지를 기준으로 좌/우 하나씩 존재한다. 즉, **현재 페이지를 포함하여 최대 세 개의 페이지를 생성 및 관리**한다. 
+그 이유는 페이지가 표시되는 매 순간 생성을 하는 방법이나 미리 모든 페이지를 생성하는 방법은 많은 메모리를 필요하게 되기 때문에
+페이지가 늦게 표시되는 문제가 생길 수 있습니다. 이를 절충하기 위해 *ViewPager*는 세 개의 페이지만 관리하는 것입니다.
 
 3. **instantiateItem**() 메소드 : **화면에 표시할 페이지뷰 생성**한다.
  파라미터로 전달된 position에 해당하는 페이지를 생성한 다음, 또 다른 파라미터로 전달된 컨테이너(=뷰페이저 객체)에 생성된 페이지뷰를 추가하면 된다.
@@ -1102,8 +1104,9 @@ public class MyIntentService extends IntentService {
     }
 }
 ```
-### 7. 로비화면 2
-1. ViewPager를 활용한 정보제공
+### 7. 로비화면 
+1. ViewPager를 활용한 정보제공  
+
 놀이공원에서 진행중인 이벤트들에 대한 정보를 제공해준다. 이미지 뷰를 클릭 시 자세한 정보를 확인 할 수 있도록 uri를 연결한다.
 
 
@@ -1208,6 +1211,8 @@ private class GetNotice extends AsyncTask<String, Void, String> {
                     }
                 // 생략...
 ```
+ JSONObject와 JSONArray를 통해서 PHP파일로부터 받아온 데이터를 공지사항내용(content)과 작성시간(date)을 불러와서 공지사항에 입력하는데
+입력 형태는 공지사항 내용이 한번에 표시되지 않을 정도로 길어질 때를 대비해서 **MARQUEE**를 설정하고 공지사항은 content, date 순으로 표시한다.  
 
 - 로비 중앙에 공지사항이 표시되고 1분 간격으로 서버로부터 업데이트 받는다.  
 
@@ -1233,6 +1238,7 @@ private class GetNotice extends AsyncTask<String, Void, String> {
         }).start();
     }
 ```
+runOnUiThread를 이용해서 1분에 한번씩 공지사항을 갱신하는 GetNotice를 실행한다.
 
 
 3. 언어설정  
