@@ -1175,8 +1175,8 @@ public class MyTimerTask extends TimerTask {
 
 2. 공지사항  
 
-<img src="https://user-images.githubusercontent.com/48272857/59277314-f254b280-8c9a-11e9-9668-8d439c398347.jpg" width="250px"/>   
--  로비 중앙에 공지사항이 표시되고 1분 간격으로 서버로부터 업데이트 받는다.  
+<img src="https://user-images.githubusercontent.com/48272857/59277314-f254b280-8c9a-11e9-9668-8d439c398347.jpg" width="250px"/><br>
+- 로비 중앙에 공지사항이 표시되고 1분 간격으로 서버로부터 업데이트 받는다.  
 
 ```
 // METHOD TO UPDATE NOTICE TEXTVIEW
