@@ -2,6 +2,37 @@
 
  - 스마트 모바일 프로그래밍 2조 프로젝트 (UnKnowN)
 ---
+
+# [목차]
+### 1.소개  
+1-1.주제를 선정하게 된 이유  
+1-2.간략 기능 소개  
+1-3.하드웨어  
+1-4.소프트웨어   
+<br>   
+
+### 2.사전 설정 및 환경 구축  
+2-1.블루투스 설정   
+2-2.Nfc 기반의 티켓기능  
+2-3.서버 구축  
+2-4.Google Map API   
+<br> 
+
+### 3.기능 구현  
+3-1.권한 허용 알림 및 로그인  
+3-2.인트로 슬라이드  
+3-3.NFC 태그  
+3-4.프로필 입력  
+3-5.아이와의 거리 확인  
+3-6.다이얼로그 알림  
+3-7.로비화면  
+3-8.관리자 모드  
+<br>
+### 4.시장성   
+
+### 5.참고자료
+
+---
 # 주제를 선정하게 된 이유
 <div>
 <img src="https://user-images.githubusercontent.com/48272857/59177151-1d091300-8b96-11e9-8e2e-f083d993f425.png">
@@ -94,6 +125,17 @@
 ---
   
 # 사전 설정 및 환경 구축
+
+### 안드로이드 공통  
+모든 프로젝트는 app/res/xml 안에 network_security_config.xml 을 만들고 다음 내용을 입력한다.  
+(api 28 이상부터 네트워크 작업에 추가 권한이 필요함)  
+```
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>
+```
+
 ### 1. 블루투스 설정 [ **필수** ]
 블루투스 모듈을 아두이노 UNO를 통해서 초기화해줘야 한다. (모듈 HM-10를 기반으로 진행하였다.)
 
@@ -1396,7 +1438,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 ```  
 참고: [Google Map Developer](https://developers.google.com/maps/documentation/android-sdk/intro?refresh=1)  
 
-5. 관리자 모드  
+### 8. 관리자모드   
 - 상단 좌측을 더블클릭한다.  
 <img src="https://user-images.githubusercontent.com/48272857/59276127-aacd2700-8c98-11e9-8c2a-c2e383cba313.jpg" width="200px"/>  
 
