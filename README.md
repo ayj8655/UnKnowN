@@ -1170,38 +1170,7 @@ public class MyTimerTask extends TimerTask {
         }
     }
 ```
-* 현재 보는 페이지의 순서를 확인할 수 있도록 표시기점을 추가해준다.
-```csharp
-protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lobby);
-                .
-                .
-                .
-        sliderDotspanel = (LinearLayout) findViewById(R.id.SliderDots);
-        dotscount = viewPagerAdapter.getCount();
-        dots = new ImageView[dotscount];
 
-        for (int i = 0; i < dotscount; i++){
-            dots[i] = new ImageView(this);
-            dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.nonactive_dot));
-                            .
-                            .
-                            .
-        }
-        dots[0].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            
-            @Override
-            public void onPageSelected(int i) {
-                for(int a = 0; a < dotscount; a++){
-                    dots[a].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.nonactive_dot));
-                }
-                dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
-            }
-        }); 
-}
-```
 출처:https://www.youtube.com/watch?v=GqcFEvBCnIk  
 
 2. 공지사항  
