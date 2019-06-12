@@ -144,8 +144,32 @@ void loop() {
 6. 위의 과정으로 프로젝트에 맞는 블루투스 모듈 설정이 완료되었다.
 
 ---
+### 2. Nfc 기반의 티켓기능 [ **필수** ]  
+미아방지 팔찌에 Nfc기능을 이용해 팔찌를 놀이기구의 문에 태그시 놀이기구의 문이 개방되는 것을 보여주기 위해 아두이노 서보모터 제어를 하여 구현했다.
+1. 라이브러리를 사용하기 위해서 다음 코드를 입력해준다.
+```csharp
+#include <Servo.h>  // 서보 라이브러리
+#include <SPI.h>    // RFID를 위한 SPI 라이브러리
+#include <MFRC522.h>// RFID 라이브러리
+```
 
-### 2. 서버 구축 [ **필수** ]
+2. 서보 모터 PIN을 6번 PIN으로  RFID모듈의 SDA, RST PIN을 각각 10, 9 PIN으로로 정의해준 다음 아래 연결도와 같이 서보모터와 RFID모듈, 우노 보드를 연결한다. ( 나머지 RFID PIN은 SPI 라이브러리를 사용하기에 별도의 설정이 필요없다. )
+
+![Image and Preview Themes on the toolbar](https://user-images.githubusercontent.com/48374494/59271252-63da3400-8c8e-11e9-8822-e5d840dd4ac9.PNG)
+
+3. 서보모터와 RFID 라이브러리를 생성한다.
+```csharp
+Servo myservo;
+MFRC522 rfid(SS_PIN, RST_PIN);
+```
+4. 아두이노 코드에 Nfc의 uid를 등록시킨다.
+
+5. 팔찌를 NFC모듈에 태그해주었을 때 먼저 PICC 타입을 읽어와 MIFARE 방식인 것을 확인한 후에 등록되 있지 않은 UID를 가진 경우에는 서버모터가 작동하지않고 사전에 등록되 있는 UID를 가진 경우에는 서보모터가 90도 회전하여 3초 딜레이를 가진 후에 0도로 다시 돌아온다.
+
+출처:https://blog.naver.com/chandong83/220920828631  
+
+---
+### 3. 서버 구축 [ **필수** ]
 
 - 서버 구축 및 설정  
 앱을 위한 서버가 필요하다.
@@ -313,7 +337,7 @@ https://webnautes.tistory.com/828
 
 ---
 
-### 3. Google Map API
+### 4. Google Map API
 QR코드에 있는 어플을 다운받으면 앱 기능 중 지도보기가 정상적으로 사용가능하지만 따로 코드를 돌리는 경우 API키를 수정해야한다.
 따라서 직접 구글 API를 써야하는 경우 밑의 방법으로 사용한다.
 
