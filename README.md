@@ -70,7 +70,7 @@
   <img src="https://user-images.githubusercontent.com/48273766/59303948-49c24500-8cd2-11e9-9274-9b91ce5de6df.png"  width="40%">
   <img src="https://user-images.githubusercontent.com/48272857/59179677-ca335980-8b9d-11e9-91dc-a0ebfb733aec.png">  
   사용자를 비롯한 관리자의 유지보수와 지속가능성 증대를 위해 왼쪽 그림과 같은 디바이스를 3D모델링을 통해 고안하였다. 이 디바이스는 배터리, 블루투스, NFC를 장착하여 사용하는 모델이다.  사용자는 디바이스에 벨크로를 연결하여 착용한다.<br>  
-3D모델 경로계획 생성 프로그램: Cubicreator4
+3D모델 경로계획 생성 프로그램: Cubicreator4  
 모델링 작업: https://www.tinkercad.com/  
   
 ---
