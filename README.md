@@ -1365,7 +1365,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     };
 }
-```
+```  
+참고: [Google Map Developer](https://developers.google.com/maps/documentation/android-sdk/intro?refresh=1)  
+
 5. 관리자 모드  
 - 상단 좌측을 더블클릭한다.  
 <img src="https://user-images.githubusercontent.com/48272857/59276127-aacd2700-8c98-11e9-8c2a-c2e383cba313.jpg" width="200px"/>
@@ -1375,7 +1377,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 - 결과창에 기능들의 작동결과가 출력된다.  
 <img src="https://user-images.githubusercontent.com/48272857/59276126-aacd2700-8c98-11e9-8cb7-78270b231a85.jpg" width="200px"/>
 
-6. 시장성  
+### 시장성  및 차별성  
+- 시장성  
 우선적으로 높은 입장객 수를 보유한 놀이공원에 본 연구결과인 팔찌를 공급했을 때 높은 수익이 기대된다. 현재 놀이공원의 한해 방문객 수는 다음과 같다.  
 <img src="https://user-images.githubusercontent.com/48273766/59314754-aaad4580-8cf1-11e9-9308-e20eafbad2e9.png" width="500px"/>  
 상단 자료와 같이 국내 롯데월드와 에버랜드의 한해 총 방문객수는 1500만명으로 추산되고 있으며 국내 다른 놀이공원을 비롯한 대형광장에서 사용될 수 있는 점을 고려할 때 방문객 수는 이를 넘어설 것을 추정되며 국내 8세이하 유아 통계를 볼 때 약 240만명으로 추산되며 통계청, 인구동향조사, 통계청, 2019.05.29기준
@@ -1392,8 +1395,10 @@ NFC: 약 250원<br>
 국내 미취학 아동 기준: 7280*120만=약 87억<br>
 현재 국내에서는 약 90억 정도의 시장규모를 보이며 출산율을 고려해볼 때 매년 약 40만명의 잠재적 소비자가 지속적으로 발생한다. 국내의 대표적인 놀이공원 두곳을 기준으로 작성되었고 국내시장은 제한적인 특성을 보여주고 있다.<br>
 미국과 영국은 매년 각각 약 46만명, 11만명의 미아가 발생하고 있으며 이는 미아 문제가 국내만이 아니며 전세계의 사회적 문제임을 보여준다. 
-이는 세계시장에 충분한 시장성을 가졌음을 의미한다.  <br>
-REFERENCE: International Centre for missing & exploited children, Missing Children’s Statistics, International Centre for missing & exploited children.
+이는 세계시장에 충분한 시장성을 가졌음을 의미한다.<br>
+REFERENCE: International Centre for missing & exploited children, Missing Children’s Statistics, International Centre for missing & exploited children. <br>  
+
+- 차별성
 
 ---
 
