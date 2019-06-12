@@ -1094,7 +1094,113 @@ public class MyIntentService extends IntentService {
 }
 ```
 ### 7. 로비화면
-1. 공지사항  
+1. ViewPager를 활용한 정보제공
+놀이공원에서 진행중인 이벤트들에 대한 정보를 제공해준다. 이미지 뷰를 클릭 시 자세한 정보를 확인 할 수 있도록 uri를 연결한다.
+
+
+<img src = "https://user-images.githubusercontent.com/48374494/59317928-24e4c680-8d00-11e9-84ab-7344a3dccc09.PNG" width = "200"></img><br>
+
+* activity_lobby.xml에서 ViewPager 사용하고 view로 사용할 custiom_layout.xml 파일을 만든다.
+
+* ViewPagerAdapter.java 파일을 생성한 다음에 activity_lobby.xml 에 ViewPager 의 페이지 뷰를 생성하기 위해 PagerAdapter를 상속받는다.
+
+* ViewPager의 전체 페이지 수는 getCount ( ) 메서드의 return 값으로 결정한다.
+
+* Object instantiateItem ( ) 메서드로 custom_layout.xml파일을 layoutInflater을 사용해  뷰 객체로 생성한다.
+```csharp
+public Object instantiateItem(@NonNull ViewGroup container, final int position) { //화면에 표시할 페이지 뷰 생성
+        // ↓layoutInflater를 통해 custom_layout.xml을 뷰 객체로 생성한다.
+        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = layoutInflater.inflate(R.layout.custom_layout, null);
+        ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
+        imageView.setImageResource(images[position]);
+}
+```
+
+* 각각의 View마다 해당하는 uri를 연결해주기 위해 setOnclickListener ( ) 메서드를 사용한다.
+
+* LobbyActivity.java 에서 뷰페이지의 참조를 가져온 다음에 ViewPagerAdapter.java 의 인스턴스를 뷰페이저에 지정한다.
+```csharp
+viewPager = (ViewPager) findViewById(R.id.view_pager);
+ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this);
+viewPager.setAdapter(viewPagerAdapter);
+```
+
+* 페이지 뷰가 자동적으로 넘어갈 수있도록 LobbyActivity.java에 MyTimerTask 클래스를 만들어준 다음에 아래와 같은 코드를 입력하고, onCreate 안에 Timer 객체를 생성해준 다음 scheduleAtFixedRate ( ) 메서드를 통해 일정 간격마다 MyTimerTask ( ) 메서드가 실행되도록 한다.
+
+ 
+
+```csharp
+protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_lobby);
+                      .
+                      .
+                      .
+         Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new MyTimerTask(), 2000, 4000);
+}
+
+public class MyTimerTask extends TimerTask {
+
+        @Override
+        public void run() {
+            LobbyActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (viewPager.getCurrentItem() == 0){
+                        viewPager.setCurrentItem(1);
+                    } else if (viewPager.getCurrentItem() == 1) {
+                        viewPager.setCurrentItem(2);
+                    } else if (viewPager.getCurrentItem() == 2) {
+                        viewPager.setCurrentItem(3);
+                    } else if (viewPager.getCurrentItem() == 3) {
+                        viewPager.setCurrentItem(4);
+                    } else if (viewPager.getCurrentItem() == 4) {
+                        viewPager.setCurrentItem(5);
+                    } else {
+                        viewPager.setCurrentItem(0);
+                    }
+                }
+            });
+        }
+    }
+```
+* 현재 보는 페이지의 순서를 확인할 수 있도록 표시기점을 추가해준다.
+```csharp
+protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_lobby);
+                .
+                .
+                .
+        sliderDotspanel = (LinearLayout) findViewById(R.id.SliderDots);
+        dotscount = viewPagerAdapter.getCount();
+        dots = new ImageView[dotscount];
+
+        for (int i = 0; i < dotscount; i++){
+            dots[i] = new ImageView(this);
+            dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.nonactive_dot));
+                            .
+                            .
+                            .
+        }
+        dots[0].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            
+            @Override
+            public void onPageSelected(int i) {
+                for(int a = 0; a < dotscount; a++){
+                    dots[a].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.nonactive_dot));
+                }
+                dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
+            }
+        }); 
+}
+```
+출처:https://www.youtube.com/watch?v=GqcFEvBCnIk  
+
+2. 공지사항  
 
 <img src="https://user-images.githubusercontent.com/48272857/59277314-f254b280-8c9a-11e9-9668-8d439c398347.jpg" width="250px"/>   
 -  로비 중앙에 공지사항이 표시되고 1분 간격으로 서버로부터 업데이트 받는다.  
@@ -1123,7 +1229,7 @@ public class MyIntentService extends IntentService {
 ```
 
 
-2. 언어설정  
+3. 언어설정  
 
 <div>
 <img src="https://user-images.githubusercontent.com/48484742/59271663-3772e780-8c8f-11e9-8d3c-28dc907c9ce0.png" width="200">
@@ -1178,7 +1284,7 @@ public class MyIntentService extends IntentService {
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
     }
 ```  
-3. 지도  
+4. 지도  
 <img src="https://user-images.githubusercontent.com/48484742/59299268-2e057180-8cc7-11e9-8321-2d0a234d9cae.jpg" width="200"> <br>
 아이의 키에 맞는 놀이기구를 보여준다. 마커 클릭시 자세한 정보를 확인할 수 있게 url을 연결한다. seekbar를 이용해 키를 조절하고 버튼을 통해 적용시켜 지도에 보여준다.  
 - 구글지도를 띄우기 위해 fragment를 사용한다.
@@ -1256,7 +1362,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     };
 }
 ```
-4. 관리자 모드  
+5. 관리자 모드  
 - 상단 좌측을 더블클릭한다.  
 <img src="https://user-images.githubusercontent.com/48272857/59276127-aacd2700-8c98-11e9-8c2a-c2e383cba313.jpg" width="200px"/>
 - 사전 설정된 비밀번호나 따로 설정한 비밀번호를 입력한다.  
@@ -1265,7 +1371,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 - 결과창에 기능들의 작동결과가 출력된다.  
 <img src="https://user-images.githubusercontent.com/48272857/59276126-aacd2700-8c98-11e9-8cb7-78270b231a85.jpg" width="200px"/>
 
-5. 시장성  
+6. 시장성  
 우선적으로 높은 입장객 수를 보유한 놀이공원에 본 연구결과인 팔찌를 공급했을 때 높은 수익이 기대된다. 현재 놀이공원의 한해 방문객 수는 다음과 같다.  
 <img src="https://user-images.githubusercontent.com/48273766/59314754-aaad4580-8cf1-11e9-9308-e20eafbad2e9.png" width="500px"/>  
 상단 자료와 같이 국내 롯데월드와 에버랜드의 한해 총 방문객수는 1500만명으로 추산되고 있으며 국내 다른 놀이공원을 비롯한 대형광장에서 사용될 수 있는 점을 고려할 때 방문객 수는 이를 넘어설 것을 추정되며 국내 8세이하 유아 통계를 볼 때 약 240만명으로 추산되며 통계청, 인구동향조사, 통계청, 2019.05.29기준
