@@ -394,10 +394,10 @@ https://webnautes.tistory.com/647
 
 ---
 # 기능 구현
-### 1. 권한 허용 알림  
+### 1. 권한 허용 알림 및 로그인
 <img src="https://user-images.githubusercontent.com/48484742/59296598-512d2280-8cc1-11e9-9241-0a6ed773cb03.jpg" width="200"> <br>  
 
-어플을 실행하는데 있어 반드시 필요한 권한들을 허용하도록 다이얼로그를 띄운다.
+어플을 실행하는데 있어 반드시 필요한 권한들을 요청하는 다이얼로그를 띄운다. 모든 퍼미션이 허용되지 않으면 어플을 사용할 수 없도록 한다.  
 - AndroidManifest.xml파일에 필요한 permission을 부여한다.
 ```
 //AndroidManifest.xml
@@ -406,7 +406,7 @@ https://webnautes.tistory.com/647
 ...
 //생략...
 ```
-- SplashActivity.java에서 권한을 모두 허용했는지 확인한다. 허용하지 않은 권한만 요청한다. isUsing은 NFC태그를 어플 첫 사용시에만 사용하도록 하기위한 변수다. 이를 사용하지 않는다면 if문 안의 내용만 사용하면 된다.
+- SplashActivity.java에서 권한을 모두 허용했는지 확인한다. 허용하지 않은 권한만 요청한다. ShardPreference를 이용하여 앱 내 데이터 저장기능을 사용한다. 목적은 nfc를 태그하여 id값을 받아오는 과정에서 isUsing이라는 데이터 값에 true를 넣어줌으로써 사용자가 로그아웃 하기전까지 NFC태그를 요청하지 않도록 한다. 최초에 태그했을경우엔 프로필 입력으로 이동한다. 전에 태그한 기록이 있고 프로필이 입력되있는경우 로비로 이동한다. 프로필이 입력되있지 않은 경우 프로필 입력으로 이동한다.
 ```
 //SplashActivity.java
 public class SplashActivity extends Activity {
@@ -417,32 +417,36 @@ public class SplashActivity extends Activity {
             //생략...
             if(permissionCheck == PackageManager.PERMISSION_GRANTED && ...){
                 if (isUsing==false) {
-                    Intent intent = new Intent(this, WelcomeActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
+                Intent intent = new Intent(this, WelcomeActivity.class);
+                startActivity(intent);
+                finish();
             }
-             else {
-                // Start Granting Permission From User
-                ActivityCompat.requestPermissions(this, new String[]{ Manifest.permission.CAMERA,...}, PERMISSION);
-            }
+
         }
-    }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch(requestCode){
-            case PERMISSION:
-                if(grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED &&...)
-                {
-                    if (isUsing==false) {
-                        startActivity(new Intent(this, WelcomeActivity.class));
-                        finish();
-                    }
-                }
-                else {
-                    finish();
-                }
-                break;
+        else {
+            // 생략...
+        }
+        if (isUsing==true) {
+            int usingId = sp.getInt("id",0);
+            String usingTid = sp.getString("tid", "");
+            if (usingId == 0 && usingTid == "") {
+                finish();
+                return;
+            }
+            if (isProfile==false) {
+                Intent intent = new Intent(SplashActivity.this, ProfileActivity.class);
+                startActivity(intent);
+                finish();
+            }
+            else {
+                Intent intent = new Intent(SplashActivity.this, LobbyActivity.class);
+                Bundle bun = new Bundle();
+                bun.putInt("id", usingId);
+                bun.putString("tid", usingTid);
+                intent.putExtra("DeviceData", bun);
+                startActivity(intent);
+                finish();
+            }
         }
     }
     //생략...
@@ -916,7 +920,7 @@ public void settingScanCallback() {
   n = 2(In free space)로 경로손실 지수를 나타내며 는 송신기와 수신기 사이의 거리가 1m일 때 수신 신호 세기를 나타낸다. 상기 식을 이용하여 Rssi를 미터(m) 단위의 거리로 변환가능하다.  
   5.5.3 Rssi 측정결과  
   <img src="https://user-images.githubusercontent.com/48273766/59306658-b7bd3b00-8cd7-11e9-9f89-e4fe5c55a7bc.png" width="50%" height="50%"><br>
-  위 표를 볼 때 블루투스 모듈을 팔찌 안에 넣고 측정했을시 오차율이 증가하는 것으로 보인다. 이는 모듈이 팔찌에 의해 간섭이 발생된 결과이며 이는 의 값의 변경으로 보정된다.   
+  위 표를 볼 때 블루투스 모듈을 팔찌 안에 넣고 측정했을시 오차율이 증가하는 것으로 보인다. 이는 모듈이 팔찌에 의해 간섭이 발생된 결과이며 이는 TxPower의 값의 변경으로 보정된다.   
   5.5.4 Rssi 기반의 거리 추정 정확도  
   <img src="https://user-images.githubusercontent.com/48273766/59306897-4336cc00-8cd8-11e9-993e-ab0f159b0f0a.png" width="50%" height="50%"><br>
   상기 Rssi 기반의 거리추정 수식을 적용하여 추정된 거리별 정확도이다. 평균 정확도는 팔찌 케이스 미적용시, 적용시 각각 86.97%, 90.52%로 정확도는 Rssi 하나로는 정확도는 다소 낮으나 사용자가 참고하는 수준임을 고려할 때 양호한 수치이다. 또한, 상기 수식의 txPower 상수를 보정함으로써 오차율을 감소시킬수 있다.
