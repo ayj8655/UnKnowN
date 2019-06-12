@@ -1208,6 +1208,28 @@ private class GetNotice extends AsyncTask<String, Void, String> {
                     }
                 // 생략...
 ```
+- php상에서 데이터 입력 처리 과정
+```
+<?php 
+    error_reporting(E_ALL); 
+    ini_set('display_errors',1); 
+
+    include('dbcon.php');
+
+    // 생략...
+        if(!isset($errMSG))
+        {
+            try{
+                $stmt = $con->prepare('INSERT INTO notice(content) VALUES(:content)');
+                $stmt->bindParam(':content', $content);
+
+                if($stmt->execute())
+                    $successMSG = "공지사항을 추가했습니다.";
+                
+                else
+                    $errMSG = "공지사항 추가 에러";
+        // 생략...
+```
 
 - 로비 중앙에 공지사항이 표시되고 1분 간격으로 서버로부터 업데이트 받는다.  
 
