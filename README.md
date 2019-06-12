@@ -209,6 +209,31 @@ MFRC522 rfid(SS_PIN, RST_PIN);
 4. 아두이노 코드에 NFC의 uid를 등록시킨다.
 
 5. 팔찌를 NFC모듈에 태그해주었을 때 먼저 PICC 타입을 읽어와 MIFARE 방식인 것을 확인한 후에 등록되 있지 않은 UID를 가진 경우에는 서버모터가 작동하지않고 사전에 등록되 있는 UID를 가진 경우에는 서보모터가 90도 회전하여 3초 딜레이를 가진 후에 0도로 다시 돌아온다.
+```
+//MIFARE 방식이 아니라면 더이상 진행하지 말고 빠져나감
+  if (piccType != MFRC522::PICC_TYPE_MIFARE_MINI &&  
+    piccType != MFRC522::PICC_TYPE_MIFARE_1K &&
+    piccType != MFRC522::PICC_TYPE_MIFARE_4K) {
+    return;
+  }
+
+  //ID가 등록된 ID와 동일하다면
+  if (rfid.uid.uidByte[0] == PICC_0 && 
+      rfid.uid.uidByte[1] == PICC_1 && 
+      rfid.uid.uidByte[2] == PICC_2 && 
+      rfid.uid.uidByte[3] == PICC_3 ) {
+ 
+    //서보 90도로 이동
+    myservo.write(90);
+    //3초 대기
+    delay(3000);
+    //서보 0도로 되돌림
+    myservo.write(0);
+  }else{
+    //등록된 카드가 아니라면 시리얼 모니터로 ID 표시
+    return;   
+  }
+```
 
 출처:https://blog.naver.com/chandong83/220920828631  
 
@@ -449,7 +474,7 @@ https://webnautes.tistory.com/647
 ---
 # 기능 구현
 ### 1. 권한 허용 알림 및 로그인
-<img src="https://user-images.githubusercontent.com/48484742/59296598-512d2280-8cc1-11e9-9241-0a6ed773cb03.jpg" width="200"> <br>  
+<img src="https://user-images.githubusercontent.com/48272857/59326667-3343da00-8d22-11e9-9e29-8bad977ff5e7.jpg" width="200"> <br>  
 
 어플을 실행하는데 있어 반드시 필요한 권한들을 요청하는 다이얼로그를 띄운다. 모든 퍼미션이 허용되지 않으면 어플을 사용할 수 없도록 한다.  
 - AndroidManifest.xml파일에 필요한 permission을 부여한다.
@@ -675,7 +700,8 @@ public int getCount() {
  출처 : https://recipes4dev.tistory.com/148
 ### 3. NFC 태그
 등록된 디바이스만 사용하기위해 NFC태그를 이용해 사용자를 구분한다. 
-- 휴대폰이 NFC기능을 지원하는지 확인 후 NFC가 활성화가 안되어있으면 Dialog를 띄워 활성화를 요구한다. 어플을 재시작 후 태그를 올바로 진행하면 onNewIntent(Intent intent)가 호출된다.
+- 휴대폰이 NFC기능을 지원하는지 확인 후 NFC가 활성화가 안되어있으면 Dialog를 띄워 활성화를 요구한다. 어플을 재시작 후 태그를 올바로 진행하면 onNewIntent(Intent intent)가 호출된다.  
+>[onNewIntent 가이드 바로가기](https://developer.android.com/reference/android/app/Activity)
  ```
  //NFCActivity.class
  public class NFCActivity extends AppCompatActivity {
@@ -695,7 +721,8 @@ public int getCount() {
     }
 }
 ```
-- NFC가 활성화 되면 태그가 되기를 기다린다. NFC태그가 이뤄지면 태그된 NFC의 ID를 가져온다. 이 ID는 데이터베이스에 등록되어있는지 확인 후(task) 어플 사용 가능 여부가 결정된다. 
+- NFC가 활성화 되면 태그가 되기를 기다린다. NFC태그가 이뤄지면 태그된 NFC의 ID를 가져온다. 이 ID는 데이터베이스에 등록되어있는지 확인 후(task) 어플 사용 가능 여부가 결정된다.   
+ >[NFC 가이드 바로가기](https://developer.android.com/guide/topics/connectivity/nfc/advanced-nfc)
 ```
 //NFCActivity.class
 public class NFCActivity extends AppCompatActivity {
